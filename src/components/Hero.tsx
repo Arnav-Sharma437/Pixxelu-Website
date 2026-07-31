@@ -66,8 +66,8 @@ export default function Hero() {
 
       {/* Infinite Horizontal Scrolling Marquee Ticker at the bottom */}
       <div className="absolute bottom-0 left-0 w-full overflow-hidden border-y border-white/5 bg-black/50 py-5 z-20 select-none pointer-events-none">
-        <div className="flex whitespace-nowrap animate-[marquee_25s_linear_infinite] w-[200%]">
-          <div className="flex justify-around items-center w-1/2">
+        <div className="flex whitespace-nowrap animate-[marquee_25s_linear_infinite] w-[200%] shrink-0">
+          <div className="flex justify-around items-center w-1/2 shrink-0">
             <span className="marquee-text text-lg sm:text-xl md:text-2xl">pixxelu</span>
             <span className="text-orange text-lg sm:text-xl md:text-2xl">&bull;</span>
             <span className="marquee-text text-lg sm:text-xl md:text-2xl">squarespace</span>
@@ -79,7 +79,7 @@ export default function Hero() {
             <span className="marquee-text text-lg sm:text-xl md:text-2xl">wordpress</span>
             <span className="text-orange text-lg sm:text-xl md:text-2xl">&bull;</span>
           </div>
-          <div className="flex justify-around items-center w-1/2">
+          <div className="flex justify-around items-center w-1/2 shrink-0">
             <span className="marquee-text text-lg sm:text-xl md:text-2xl">pixxelu</span>
             <span className="text-orange text-lg sm:text-xl md:text-2xl">&bull;</span>
             <span className="marquee-text text-lg sm:text-xl md:text-2xl">squarespace</span>
@@ -93,6 +93,7 @@ export default function Hero() {
           </div>
         </div>
       </div>
+
 
       {/* Main Content Grid (Full width container alignment) */}
       <div className="w-full px-8 md:px-16 grid grid-cols-1 lg:grid-cols-12 gap-16 items-center z-10 relative">
