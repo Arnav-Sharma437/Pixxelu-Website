@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Lenis from "lenis";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -10,14 +11,42 @@ if (typeof window !== "undefined") {
 
 export default function GSAPInit() {
   useEffect(() => {
-    // Safety net: clear any orphaned triggers from a previous mount before page components load
+    // Safety net: clear any orphaned triggers from a previous mount
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
   }, []);
 
   useEffect(() => {
-    // Refresh ScrollTrigger calculations after everything (fonts, layout heights, images) has fully loaded
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReducedMotion) return;
+
+    // 1. Initialize Lenis smooth scroll with premium custom easing
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // fast inertia scroll deceleration
+      touchMultiplier: 1.5,
+      infinite: false,
+    });
+
+    // 2. Synchronize Lenis scrolling updates with GSAP ScrollTrigger
+    lenis.on("scroll", ScrollTrigger.update);
+
+    // 3. Coordinate Lenis update frames inside GSAP global ticker
+    const gsapTicker = (time: number) => {
+      lenis.raf(time * 1000);
+    };
+    gsap.ticker.add(gsapTicker);
+    gsap.ticker.lagSmoothing(0);
+
+    return () => {
+      lenis.destroy();
+      gsap.ticker.remove(gsapTicker);
+    };
+  }, []);
+
+  useEffect(() => {
+    // Refresh ScrollTrigger calculations after everything (fonts, lazy heights) finishes loading
     const handleLoad = () => {
       ScrollTrigger.refresh();
     };

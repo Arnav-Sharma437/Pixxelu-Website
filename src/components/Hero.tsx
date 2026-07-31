@@ -117,64 +117,68 @@ export default function Hero() {
           >
             {/* Mockup 1: Squarespace */}
             <div
-              className="absolute w-[220px] h-[150px] bg-[#151515] border border-white/10 shadow-2xl p-2.5 flex flex-col justify-between"
+              className="absolute"
               style={{
                 transform: "translate(-60px, -60px) rotate(-6deg)",
                 zIndex: 10,
               }}
             >
-              <div className="flex items-center justify-between pb-1 border-b border-white/10 shrink-0">
-                <div className="flex space-x-1">
-                  <div className="w-1.5 h-1.5 rounded-full bg-red-500/80"></div>
-                  <div className="w-1.5 h-1.5 rounded-full bg-yellow-500/80"></div>
+              <div className="animate-[float-ambient_6s_infinite_ease-in-out] w-[220px] h-[150px] bg-[#151515] border border-white/10 shadow-2xl p-2.5 flex flex-col justify-between">
+                <div className="flex items-center justify-between pb-1 border-b border-white/10 shrink-0">
+                  <div className="flex space-x-1">
+                    <div className="w-1.5 h-1.5 rounded-full bg-red-500/80"></div>
+                    <div className="w-1.5 h-1.5 rounded-full bg-yellow-500/80"></div>
+                  </div>
+                  <span className="text-[6px] text-grey-800 uppercase font-mono tracking-wider">
+                    squarespace.co
+                  </span>
                 </div>
-                <span className="text-[6px] text-grey-800 uppercase font-mono tracking-wider">
-                  squarespace.co
-                </span>
-              </div>
-              {/* Micro UI: Portfolio Layout */}
-              <div className="flex-1 flex flex-col space-y-2 mt-2">
-                <div className="h-2.5 bg-white/20 w-3/4"></div>
-                <div className="grid grid-cols-2 gap-1.5">
-                  <div className="aspect-[4/3] bg-orange/40"></div>
-                  <div className="aspect-[4/3] bg-white/5 border border-white/10"></div>
+                {/* Micro UI: Portfolio Layout */}
+                <div className="flex-1 flex flex-col space-y-2 mt-2">
+                  <div className="h-2.5 bg-white/20 w-3/4"></div>
+                  <div className="grid grid-cols-2 gap-1.5">
+                    <div className="aspect-[4/3] bg-orange/40"></div>
+                    <div className="aspect-[4/3] bg-white/5 border border-white/10"></div>
+                  </div>
+                  <div className="h-1 bg-white/10 w-full"></div>
                 </div>
-                <div className="h-1 bg-white/10 w-full"></div>
               </div>
             </div>
 
             {/* Mockup 2: Wix */}
             <div
-              className="absolute w-[220px] h-[150px] bg-[#1c1c1c] border border-white/10 shadow-2xl p-2.5 flex flex-col justify-between"
+              className="absolute"
               style={{
                 transform: "translate(60px, -40px) rotate(-2deg)",
                 zIndex: 11,
               }}
             >
-              <div className="flex items-center justify-between pb-1 border-b border-white/10 shrink-0">
-                <div className="flex space-x-1">
-                  <div className="w-1.5 h-1.5 rounded-full bg-red-500/80"></div>
-                  <div className="w-1.5 h-1.5 rounded-full bg-yellow-500/80"></div>
+              <div className="animate-[float-ambient_7s_infinite_ease-in-out_1s] w-[220px] h-[150px] bg-[#1c1c1c] border border-white/10 shadow-2xl p-2.5 flex flex-col justify-between">
+                <div className="flex items-center justify-between pb-1 border-b border-white/10 shrink-0">
+                  <div className="flex space-x-1">
+                    <div className="w-1.5 h-1.5 rounded-full bg-red-500/80"></div>
+                    <div className="w-1.5 h-1.5 rounded-full bg-yellow-500/80"></div>
+                  </div>
+                  <span className="text-[6px] text-grey-800 uppercase font-mono tracking-wider">
+                    wixstudio.co
+                  </span>
                 </div>
-                <span className="text-[6px] text-grey-800 uppercase font-mono tracking-wider">
-                  wixstudio.co
-                </span>
-              </div>
-              {/* Micro UI: Design Studio dashboard */}
-              <div className="flex-1 flex flex-col justify-between mt-2">
-                <div className="h-2 bg-white/20 w-2/3"></div>
-                <div className="grid grid-cols-3 gap-1">
-                  <div className="h-10 bg-white/5 border border-white/10 flex flex-col justify-center items-center">
-                    <div className="w-4 h-1 bg-white/30 mb-1"></div>
-                    <div className="w-6 h-1 bg-white/10"></div>
-                  </div>
-                  <div className="h-10 bg-orange/10 border border-orange/30 flex flex-col justify-center items-center">
-                    <div className="w-4 h-1 bg-orange/60 mb-1"></div>
-                    <div className="w-6 h-1 bg-orange/30"></div>
-                  </div>
-                  <div className="h-10 bg-white/5 border border-white/10 flex flex-col justify-center items-center">
-                    <div className="w-4 h-1 bg-white/30 mb-1"></div>
-                    <div className="w-6 h-1 bg-white/10"></div>
+                {/* Micro UI: Design Studio dashboard */}
+                <div className="flex-1 flex flex-col justify-between mt-2">
+                  <div className="h-2 bg-white/20 w-2/3"></div>
+                  <div className="grid grid-cols-3 gap-1">
+                    <div className="h-10 bg-white/5 border border-white/10 flex flex-col justify-center items-center">
+                      <div className="w-4 h-1 bg-white/30 mb-1"></div>
+                      <div className="w-6 h-1 bg-white/10"></div>
+                    </div>
+                    <div className="h-10 bg-orange/10 border border-orange/30 flex flex-col justify-center items-center">
+                      <div className="w-4 h-1 bg-orange/60 mb-1"></div>
+                      <div className="w-6 h-1 bg-orange/30"></div>
+                    </div>
+                    <div className="h-10 bg-white/5 border border-white/10 flex flex-col justify-center items-center">
+                      <div className="w-4 h-1 bg-white/30 mb-1"></div>
+                      <div className="w-6 h-1 bg-white/10"></div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -182,32 +186,34 @@ export default function Hero() {
 
             {/* Mockup 3: Shopify */}
             <div
-              className="absolute w-[220px] h-[150px] bg-[#121212] border border-white/10 shadow-2xl p-2.5 flex flex-col justify-between"
+              className="absolute"
               style={{
                 transform: "translate(-40px, 50px) rotate(2deg)",
                 zIndex: 12,
               }}
             >
-              <div className="flex items-center justify-between pb-1 border-b border-white/10 shrink-0">
-                <div className="flex space-x-1">
-                  <div className="w-1.5 h-1.5 rounded-full bg-red-500/80"></div>
-                  <div className="w-1.5 h-1.5 rounded-full bg-yellow-500/80"></div>
+              <div className="animate-[float-ambient_5s_infinite_ease-in-out_2s] w-[220px] h-[150px] bg-[#121212] border border-white/10 shadow-2xl p-2.5 flex flex-col justify-between">
+                <div className="flex items-center justify-between pb-1 border-b border-white/10 shrink-0">
+                  <div className="flex space-x-1">
+                    <div className="w-1.5 h-1.5 rounded-full bg-red-500/80"></div>
+                    <div className="w-1.5 h-1.5 rounded-full bg-yellow-500/80"></div>
+                  </div>
+                  <span className="text-[6px] text-grey-800 uppercase font-mono tracking-wider">
+                    shopify.store
+                  </span>
                 </div>
-                <span className="text-[6px] text-grey-800 uppercase font-mono tracking-wider">
-                  shopify.store
-                </span>
-              </div>
-              {/* Micro UI: Store Product Detail and Cart Checkout */}
-              <div className="flex-1 flex flex-col justify-between mt-2">
-                <div className="flex justify-between items-center">
-                  <div className="h-2.5 bg-white/30 w-1/2"></div>
-                  <div className="h-3.5 bg-orange w-10 flex items-center justify-center text-[5px] font-bold">ADD</div>
-                </div>
-                <div className="flex-1 flex items-center space-x-2 bg-white/5 border border-white/5 p-1.5 mt-2">
-                  <div className="w-7 h-7 bg-white/10 border border-white/10"></div>
-                  <div className="flex-1 space-y-1">
-                    <div className="h-1.5 bg-white/20 w-4/5"></div>
-                    <div className="h-1 bg-white/10 w-2/3"></div>
+                {/* Micro UI: Store Product Detail and Cart Checkout */}
+                <div className="flex-1 flex flex-col justify-between mt-2">
+                  <div className="flex justify-between items-center">
+                    <div className="h-2.5 bg-white/30 w-1/2"></div>
+                    <div className="h-3.5 bg-orange w-10 flex items-center justify-center text-[5px] font-bold">ADD</div>
+                  </div>
+                  <div className="flex-1 flex items-center space-x-2 bg-white/5 border border-white/5 p-1.5 mt-2">
+                    <div className="w-7 h-7 bg-white/10 border border-white/10"></div>
+                    <div className="flex-1 space-y-1">
+                      <div className="h-1.5 bg-white/20 w-4/5"></div>
+                      <div className="h-1 bg-white/10 w-2/3"></div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -215,34 +221,36 @@ export default function Hero() {
 
             {/* Mockup 4: WordPress */}
             <div
-              className="absolute w-[220px] h-[150px] bg-[#1a1a1a] border border-white/10 shadow-2xl p-2.5 flex flex-col justify-between"
+              className="absolute"
               style={{
                 transform: "translate(50px, 70px) rotate(6deg)",
                 zIndex: 13,
               }}
             >
-              <div className="flex items-center justify-between pb-1 border-b border-white/10 shrink-0">
-                <div className="flex space-x-1">
-                  <div className="w-1.5 h-1.5 rounded-full bg-red-500/80"></div>
-                  <div className="w-1.5 h-1.5 rounded-full bg-yellow-500/80"></div>
+              <div className="animate-[float-ambient_8s_infinite_ease-in-out_1.5s] w-[220px] h-[150px] bg-[#1a1a1a] border border-white/10 shadow-2xl p-2.5 flex flex-col justify-between">
+                <div className="flex items-center justify-between pb-1 border-b border-white/10 shrink-0">
+                  <div className="flex space-x-1">
+                    <div className="w-1.5 h-1.5 rounded-full bg-red-500/80"></div>
+                    <div className="w-1.5 h-1.5 rounded-full bg-yellow-500/80"></div>
+                  </div>
+                  <span className="text-[6px] text-grey-800 uppercase font-mono tracking-wider">
+                    wordpress.cms
+                  </span>
                 </div>
-                <span className="text-[6px] text-grey-800 uppercase font-mono tracking-wider">
-                  wordpress.cms
-                </span>
-              </div>
-              {/* Micro UI: CMS Dashboard chart */}
-              <div className="flex-1 flex flex-col justify-between mt-2">
-                <div className="flex justify-between items-center">
-                  <div className="h-2 bg-orange w-12"></div>
-                  <div className="h-1 bg-white/10 w-6"></div>
-                </div>
-                {/* SVG Mini Chart */}
-                <div className="h-10 flex items-end justify-between px-1.5 py-1 bg-white/5 border border-white/5 mt-1.5">
-                  <div className="w-1.5 bg-orange/40 h-[30%]"></div>
-                  <div className="w-1.5 bg-orange/50 h-[50%]"></div>
-                  <div className="w-1.5 bg-orange/60 h-[40%]"></div>
-                  <div className="w-1.5 bg-orange h-[80%]"></div>
-                  <div className="w-1.5 bg-orange/70 h-[60%]"></div>
+                {/* Micro UI: CMS Dashboard chart */}
+                <div className="flex-1 flex flex-col justify-between mt-2">
+                  <div className="flex justify-between items-center">
+                    <div className="h-2 bg-orange w-12"></div>
+                    <div className="h-1 bg-white/10 w-6"></div>
+                  </div>
+                  {/* SVG Mini Chart */}
+                  <div className="h-10 flex items-end justify-between px-1.5 py-1 bg-white/5 border border-white/5 mt-1.5">
+                    <div className="w-1.5 bg-orange/40 h-[30%]"></div>
+                    <div className="w-1.5 bg-orange/50 h-[50%]"></div>
+                    <div className="w-1.5 bg-orange/60 h-[40%]"></div>
+                    <div className="w-1.5 bg-orange h-[80%]"></div>
+                    <div className="w-1.5 bg-orange/70 h-[60%]"></div>
+                  </div>
                 </div>
               </div>
             </div>

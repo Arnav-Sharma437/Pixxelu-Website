@@ -1,6 +1,13 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { Shuffle, Code2, Gauge, TrendingUp, Cpu, ShieldCheck } from "lucide-react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 interface ExpertiseItem {
   icon: React.ComponentType<{ className?: string }>;
@@ -42,30 +49,61 @@ const EXPERTISE_DATA: ExpertiseItem[] = [
 ];
 
 export default function Expertise() {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReducedMotion) return;
+
+    const ctx = gsap.context(() => {
+      // Staggered slide+fade reveal for expertise cards
+      gsap.fromTo(
+        ".expertise-card",
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.75,
+          stagger: 0.1,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: ".expertise-grid",
+            start: "top 82%",
+            toggleActions: "play none none none",
+          },
+        }
+      );
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
     <section
+      ref={containerRef}
       id="company"
       className="bg-white text-black py-24 md:py-32 border-b border-grey-800/10"
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12">
+        
         {/* Section Header */}
         <div className="max-w-3xl mb-16 md:mb-20">
           <span className="text-[10px] font-bold tracking-[0.2em] text-orange uppercase">
             Our Areas of Expertise
           </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-display tracking-tight text-black mt-1.5 leading-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-display tracking-tight text-black mt-1.5 leading-tight animate-[pulse_8s_infinite_ease-in-out]">
             Full-stack support for growth-focused teams.
           </h2>
         </div>
 
         {/* Grid of Expertise Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="expertise-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {EXPERTISE_DATA.map((item, index) => {
             const Icon = item.icon;
             return (
               <div
                 key={index}
-                className="bg-white border border-grey-800/15 p-8 flex flex-col justify-between hover:border-orange transition-all duration-300 group hover:shadow-sm"
+                className="expertise-card bg-white border border-grey-800/15 p-8 flex flex-col justify-between hover:border-orange transition-all duration-300 group hover:shadow-sm"
               >
                 <div>
                   <div className="w-10 h-10 bg-off-black text-white flex items-center justify-center mb-6 group-hover:bg-orange group-hover:text-white transition-colors duration-300">
