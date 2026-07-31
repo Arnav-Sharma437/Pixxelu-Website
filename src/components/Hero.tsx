@@ -137,7 +137,7 @@ export default function Hero() {
         <div className="lg:col-span-5 relative flex items-center justify-center min-h-[380px] md:min-h-[480px] w-full">
           
           {/* SVG Orbital Network backdrop (hero-bg-asset) */}
-          <div className="hero-bg-asset absolute w-[110%] h-[110%] pointer-events-none select-none z-0 flex items-center justify-center opacity-65">
+          <div className="hero-bg-asset absolute w-[110%] h-[110%] pointer-events-none select-none z-0 flex items-center justify-center opacity-100">
             <style jsx>{`
               @keyframes rot-clockwise {
                 from { transform: rotate(0deg); }
@@ -164,7 +164,7 @@ export default function Hero() {
               }
             `}</style>
 
-            <svg className="w-full h-full text-white/10" viewBox="0 0 100 100">
+            <svg className="w-full h-full text-white/22" viewBox="0 0 100 100">
               <circle cx="50" cy="50" r="49" stroke="currentColor" strokeWidth="0.08" fill="none" />
               
               {/* Clockwise rotating ring */}
@@ -186,22 +186,23 @@ export default function Hero() {
               </g>
 
               {/* Core center glows */}
-              <circle cx="50" cy="50" r="12" className="animate-pulse-slow text-orange/10" fill="currentColor" />
+              <circle cx="50" cy="50" r="12" className="animate-pulse-slow text-orange/20" fill="currentColor" />
               <circle cx="50" cy="50" r="6" stroke="currentColor" strokeWidth="0.15" fill="none" />
             </svg>
           </div>
 
           {/* Floating Main Hero Graphic Image Card */}
-          <div className="hero-bg-asset relative w-full max-w-[360px] aspect-[4/3] rounded-lg overflow-hidden border border-white/10 shadow-2xl z-10 animate-[float-ambient_6s_infinite_ease-in-out]">
+          <div className="hero-bg-asset relative w-full max-w-[500px] aspect-[4/3] rounded-lg overflow-hidden border border-white/10 shadow-2xl z-10 animate-[float-ambient_6s_infinite_ease-in-out]">
             <Image
               src="/hero-sketch.jpg"
               alt="Pixxelu Web Design Sketch Illustration"
               fill
-              sizes="360px"
+              sizes="500px"
               className="object-cover opacity-95 hover:opacity-100 transition-opacity duration-300"
               priority
             />
           </div>
+
 
 
         </div>
