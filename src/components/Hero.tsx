@@ -59,8 +59,9 @@ export default function Hero() {
   return (
     <section
       ref={containerRef}
-      className="relative bg-off-black text-white overflow-hidden pt-32 pb-0 flex flex-col justify-between"
+      className="relative bg-off-black text-white overflow-hidden pt-32 pb-24 md:pb-36 flex flex-col justify-between"
     >
+
       {/* Ambient background detail (slow movement) */}
       <div className="absolute top-1/4 right-0 w-[550px] h-[550px] bg-orange/5 rounded-full blur-[140px] pointer-events-none animate-[pulse_10s_infinite_ease-in-out]" />
       <div className="absolute bottom-0 left-10 w-[350px] h-[350px] bg-white/5 rounded-full blur-[110px] pointer-events-none animate-[pulse_15s_infinite_ease-in-out]" />

@@ -80,9 +80,28 @@ export default function ProblemStatement() {
   return (
     <section 
       ref={sectionRef} 
-      className="bg-white text-black py-24 md:py-32 border-b border-grey-800/10"
+      className="bg-white text-black py-24 md:py-32 border-b border-grey-800/10 relative overflow-hidden bg-[linear-gradient(to_right,#f5f5f5_1px,transparent_1px),linear-gradient(to_bottom,#f5f5f5_1px,transparent_1px)] bg-[size:5rem_5rem]"
     >
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
+      {/* Drifting background orange/grey glows */}
+      <div className="absolute top-1/4 left-10 w-96 h-96 bg-orange/5 rounded-full blur-[90px] pointer-events-none animate-[pulse_12s_infinite_ease-in-out]" />
+      <div className="absolute bottom-10 right-10 w-[450px] h-[450px] bg-grey-800/10 rounded-full blur-[110px] pointer-events-none animate-[pulse_18s_infinite_ease-in-out_2s]" />
+
+      {/* Continuous moving tech lines / shapes in background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
+        {/* Floating SVG mesh grid that slowly rotates */}
+        <svg className="absolute top-12 right-12 w-48 h-48 text-grey-800/30 animate-[spin_60s_linear_infinite]" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="40" stroke="currentColor" strokeWidth="0.5" fill="none" strokeDasharray="5,5" />
+          <line x1="10" y1="50" x2="90" y2="50" stroke="currentColor" strokeWidth="0.5" />
+          <line x1="50" y1="10" x2="50" y2="90" stroke="currentColor" strokeWidth="0.5" />
+        </svg>
+        {/* Pulsing sine wave layout */}
+        <svg className="absolute bottom-12 left-12 w-64 h-64 text-orange/20 animate-[pulse_10s_infinite_ease-in-out]" viewBox="0 0 200 200">
+          <path d="M20,100 Q60,40 100,100 T180,100" fill="none" stroke="currentColor" strokeWidth="0.8" strokeDasharray="8,8" />
+        </svg>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
+
         
         {/* Animated Stats Strip (At the top of the content section) */}
         <div className="border-b border-grey-800/10 pb-16 mb-20">

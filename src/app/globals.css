@@ -109,6 +109,15 @@ html.lenis, html.lenis body {
   50% { transform: translateY(-8px); }
 }
 
+/* Hide system cursor on desktop when custom follower is active */
+@media (min-width: 768px) {
+  .custom-cursor-active,
+  .custom-cursor-active * {
+    cursor: none !important;
+  }
+}
+
+
 
 
 

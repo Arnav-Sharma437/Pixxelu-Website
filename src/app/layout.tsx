@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Inter } from "next/font/google";
 import GSAPInit from "@/components/GSAPInit";
+import CustomCursor from "@/components/CustomCursor";
 import "./globals.css";
 
 const displayFont = Plus_Jakarta_Sans({
@@ -32,10 +33,12 @@ export default function RootLayout({
     >
       <body className="min-h-full bg-white text-black font-body select-none">
         <GSAPInit />
+        <CustomCursor />
         {children}
       </body>
     </html>
   );
 }
+
 
 
