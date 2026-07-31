@@ -1,19 +1,19 @@
 import type { Metadata } from "next";
-import { Syne, Space_Grotesk } from "next/font/google";
+import { Outfit, Inter } from "next/font/google";
 import GSAPInit from "@/components/GSAPInit";
 import CustomCursor from "@/components/CustomCursor";
 import "./globals.css";
 
-const displayFont = Syne({
+const displayFont = Outfit({
   variable: "--font-display",
   subsets: ["latin"],
-  weight: ["700", "800"],
+  weight: ["600", "700", "800"],
 });
 
-const bodyFont = Space_Grotesk({
+const bodyFont = Inter({
   variable: "--font-body",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600"],
 });
 
 export const metadata: Metadata = {
