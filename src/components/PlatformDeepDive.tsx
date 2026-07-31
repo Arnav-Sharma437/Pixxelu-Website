@@ -1,7 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ArrowUpRight } from "lucide-react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 interface ServiceCardProps {
   title: string;
@@ -9,7 +15,7 @@ interface ServiceCardProps {
 }
 
 const ServiceCard = ({ title, desc }: ServiceCardProps) => (
-  <div className="bg-white/5 border border-white/10 p-5 hover:border-orange hover:bg-white/10 transition-all duration-300 flex flex-col justify-between group cursor-pointer">
+  <div className="bg-white/5 border border-white/10 p-5 hover:border-orange hover:bg-white/10 transition-all duration-300 flex flex-col justify-between group cursor-pointer h-full">
     <div>
       <h4 className="text-sm font-bold tracking-tight text-white mb-1.5 group-hover:text-orange transition-colors">
         {title}
@@ -52,40 +58,109 @@ const PLATFORM_LIST = [
   {
     key: "shopify",
     label: "SHOPIFY",
-    headline: "Transactional engines built for commerce scalability.",
-    tagline: "Best for stores ready to scale commerce",
+    headline: "Scalable transaction systems tuned for high conversion.",
+    tagline: "Best for modern direct-to-consumer and retail brands",
     services: [
-      { title: "Store Configuration", desc: "Tax engines, shipping logic, and checkout integrations." },
-      { title: "Liquid Theme Dev", desc: "Fully custom Shopify theme development optimized for performance." },
-      { title: "App Ecosystem Sync", desc: "Seamless integration of ERPs, inventory management, and CRM apps." },
-      { title: "CRO Implementation", desc: "High-speed landing pages and checkout flows to maximize sales." },
+      { title: "Liquid Customizations", desc: "Modify templates, custom product grids, and custom checkouts." },
+      { title: "App Connections", desc: "Securely hook up ERP inventory tools, ship hosts, and marketing tools." },
+      { title: "Speed Tuning", desc: "Minimize bundle weights and lazy-load scripts for fast checkouts." },
+      { title: "Checkout Extensions", desc: "Optimize sales channels, discount logic, and cart items." },
     ],
   },
   {
     key: "wordpress",
     label: "WORDPRESS",
-    headline: "Full-control architectures built for content scale.",
-    tagline: "Best for content-heavy sites that need full control",
+    headline: "Custom CMS environments built for complete custom scale.",
+    tagline: "Best for high-content databases and complex logic hubs",
     services: [
-      { title: "Headless CMS Setup", desc: "Decouple backend editing from frontend speed using Next.js." },
-      { title: "Custom Blocks & ACF", desc: "Easy editing systems using custom Gutenberg blocks." },
-      { title: "WooCommerce Engine", desc: "Scalable online stores customized to complex transactional needs." },
-      { title: "Speed & Security Tuning", desc: "Object caching, CDN routing, and vulnerability hardening." },
+      { title: "Headless Decoupling", desc: "Connect dynamic WP engines with fast Next.js or React frontends." },
+      { title: "Gutenberg Block Coding", desc: "Custom editorial blocks coded from scratch to matches styles." },
+      { title: "Database Optimizations", desc: "Tune dynamic tables and search indexes for massive catalog speed." },
+      { title: "Plugin Engineering", desc: "Coded custom back-end PHP logic and security patches." },
     ],
   },
 ];
 
 export default function PlatformDeepDive() {
-  const [activePlatform, setActivePlatform] = useState<string>("squarespace");
+  const [activePlatform, setActivePlatform] = useState("squarespace");
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReducedMotion) return;
+
+    const ctx = gsap.context(() => {
+      // Staggered column parallax
+      gsap.fromTo(
+        ".parallax-col-left",
+        { y: 25 },
+        {
+          y: -25,
+          ease: "none",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 0.8,
+          },
+        }
+      );
+
+      gsap.fromTo(
+        ".parallax-col-right",
+        { y: -25 },
+        {
+          y: 25,
+          ease: "none",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 0.8,
+          },
+        }
+      );
+
+      // Background shapes parallax
+      gsap.fromTo(
+        ".parallax-bg-shape",
+        { y: -50 },
+        {
+          y: 50,
+          ease: "none",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true,
+          },
+        }
+      );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
 
   const currentPlatformData = PLATFORM_LIST.find((p) => p.key === activePlatform) || PLATFORM_LIST[0];
 
   return (
     <section
-      className="platform-matrix bg-off-black text-white py-24 md:py-32 border-b border-grey-800/10"
+      ref={sectionRef}
+      className="platform-matrix bg-[#0c0c0c] text-white py-24 md:py-32 border-b border-white/5 relative overflow-hidden"
       id="platform-dive"
     >
-      <div className="max-w-7xl mx-auto px-6 md:px-12 w-full grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 items-start">
+      {/* Decorative Parallax Background shapes */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="parallax-bg-shape absolute top-10 right-[-10%] w-[500px] h-[500px] bg-orange/5 rounded-full blur-[120px] pointer-events-none" />
+        
+        {/* Outline rotating geometry that slides slowly */}
+        <svg className="parallax-bg-shape absolute bottom-10 left-[5%] w-72 h-72 text-white/5 opacity-50" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="45" stroke="currentColor" strokeWidth="0.1" fill="none" strokeDasharray="3,3" />
+          <path d="M50 5 L50 95 M5 50 L95 50" stroke="currentColor" strokeWidth="0.05" />
+        </svg>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 md:px-12 w-full grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 items-start relative z-10">
         
         {/* Left Column (Sticky Sidebar on Desktop) */}
         <div className="matrix-left md:col-span-4 flex flex-col space-y-6 md:sticky md:top-32">
@@ -105,7 +180,7 @@ export default function PlatformDeepDive() {
                 key={platform.key}
                 className={`platform-nav-btn text-left text-lg md:text-xl font-bold tracking-wide transition-all uppercase pl-4 border-l-2 focus:outline-none cursor-pointer ${
                   activePlatform === platform.key
-                    ? "text-white border-orange"
+                    ? "text-white border-orange font-black"
                     : "text-grey-500 border-transparent hover:text-white"
                 }`}
                 onClick={() => setActivePlatform(platform.key)}
@@ -117,11 +192,11 @@ export default function PlatformDeepDive() {
           </div>
         </div>
 
-        {/* Right Column (Standard Content Grid - No Parallax/Overlaps) */}
+        {/* Right Column (Staggered Column Parallax Grid) */}
         <div className="md:col-span-8 w-full">
           <div className="transition-all duration-300 ease-in-out flex flex-col space-y-6">
             <div>
-              <span className="inline-block text-[11px] font-bold tracking-widest text-grey-800 uppercase bg-white/5 border border-white/15 px-3 py-1">
+              <span className="inline-block text-[11px] font-bold tracking-widest text-grey-800 uppercase bg-white/5 border border-white/15 px-3 py-1 rounded">
                 {currentPlatformData.tagline}
               </span>
               <h4 className="text-2xl md:text-3xl font-bold font-display tracking-tight text-white mt-4 max-w-xl">
@@ -129,11 +204,35 @@ export default function PlatformDeepDive() {
               </h4>
             </div>
             
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {currentPlatformData.services.map((service, sIndex) => (
-                <ServiceCard key={sIndex} title={service.title} desc={service.desc} />
-              ))}
+            {/* Split Grid for Staggered Parallax Scrolling */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-start pt-6">
+              
+              {/* Left Column - Cards 1 and 3 */}
+              <div className="flex flex-col space-y-4 parallax-col-left">
+                <ServiceCard 
+                  title={currentPlatformData.services[0].title} 
+                  desc={currentPlatformData.services[0].desc} 
+                />
+                <ServiceCard 
+                  title={currentPlatformData.services[2].title} 
+                  desc={currentPlatformData.services[2].desc} 
+                />
+              </div>
+
+              {/* Right Column - Cards 2 and 4 */}
+              <div className="flex flex-col space-y-4 parallax-col-right sm:mt-8">
+                <ServiceCard 
+                  title={currentPlatformData.services[1].title} 
+                  desc={currentPlatformData.services[1].desc} 
+                />
+                <ServiceCard 
+                  title={currentPlatformData.services[3].title} 
+                  desc={currentPlatformData.services[3].desc} 
+                />
+              </div>
+
             </div>
+
           </div>
         </div>
 
