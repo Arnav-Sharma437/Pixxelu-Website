@@ -18,40 +18,39 @@ export default function Hero() {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline();
 
-      // 1. Animate masked title lines
+      // 1. Headline text reveal (y: 40 -> 0, opacity: 0 -> 1, stagger: 0.08s, ease: power3.out)
       tl.fromTo(
         ".hero-title-line",
-        { y: 65, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.9, stagger: 0.08, ease: "power3.out" }
+        { y: 40, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.8, stagger: 0.08, ease: "power3.out" }
       );
 
-      // 2. Animate body elements (fade + rise)
-      tl.fromTo(
-        ".hero-body-element",
-        { y: 25, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.65, stagger: 0.1, ease: "power2.out" },
-        "-=0.45"
-      );
-
-      // 3. Animate staggered mockups (rise + rotation offset)
+      // 2. Hero mockups staggered entrance (starting just as headline finishes)
       const mockups = mockupsRef.current?.children;
       if (mockups) {
         const targetAngles = [-6, -2, 2, 6];
         tl.fromTo(
           mockups,
-          { opacity: 0, y: 80, rotate: -4, scale: 0.96 },
+          { opacity: 0, y: 50, rotate: -4 },
           {
             opacity: 1,
             y: 0,
-            scale: 1,
             rotate: (i) => targetAngles[i] || 0,
-            duration: 0.85,
-            stagger: 0.12,
+            duration: 0.8,
+            stagger: 0.1, // ~0.1s offset per window
             ease: "power2.out",
           },
-          "-=0.35"
+          "-=0.1" // begins right as headline finishes
         );
       }
+
+      // 3. Subhead + CTAs fade + rise (delayed to run after the headline completes)
+      tl.fromTo(
+        ".hero-body-element",
+        { y: 20, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: "power2.out" },
+        "-=0.5" // runs concurrent to mockup entrance, ensuring headline is fully read first
+      );
     }, containerRef);
 
     return () => ctx.revert();

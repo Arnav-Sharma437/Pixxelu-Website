@@ -21,7 +21,7 @@ interface Testimonial {
 
 const TESTIMONIALS_DATA: Testimonial[] = [
   {
-    quote: "Pixxelu migrated our complex 500-page site to Squarespace without a single broken link or drops in our search impressions. Truly impressive speed and execution.",
+    quote: "Pixxelu migrated our complex 500-page site to Squarespace without a single broken link or drops in our weekly search impressions. Truly impressive speed and execution.",
     author: "Marcus Vance",
     role: "VP of Marketing",
     company: "Apex Global",
@@ -61,49 +61,40 @@ export default function Testimonials() {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReducedMotion) return;
 
-    const cards = gsap.utils.toArray(".testimonial-card");
-    if (!cards.length) return;
-
-    const createdTriggers: any[] = [];
-
+    const cards = gsap.utils.toArray('.testimonial-card');
     cards.forEach((card: any, i: number) => {
-      // 1. Create ScrollTrigger to pin the card in place
-      const pinTrigger = ScrollTrigger.create({
+      ScrollTrigger.create({
         trigger: card,
-        start: "top top+=" + (100 + i * 25), // slight stacked offset per card
+        start: 'top top+=' + (100 + i * 20), // slight stacked offset per card
         pin: true,
         pinSpacing: false, // this is what makes them STACK instead of pushing content down
-        end: () => "+=" + (cards.length - i) * 400, // reserve scroll distance
+        end: () => '+=' + (cards.length - i) * 400,
       });
-      createdTriggers.push(pinTrigger);
-
-      // 2. Scale down cards as they get buried under new ones
-      const scaleTween = gsap.to(card, {
-        scale: 0.96 - (cards.length - 1 - i) * 0.015,
-        filter: "brightness(0.85)",
+      // optional: subtly scale down + darken cards as they get buried under new ones
+      gsap.to(card, {
+        scale: 0.96 - i * 0.01,
         scrollTrigger: {
           trigger: cards[i + 1] || card,
-          start: "top top+=" + (100 + (i + 1) * 25),
-          end: "bottom top",
+          start: 'top top',
+          end: 'bottom top',
           scrub: true,
-        },
+        }
       });
-      createdTriggers.push(scaleTween.scrollTrigger);
     });
 
     return () => {
-      createdTriggers.forEach((t) => t?.kill());
+      ScrollTrigger.getAll().forEach(t => {
+        if (t.vars.id !== "matrixTrigger") {
+          t.kill();
+        }
+      });
     };
   }, []);
 
   return (
-    <section
-      className="testimonials-stack bg-white text-black py-24 md:py-32 border-b border-grey-800/10"
-      ref={stackRef}
-    >
+    <section className="testimonials-stack bg-white text-black py-24 md:py-32 border-b border-grey-800/10" ref={stackRef}>
       <div className="max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row md:gap-12 items-start justify-between">
         
-        {/* Left Side Header (Sticky) */}
         <div className="stack-header md:sticky md:top-32 md:w-1/3 mb-16 md:mb-0">
           <p className="eyebrow text-[10px] font-bold tracking-[0.2em] text-orange uppercase">
             TESTIMONIALS
@@ -116,7 +107,6 @@ export default function Testimonials() {
           </p>
         </div>
 
-        {/* Right Side Cards Track */}
         <div className="cards-track md:w-2/3 w-full flex flex-col space-y-24 md:space-y-36 pb-32">
           {TESTIMONIALS_DATA.map((t, i) => (
             <div
@@ -124,19 +114,16 @@ export default function Testimonials() {
               className="testimonial-card w-full max-w-[550px] bg-white border border-grey-800/20 p-8 md:p-12 shadow-md flex flex-col justify-between"
               style={{ zIndex: i + 1 }}
             >
-              {/* Star Rating */}
               <div className="flex space-x-1 mb-6 text-orange">
                 {Array.from({ length: t.rating }).map((_, starIndex) => (
                   <Star key={starIndex} className="w-4 h-4 fill-current" />
                 ))}
               </div>
 
-              {/* Quote */}
               <blockquote className="text-base sm:text-lg md:text-xl font-normal leading-relaxed text-black mb-8 font-display">
                 &ldquo;{t.quote}&rdquo;
               </blockquote>
 
-              {/* Author Row */}
               <div className="flex items-center space-x-4 border-t border-grey-800/10 pt-6 mt-auto">
                 <div className="relative w-11 h-11 rounded-full overflow-hidden shrink-0 border border-grey-800/20">
                   <Image

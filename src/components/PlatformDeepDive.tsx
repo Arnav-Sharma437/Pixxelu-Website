@@ -120,10 +120,11 @@ export default function PlatformDeepDive() {
 
     if (!sectionRef.current || !panels.length || !leftLinks) return;
 
-    // Set initial active state for links
+    // Set initial active state for nav links
     gsap.set(leftLinks, { color: "#6B6B6B", borderLeftColor: "transparent" });
     gsap.set(leftLinks[0], { color: "#FFFFFF", borderLeftColor: "#E85C2B" });
 
+    // 1. Literal GSAP setup as requested
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: sectionRef.current,
@@ -148,17 +149,14 @@ export default function PlatformDeepDive() {
       if (i === 0) return; // first panel already visible
       const prevPanel = panels[i - 1] as any;
       const label = `seg${i}`;
-
-      // Transition panels and nav links concurrently
+      
       tl.to(prevPanel, { autoAlpha: 0, duration: 0.3 }, label)
         .to(panel, { autoAlpha: 1, duration: 0.3 }, label)
         .to(leftLinks[i - 1], { color: "#6B6B6B", borderLeftColor: "transparent", duration: 0.2 }, label)
         .to(leftLinks[i], { color: "#FFFFFF", borderLeftColor: "#E85C2B", duration: 0.2 }, label);
     });
 
-    return () => {
-      tl.scrollTrigger?.kill();
-    };
+    return () => tl.scrollTrigger?.kill();
   }, []);
 
   return (
@@ -202,34 +200,87 @@ export default function PlatformDeepDive() {
           {/* Desktop Overlay Container */}
           <div className="hidden md:block w-full h-full relative">
             <div className="matrix-right" style={{ position: "relative", height: "500px", width: "100%" }}>
-              {PLATFORM_LIST.map((platform, i) => {
-                const isFirst = i === 0;
-                return (
-                  <div
-                    key={platform.key}
-                    className={`panel panel-${platform.key} w-full flex flex-col justify-center space-y-6`}
-                    style={isFirst 
-                      ? { position: "absolute", inset: 0 } 
-                      : { position: "absolute", inset: 0, visibility: "hidden", opacity: 0 }
-                    }
-                  >
-                    <div>
-                      <span className="text-[11px] font-bold tracking-widest text-grey-800 uppercase bg-white/5 border border-white/15 px-3 py-1">
-                        {platform.tagline}
-                      </span>
-                      <h4 className="text-2xl md:text-3xl font-bold font-display tracking-tight text-white mt-4 max-w-xl">
-                        {platform.headline}
-                      </h4>
-                    </div>
+              
+              {/* Panel 1: Squarespace */}
+              <div
+                className="panel panel-squarespace w-full flex flex-col justify-center space-y-6"
+                style={{ position: "absolute", inset: 0 }}
+              >
+                <div>
+                  <span className="text-[11px] font-bold tracking-widest text-grey-800 uppercase bg-white/5 border border-white/15 px-3 py-1">
+                    {PLATFORM_LIST[0].tagline}
+                  </span>
+                  <h4 className="text-2xl md:text-3xl font-bold font-display tracking-tight text-white mt-4 max-w-xl">
+                    {PLATFORM_LIST[0].headline}
+                  </h4>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {PLATFORM_LIST[0].services.map((service, sIndex) => (
+                    <ServiceCard key={sIndex} title={service.title} desc={service.desc} />
+                  ))}
+                </div>
+              </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      {platform.services.map((service, sIndex) => (
-                        <ServiceCard key={sIndex} title={service.title} desc={service.desc} />
-                      ))}
-                    </div>
-                  </div>
-                );
-              })}
+              {/* Panel 2: Wix */}
+              <div
+                className="panel panel-wix w-full flex flex-col justify-center space-y-6"
+                style={{ position: "absolute", inset: 0, visibility: "hidden", opacity: 0 }}
+              >
+                <div>
+                  <span className="text-[11px] font-bold tracking-widest text-grey-800 uppercase bg-white/5 border border-white/15 px-3 py-1">
+                    {PLATFORM_LIST[1].tagline}
+                  </span>
+                  <h4 className="text-2xl md:text-3xl font-bold font-display tracking-tight text-white mt-4 max-w-xl">
+                    {PLATFORM_LIST[1].headline}
+                  </h4>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {PLATFORM_LIST[1].services.map((service, sIndex) => (
+                    <ServiceCard key={sIndex} title={service.title} desc={service.desc} />
+                  ))}
+                </div>
+              </div>
+
+              {/* Panel 3: Shopify */}
+              <div
+                className="panel panel-shopify w-full flex flex-col justify-center space-y-6"
+                style={{ position: "absolute", inset: 0, visibility: "hidden", opacity: 0 }}
+              >
+                <div>
+                  <span className="text-[11px] font-bold tracking-widest text-grey-800 uppercase bg-white/5 border border-white/15 px-3 py-1">
+                    {PLATFORM_LIST[2].tagline}
+                  </span>
+                  <h4 className="text-2xl md:text-3xl font-bold font-display tracking-tight text-white mt-4 max-w-xl">
+                    {PLATFORM_LIST[2].headline}
+                  </h4>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {PLATFORM_LIST[2].services.map((service, sIndex) => (
+                    <ServiceCard key={sIndex} title={service.title} desc={service.desc} />
+                  ))}
+                </div>
+              </div>
+
+              {/* Panel 4: WordPress */}
+              <div
+                className="panel panel-wordpress w-full flex flex-col justify-center space-y-6"
+                style={{ position: "absolute", inset: 0, visibility: "hidden", opacity: 0 }}
+              >
+                <div>
+                  <span className="text-[11px] font-bold tracking-widest text-grey-800 uppercase bg-white/5 border border-white/15 px-3 py-1">
+                    {PLATFORM_LIST[3].tagline}
+                  </span>
+                  <h4 className="text-2xl md:text-3xl font-bold font-display tracking-tight text-white mt-4 max-w-xl">
+                    {PLATFORM_LIST[3].headline}
+                  </h4>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {PLATFORM_LIST[3].services.map((service, sIndex) => (
+                    <ServiceCard key={sIndex} title={service.title} desc={service.desc} />
+                  ))}
+                </div>
+              </div>
+
             </div>
           </div>
 
