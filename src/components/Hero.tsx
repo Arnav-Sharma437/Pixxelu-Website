@@ -57,18 +57,36 @@ export default function Hero() {
       ref={containerRef}
       className="relative bg-[#0c0c0c] text-white min-h-screen flex items-center justify-between overflow-hidden pt-36 pb-24 md:pb-36"
     >
-      {/* Horizontal outlined watermark behind text (opacity: 2%) (hero-bg-asset) */}
-      <div className="hero-bg-asset absolute left-1/2 bottom-[12%] -translate-x-1/2 w-full text-center pointer-events-none select-none z-0 opacity-[0.02]">
-        <span
-          className="text-[14vw] font-black font-display uppercase tracking-[0.15em] block leading-none"
-          style={{
-            WebkitTextStroke: "1px rgba(255, 255, 255, 0.2)",
-            color: "transparent",
-          }}
-        >
-          pixxelu
-        </span>
+      {/* Infinite Horizontal Scrolling Marquee Ticker at the bottom */}
+      <div className="absolute bottom-0 left-0 w-full overflow-hidden border-y border-white/5 bg-black/50 py-5 z-20 select-none pointer-events-none">
+        <div className="flex whitespace-nowrap animate-[marquee_25s_linear_infinite] w-[200%]">
+          <div className="flex justify-around items-center w-1/2">
+            <span className="marquee-text text-lg sm:text-xl md:text-2xl">pixxelu</span>
+            <span className="text-orange text-lg sm:text-xl md:text-2xl">&bull;</span>
+            <span className="marquee-text text-lg sm:text-xl md:text-2xl">squarespace</span>
+            <span className="text-orange text-lg sm:text-xl md:text-2xl">&bull;</span>
+            <span className="marquee-text text-lg sm:text-xl md:text-2xl">wix studio</span>
+            <span className="text-orange text-lg sm:text-xl md:text-2xl">&bull;</span>
+            <span className="marquee-text text-lg sm:text-xl md:text-2xl">shopify</span>
+            <span className="text-orange text-lg sm:text-xl md:text-2xl">&bull;</span>
+            <span className="marquee-text text-lg sm:text-xl md:text-2xl">wordpress</span>
+            <span className="text-orange text-lg sm:text-xl md:text-2xl">&bull;</span>
+          </div>
+          <div className="flex justify-around items-center w-1/2">
+            <span className="marquee-text text-lg sm:text-xl md:text-2xl">pixxelu</span>
+            <span className="text-orange text-lg sm:text-xl md:text-2xl">&bull;</span>
+            <span className="marquee-text text-lg sm:text-xl md:text-2xl">squarespace</span>
+            <span className="text-orange text-lg sm:text-xl md:text-2xl">&bull;</span>
+            <span className="marquee-text text-lg sm:text-xl md:text-2xl">wix studio</span>
+            <span className="text-orange text-lg sm:text-xl md:text-2xl">&bull;</span>
+            <span className="marquee-text text-lg sm:text-xl md:text-2xl">shopify</span>
+            <span className="text-orange text-lg sm:text-xl md:text-2xl">&bull;</span>
+            <span className="marquee-text text-lg sm:text-xl md:text-2xl">wordpress</span>
+            <span className="text-orange text-lg sm:text-xl md:text-2xl">&bull;</span>
+          </div>
+        </div>
       </div>
+
 
 
       {/* Right Side Generative Orbital Network (Continuous Animation) (hero-bg-asset) */}

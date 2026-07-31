@@ -117,6 +117,22 @@ html.lenis, html.lenis body {
   }
 }
 
+/* Infinite Scrolling Marquee keyframes and classes */
+@keyframes marquee {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
+}
+
+.marquee-text {
+  font-family: var(--font-display);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  -webkit-text-stroke: 1.2px rgba(255, 255, 255, 0.22);
+  color: transparent;
+}
+
+
 
 
 
