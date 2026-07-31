@@ -84,9 +84,8 @@ export default function Expertise() {
       id="company"
       className="bg-white text-black py-24 md:py-32 border-b border-grey-800/10"
     >
+      {/* 1. Header (Inside container wrapper) */}
       <div className="max-w-7xl mx-auto px-6 md:px-12">
-        
-        {/* Section Header */}
         <div className="max-w-3xl mb-16 md:mb-20">
           <span className="text-[10px] font-bold tracking-[0.2em] text-orange uppercase">
             Our Areas of Expertise
@@ -95,33 +94,33 @@ export default function Expertise() {
             Full-stack support for growth-focused teams.
           </h2>
         </div>
+      </div>
 
-        {/* Infinite Scrolling Expertise Cards Carousel */}
-        <div className="w-full overflow-hidden py-10 relative select-none">
-          <div className="flex gap-6 w-[200%] shrink-0 animate-[marquee_45s_linear_infinite] hover:[animation-play-state:paused]">
-            {/* Render cards twice for seamless loop */}
-            {[...EXPERTISE_DATA, ...EXPERTISE_DATA].map((item, index) => {
-              const Icon = item.icon;
-              return (
-                <div
-                  key={index}
-                  className="expertise-card w-[290px] md:w-[360px] shrink-0 bg-white border border-grey-800/15 p-8 flex flex-col justify-between hover:border-orange hover:shadow-[0_20px_50px_rgba(232,92,43,0.05)] hover:-translate-y-4 transition-all duration-300 group cursor-pointer"
-                >
-                  <div>
-                    <div className="w-10 h-10 bg-off-black text-white flex items-center justify-center mb-6 group-hover:bg-orange group-hover:text-white transition-colors duration-300">
-                      <Icon className="w-5 h-5" />
-                    </div>
-                    <h3 className="text-lg font-bold font-display tracking-tight text-black mb-3">
-                      {item.title}
-                    </h3>
-                    <p className="text-sm text-grey-500 font-normal leading-relaxed">
-                      {item.desc}
-                    </p>
+      {/* 2. Infinite Carousel Slider (Spans full viewport width edge-to-edge) */}
+      <div className="w-full overflow-hidden py-12 relative select-none">
+        <div className="flex gap-6 w-[200%] shrink-0 animate-[marquee_28s_linear_infinite] hover:[animation-play-state:paused]">
+          {/* Render cards twice for seamless loop */}
+          {[...EXPERTISE_DATA, ...EXPERTISE_DATA].map((item, index) => {
+            const Icon = item.icon;
+            return (
+              <div
+                key={index}
+                className="expertise-card w-[290px] md:w-[380px] shrink-0 bg-white border border-grey-800/15 p-8 flex flex-col justify-between hover:border-orange hover:bg-orange/[0.02] hover:shadow-[0_25px_60px_rgba(232,92,43,0.18)] hover:-translate-y-4 transition-all duration-300 group cursor-pointer"
+              >
+                <div>
+                  <div className="w-10 h-10 bg-off-black text-white flex items-center justify-center mb-6 group-hover:bg-orange group-hover:text-white transition-colors duration-300">
+                    <Icon className="w-5 h-5" />
                   </div>
+                  <h3 className="text-lg font-bold font-display tracking-tight text-black mb-3">
+                    {item.title}
+                  </h3>
+                  <p className="text-sm text-grey-500 font-normal leading-relaxed">
+                    {item.desc}
+                  </p>
                 </div>
-              );
-            })}
-          </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
