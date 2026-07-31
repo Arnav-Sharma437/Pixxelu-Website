@@ -5,7 +5,6 @@ import { ArrowUpRight } from "lucide-react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-// Register ScrollTrigger plugin
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
@@ -83,9 +82,8 @@ const PLATFORM_LIST = [
 ];
 
 export default function PlatformDeepDive() {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
   const leftColRef = useRef<HTMLDivElement>(null);
-  const rightColRef = useRef<HTMLDivElement>(null);
   const [activePlatform, setActivePlatform] = useState<string>("squarespace");
 
   const handleLinkClick = (index: number, key: string) => {
@@ -104,7 +102,6 @@ export default function PlatformDeepDive() {
     if (trigger) {
       const start = trigger.start;
       const end = trigger.end;
-      // Calculate target scroll based on active segments
       const targetScroll = start + (end - start) * (index / 3);
       window.scrollTo({ top: targetScroll + 5, behavior: "smooth" });
     }
@@ -118,30 +115,23 @@ export default function PlatformDeepDive() {
       return; // Skip GSAP ScrollTrigger pinning and let it scroll naturally
     }
 
-    const container = containerRef.current;
+    const panels = gsap.utils.toArray(".panel");
     const leftLinks = leftColRef.current?.querySelectorAll(".platform-nav-btn");
-    const rightPanels = rightColRef.current?.querySelectorAll(".platform-panel");
 
-    if (!container || !leftLinks || !rightPanels) return;
+    if (!sectionRef.current || !panels.length || !leftLinks) return;
 
-    // Set initial states for right panels (hide panels 1, 2, 3)
-    gsap.set(rightPanels, { autoAlpha: 0, zIndex: 1, y: 15, pointerEvents: "none" });
-    gsap.set(rightPanels[0], { autoAlpha: 1, zIndex: 2, y: 0, pointerEvents: "auto" });
-
-    // Set initial states for left links
+    // Set initial active state for links
     gsap.set(leftLinks, { color: "#6B6B6B", borderLeftColor: "transparent" });
     gsap.set(leftLinks[0], { color: "#FFFFFF", borderLeftColor: "#E85C2B" });
 
-    // Create pinning scrolltrigger timeline
     const tl = gsap.timeline({
       scrollTrigger: {
-        trigger: container,
+        trigger: sectionRef.current,
         id: "matrixTrigger",
-        start: "top top",
-        end: "+=3000", // 3000px scroll distance
         pin: true,
-        scrub: 1, // Smooth scrub tracking
-        anticipatePin: 1,
+        scrub: 1,
+        start: "top top",
+        end: "+=4000",
         onUpdate: (self) => {
           const progress = self.progress;
           let activeIndex = 0;
@@ -154,40 +144,32 @@ export default function PlatformDeepDive() {
       },
     });
 
-    // Segment 1: Squarespace -> Wix
-    tl.to(rightPanels[0], { autoAlpha: 0, zIndex: 1, y: -15, duration: 1 }, "seg1")
-      .to(rightPanels[1], { autoAlpha: 1, zIndex: 2, y: 0, duration: 1 }, "seg1")
-      .to(leftLinks[0], { color: "#6B6B6B", borderLeftColor: "transparent", duration: 0.6 }, "seg1")
-      .to(leftLinks[1], { color: "#FFFFFF", borderLeftColor: "#E85C2B", duration: 0.6 }, "seg1")
-      .to({}, { duration: 0.5 }) // hold frame
+    panels.forEach((panel: any, i: number) => {
+      if (i === 0) return; // first panel already visible
+      const prevPanel = panels[i - 1] as any;
+      const label = `seg${i}`;
 
-      // Segment 2: Wix -> Shopify
-      .to(rightPanels[1], { autoAlpha: 0, zIndex: 1, y: -15, duration: 1 }, "seg2")
-      .to(rightPanels[2], { autoAlpha: 1, zIndex: 2, y: 0, duration: 1 }, "seg2")
-      .to(leftLinks[1], { color: "#6B6B6B", borderLeftColor: "transparent", duration: 0.6 }, "seg2")
-      .to(leftLinks[2], { color: "#FFFFFF", borderLeftColor: "#E85C2B", duration: 0.6 }, "seg2")
-      .to({}, { duration: 0.5 }) // hold frame
-
-      // Segment 3: Shopify -> WordPress
-      .to(rightPanels[2], { autoAlpha: 0, zIndex: 1, y: -15, duration: 1 }, "seg3")
-      .to(rightPanels[3], { autoAlpha: 1, zIndex: 2, y: 0, duration: 1 }, "seg3")
-      .to(leftLinks[2], { color: "#6B6B6B", borderLeftColor: "transparent", duration: 0.6 }, "seg3")
-      .to(leftLinks[3], { color: "#FFFFFF", borderLeftColor: "#E85C2B", duration: 0.6 }, "seg3");
+      // Transition panels and nav links concurrently
+      tl.to(prevPanel, { autoAlpha: 0, duration: 0.3 }, label)
+        .to(panel, { autoAlpha: 1, duration: 0.3 }, label)
+        .to(leftLinks[i - 1], { color: "#6B6B6B", borderLeftColor: "transparent", duration: 0.2 }, label)
+        .to(leftLinks[i], { color: "#FFFFFF", borderLeftColor: "#E85C2B", duration: 0.2 }, label);
+    });
 
     return () => {
-      ScrollTrigger.getAll().forEach((t) => t.kill());
+      tl.scrollTrigger?.kill();
     };
   }, []);
 
   return (
     <section
+      className="platform-matrix bg-off-black text-white relative min-h-screen flex items-center justify-center py-20 md:py-0 border-b border-grey-800/10"
+      ref={sectionRef}
       id="platform-dive"
-      ref={containerRef}
-      className="bg-off-black text-white relative min-h-screen flex items-center justify-center py-20 md:py-0 border-b border-grey-800/10"
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12 w-full grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 items-start">
         {/* Left Column (Sticky Sidebar on Desktop) */}
-        <div className="md:col-span-4 flex flex-col space-y-6 md:py-12 md:sticky md:top-32" ref={leftColRef}>
+        <div className="matrix-left md:col-span-4 flex flex-col space-y-6 md:py-12 md:sticky md:top-32" ref={leftColRef}>
           <div>
             <span className="text-[10px] font-bold tracking-[0.15em] uppercase text-orange">
               Signature Service
@@ -214,34 +196,41 @@ export default function PlatformDeepDive() {
           </div>
         </div>
 
-        {/* Right Column (Absolute stack on desktop, standard layout on mobile) */}
-        <div
-          className="md:col-span-8 relative min-h-[500px] md:h-[550px] flex items-center md:items-stretch"
-          ref={rightColRef}
-        >
+        {/* Right Column (Stacked absolute cards) */}
+        <div className="md:col-span-8 w-full flex items-center md:items-stretch">
+          
           {/* Desktop Overlay Container */}
           <div className="hidden md:block w-full h-full relative">
-            {PLATFORM_LIST.map((platform) => (
-              <div
-                key={platform.key}
-                className="platform-panel absolute inset-0 w-full flex flex-col justify-center space-y-6"
-              >
-                <div>
-                  <span className="text-[11px] font-bold tracking-widest text-grey-800 uppercase bg-white/5 border border-white/15 px-3 py-1">
-                    {platform.tagline}
-                  </span>
-                  <h4 className="text-2xl md:text-3xl font-bold font-display tracking-tight text-white mt-4 max-w-xl">
-                    {platform.headline}
-                  </h4>
-                </div>
+            <div className="matrix-right" style={{ position: "relative", height: "500px", width: "100%" }}>
+              {PLATFORM_LIST.map((platform, i) => {
+                const isFirst = i === 0;
+                return (
+                  <div
+                    key={platform.key}
+                    className={`panel panel-${platform.key} w-full flex flex-col justify-center space-y-6`}
+                    style={isFirst 
+                      ? { position: "absolute", inset: 0 } 
+                      : { position: "absolute", inset: 0, visibility: "hidden", opacity: 0 }
+                    }
+                  >
+                    <div>
+                      <span className="text-[11px] font-bold tracking-widest text-grey-800 uppercase bg-white/5 border border-white/15 px-3 py-1">
+                        {platform.tagline}
+                      </span>
+                      <h4 className="text-2xl md:text-3xl font-bold font-display tracking-tight text-white mt-4 max-w-xl">
+                        {platform.headline}
+                      </h4>
+                    </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {platform.services.map((service, sIndex) => (
-                    <ServiceCard key={sIndex} title={service.title} desc={service.desc} />
-                  ))}
-                </div>
-              </div>
-            ))}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      {platform.services.map((service, sIndex) => (
+                        <ServiceCard key={sIndex} title={service.title} desc={service.desc} />
+                      ))}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
 
           {/* Mobile Stacking Version */}
@@ -269,6 +258,7 @@ export default function PlatformDeepDive() {
               </div>
             ))}
           </div>
+
         </div>
       </div>
     </section>

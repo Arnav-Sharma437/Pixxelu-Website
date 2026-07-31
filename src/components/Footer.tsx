@@ -7,11 +7,25 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-black text-white py-16 md:py-20 border-t border-white/5 select-none">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 flex flex-col space-y-12">
+    <footer className="bg-black text-white relative py-20 md:py-28 overflow-hidden border-t border-white/15 select-none bg-gradient-to-b from-[#0d0d0d] to-black">
+      
+      {/* Huge outlines wordmark in background (high-end pattern) */}
+      <div className="absolute bottom-6 left-0 w-full overflow-hidden select-none pointer-events-none opacity-5 z-0 leading-none">
+        <span
+          className="text-[17vw] font-black font-display uppercase tracking-tighter text-center block"
+          style={{
+            WebkitTextStroke: "2px rgba(255, 255, 255, 0.4)",
+            color: "transparent",
+          }}
+        >
+          pixxelu
+        </span>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 md:px-12 flex flex-col space-y-16 relative z-10">
         
         {/* Top block */}
-        <div className="flex flex-col md:flex-row justify-between items-start gap-8">
+        <div className="flex flex-col md:flex-row justify-between items-start gap-12">
           {/* Logo & description */}
           <div className="flex flex-col space-y-4 max-w-sm">
             <PixxeluLogo isDarkNav={true} />
@@ -20,63 +34,63 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Sitemaps */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 md:gap-12">
-            <div className="flex flex-col space-y-3">
-              <span className="text-[9px] font-bold tracking-[0.2em] text-orange uppercase">
+          {/* Sitemaps (tightened vertical rhythm) */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 md:gap-16">
+            <div className="flex flex-col space-y-2">
+              <span className="text-[9px] font-bold tracking-[0.25em] text-orange uppercase mb-2">
                 Platforms
               </span>
-              <Link href="#platform-dive" className="text-xs text-grey-800 hover:text-white transition-colors">
+              <Link href="#platform-dive" className="text-xs text-grey-800 hover:text-white transition-colors py-0.5">
                 Squarespace
               </Link>
-              <Link href="#platform-dive" className="text-xs text-grey-800 hover:text-white transition-colors">
+              <Link href="#platform-dive" className="text-xs text-grey-800 hover:text-white transition-colors py-0.5">
                 Wix Studio
               </Link>
-              <Link href="#platform-dive" className="text-xs text-grey-800 hover:text-white transition-colors">
+              <Link href="#platform-dive" className="text-xs text-grey-800 hover:text-white transition-colors py-0.5">
                 Shopify
               </Link>
-              <Link href="#platform-dive" className="text-xs text-grey-800 hover:text-white transition-colors">
+              <Link href="#platform-dive" className="text-xs text-grey-800 hover:text-white transition-colors py-0.5">
                 WordPress
               </Link>
             </div>
 
-            <div className="flex flex-col space-y-3">
-              <span className="text-[9px] font-bold tracking-[0.2em] text-orange uppercase">
+            <div className="flex flex-col space-y-2">
+              <span className="text-[9px] font-bold tracking-[0.25em] text-orange uppercase mb-2">
                 Company
               </span>
-              <Link href="#cases" className="text-xs text-grey-800 hover:text-white transition-colors">
+              <Link href="#cases" className="text-xs text-grey-800 hover:text-white transition-colors py-0.5">
                 Case Studies
               </Link>
-              <Link href="#company" className="text-xs text-grey-800 hover:text-white transition-colors">
+              <Link href="#company" className="text-xs text-grey-800 hover:text-white transition-colors py-0.5">
                 Our Method
               </Link>
-              <Link href="#insights" className="text-xs text-grey-800 hover:text-white transition-colors">
+              <Link href="#insights" className="text-xs text-grey-800 hover:text-white transition-colors py-0.5">
                 AI Pipeline
               </Link>
-              <Link href="#contact" className="text-xs text-grey-800 hover:text-white transition-colors">
+              <Link href="#contact" className="text-xs text-grey-800 hover:text-white transition-colors py-0.5">
                 Contact
               </Link>
             </div>
 
-            <div className="flex flex-col space-y-3 col-span-2 sm:col-span-1">
-              <span className="text-[9px] font-bold tracking-[0.2em] text-orange uppercase">
+            <div className="flex flex-col space-y-2 col-span-2 sm:col-span-1">
+              <span className="text-[9px] font-bold tracking-[0.25em] text-orange uppercase mb-2">
                 Connect
               </span>
-              <Link href="#" className="text-xs text-grey-800 hover:text-white transition-colors">
+              <Link href="#" className="text-xs text-grey-800 hover:text-white transition-colors py-0.5">
                 GitHub
               </Link>
-              <Link href="#" className="text-xs text-grey-800 hover:text-white transition-colors">
+              <Link href="#" className="text-xs text-grey-800 hover:text-white transition-colors py-0.5">
                 LinkedIn
               </Link>
-              <Link href="#" className="text-xs text-grey-800 hover:text-white transition-colors">
+              <Link href="#" className="text-xs text-grey-800 hover:text-white transition-colors py-0.5">
                 Twitter/X
               </Link>
             </div>
           </div>
         </div>
 
-        {/* Bottom block */}
-        <div className="border-t border-white/5 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-[10px] text-grey-800 font-semibold tracking-wider uppercase">
+        {/* Bottom row (copyright + AI tag line, clean single line) */}
+        <div className="border-t border-white/10 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-[10px] text-grey-800 font-semibold tracking-widest uppercase mt-4">
           <div>
             &copy; {currentYear} Pixxelu Ltd. All rights reserved.
           </div>

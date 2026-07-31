@@ -8,10 +8,11 @@ export default function WhyAi() {
       id="insights"
       className="bg-off-black text-white py-24 md:py-32 relative overflow-hidden border-b border-grey-800/10"
     >
-      {/* Background elements */}
+      {/* Background radial accent */}
       <div className="absolute top-1/2 left-0 w-[400px] h-[400px] bg-orange/5 rounded-full blur-[100px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center relative z-10">
+        
         {/* Left Text Column */}
         <div className="lg:col-span-6 flex flex-col space-y-8">
           <div>
@@ -72,10 +73,10 @@ export default function WhyAi() {
           </div>
         </div>
 
-        {/* Right Gradient Mesh Visual Column */}
+        {/* Right Generative Visual Column */}
         <div className="lg:col-span-6 relative w-full aspect-square max-w-[450px] mx-auto border border-white/10 p-4">
           <div className="absolute top-2 left-2 text-[8px] font-mono text-grey-800 uppercase tracking-widest z-20">
-            pixxelu // interactive mesh
+            pixxelu // generative mesh active
           </div>
 
           {/* Glowing Animated Mesh Container */}
@@ -84,36 +85,65 @@ export default function WhyAi() {
             <style jsx>{`
               @keyframes mesh-pulse {
                 0% { transform: scale(1) translate(0px, 0px) rotate(0deg); }
-                33% { transform: scale(1.1) translate(30px, -20px) rotate(5deg); }
-                66% { transform: scale(0.95) translate(-20px, 30px) rotate(-5deg); }
+                33% { transform: scale(1.1) translate(25px, -15px) rotate(3deg); }
+                66% { transform: scale(0.95) translate(-15px, 20px) rotate(-3deg); }
                 100% { transform: scale(1) translate(0px, 0px) rotate(0deg); }
               }
+              @keyframes rot-slow {
+                from { transform: rotate(0deg); }
+                to { transform: rotate(360deg); }
+              }
               .mesh-glow-1 {
-                animation: mesh-pulse 15s ease-in-out infinite;
+                animation: mesh-pulse 12s ease-in-out infinite;
               }
               .mesh-glow-2 {
-                animation: mesh-pulse 18s ease-in-out infinite reverse;
+                animation: mesh-pulse 16s ease-in-out infinite reverse;
+              }
+              .grid-rot {
+                animation: rot-slow 35s linear infinite;
               }
             `}</style>
 
             {/* Glowing spot 1 */}
-            <div className="mesh-glow-1 absolute -top-10 -left-10 w-[250px] h-[250px] bg-orange/40 rounded-full blur-[70px] mix-blend-screen pointer-events-none" />
+            <div className="mesh-glow-1 absolute -top-12 -left-12 w-[260px] h-[260px] bg-orange/45 rounded-full blur-[65px] mix-blend-screen pointer-events-none" />
             {/* Glowing spot 2 */}
-            <div className="mesh-glow-2 absolute -bottom-16 -right-16 w-[300px] h-[300px] bg-orange/30 rounded-full blur-[85px] mix-blend-screen pointer-events-none" />
+            <div className="mesh-glow-2 absolute -bottom-16 -right-16 w-[320px] h-[320px] bg-orange/30 rounded-full blur-[80px] mix-blend-screen pointer-events-none" />
             {/* Glowing spot 3 */}
-            <div className="mesh-glow-1 absolute top-1/3 right-1/4 w-[180px] h-[180px] bg-white/10 rounded-full blur-[50px] pointer-events-none" />
+            <div className="mesh-glow-1 absolute top-1/4 right-1/4 w-[200px] h-[200px] bg-white/10 rounded-full blur-[60px] pointer-events-none" />
 
-            {/* Centered tech layout grid lines */}
-            <div className="absolute inset-0 grid grid-cols-6 grid-rows-6 opacity-10 pointer-events-none">
-              {Array.from({ length: 36 }).map((_, i) => (
+            {/* High-density grid lines & rotating tech overlays */}
+            <div className="absolute inset-0 grid grid-cols-8 grid-rows-8 opacity-10 pointer-events-none">
+              {Array.from({ length: 64 }).map((_, i) => (
                 <div key={i} className="border-[0.5px] border-white"></div>
               ))}
             </div>
 
-            {/* Futuristic overlay text block */}
+            {/* Generative SVG Mesh Lines Overlay */}
+            <svg className="grid-rot absolute inset-0 w-full h-full opacity-20 pointer-events-none scale-110" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="30" stroke="white" strokeWidth="0.3" fill="none" strokeDasharray="1, 4" />
+              <circle cx="50" cy="50" r="40" stroke="white" strokeWidth="0.3" fill="none" strokeDasharray="6, 12" />
+              <circle cx="50" cy="50" r="20" stroke="#E85C2B" strokeWidth="0.5" fill="none" />
+              
+              {/* Connected node network */}
+              <line x1="30" y1="30" x2="50" y2="20" stroke="white" strokeWidth="0.3" />
+              <line x1="50" y1="20" x2="70" y2="30" stroke="white" strokeWidth="0.3" />
+              <line x1="70" y1="30" x2="70" y2="70" stroke="white" strokeWidth="0.3" />
+              <line x1="70" y1="70" x2="50" y2="80" stroke="white" strokeWidth="0.3" />
+              <line x1="50" y1="80" x2="30" y2="70" stroke="white" strokeWidth="0.3" />
+              <line x1="30" y1="70" x2="30" y2="30" stroke="white" strokeWidth="0.3" />
+              
+              <circle cx="30" cy="30" r="1.5" fill="#E85C2B" />
+              <circle cx="50" cy="20" r="1.5" fill="white" />
+              <circle cx="70" cy="30" r="1.5" fill="#E85C2B" />
+              <circle cx="70" cy="70" r="1.5" fill="white" />
+              <circle cx="50" cy="80" r="1.5" fill="#E85C2B" />
+              <circle cx="30" cy="70" r="1.5" fill="white" />
+            </svg>
+
+            {/* Centered text and state values */}
             <div className="relative z-10 text-center flex flex-col items-center justify-center p-6 space-y-2">
-              <span className="text-[10px] font-bold tracking-[0.25em] text-orange bg-orange/10 px-3 py-1 border border-orange/20">
-                AI.ENGINE_ACTIVE
+              <span className="text-[9px] font-bold tracking-[0.25em] text-orange bg-orange/15 px-3 py-1 border border-orange/30">
+                PIXXELU_MESH.INIT
               </span>
               <span className="text-xl font-bold tracking-tight font-display text-white">
                 Engineered for speed.
@@ -123,11 +153,14 @@ export default function WhyAi() {
               </span>
             </div>
 
-            {/* Corner crosshairs */}
-            <div className="absolute top-3 right-3 text-[9px] text-grey-800 font-mono">+</div>
-            <div className="absolute bottom-3 left-3 text-[9px] text-grey-800 font-mono">+</div>
+            {/* Interactive Corner Crosshairs */}
+            <div className="absolute top-4 right-4 text-[9px] text-grey-800 font-mono">+</div>
+            <div className="absolute bottom-4 left-4 text-[9px] text-grey-800 font-mono">+</div>
+            <div className="absolute top-4 left-4 text-[9px] text-grey-800 font-mono">+</div>
+            <div className="absolute bottom-4 right-4 text-[9px] text-grey-800 font-mono">+</div>
           </div>
         </div>
+
       </div>
     </section>
   );

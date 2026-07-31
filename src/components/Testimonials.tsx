@@ -1,7 +1,14 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 import { Star } from "lucide-react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 interface Testimonial {
   quote: string;
@@ -9,6 +16,7 @@ interface Testimonial {
   role: string;
   company: string;
   rating: number;
+  avatar: string;
 }
 
 const TESTIMONIALS_DATA: Testimonial[] = [
@@ -18,6 +26,7 @@ const TESTIMONIALS_DATA: Testimonial[] = [
     role: "VP of Marketing",
     company: "Apex Global",
     rating: 5,
+    avatar: "https://i.pravatar.cc/150?img=11",
   },
   {
     quote: "Our Shopify store rebuild doubled our conversion rate in the first month. The checkout is blistering fast, and editing catalog banners is incredibly easy.",
@@ -25,6 +34,7 @@ const TESTIMONIALS_DATA: Testimonial[] = [
     role: "Founder",
     company: "Muse Apparel",
     rating: 5,
+    avatar: "https://i.pravatar.cc/150?img=47",
   },
   {
     quote: "We needed a custom booking database on Wix. Other agencies said it was impossible and pushed other tech. Pixxelu solved it in two weeks using Wix Studio.",
@@ -32,6 +42,7 @@ const TESTIMONIALS_DATA: Testimonial[] = [
     role: "Operations Director",
     company: "Rise Fitness",
     rating: 5,
+    avatar: "https://i.pravatar.cc/150?img=33",
   },
   {
     quote: "The AI-native approach is real. We got our custom WordPress architecture in under 3 weeks, and it passes all Lighthouse performance audits with perfect scores.",
@@ -39,115 +50,117 @@ const TESTIMONIALS_DATA: Testimonial[] = [
     role: "Tech Lead",
     company: "Fintech Insiders",
     rating: 5,
+    avatar: "https://i.pravatar.cc/150?img=49",
   },
 ];
 
 export default function Testimonials() {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const stackRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReducedMotion) return;
 
-    const handleScroll = () => {
-      const cards = container.querySelectorAll(".testimonial-card");
-      const containerRect = container.getBoundingClientRect();
-      // Calculate active center focal point
-      const containerCenter = containerRect.left + containerRect.width / 2;
+    const cards = gsap.utils.toArray(".testimonial-card");
+    if (!cards.length) return;
 
-      cards.forEach((card: any) => {
-        const cardRect = card.getBoundingClientRect();
-        const cardCenter = cardRect.left + cardRect.width / 2;
-        const distance = Math.abs(containerCenter - cardCenter);
+    const createdTriggers: any[] = [];
 
-        // Adjust scale and opacity based on distance from center
-        const maxDistance = containerRect.width * 0.7;
-        const ratio = Math.min(distance / maxDistance, 1);
-        
-        const scale = 1 - ratio * 0.08; // scale from 1.0 to 0.92
-        const opacity = 1 - ratio * 0.45; // opacity from 1.0 to 0.55
-
-        card.style.transform = `scale(${scale})`;
-        card.style.opacity = opacity.toString();
+    cards.forEach((card: any, i: number) => {
+      // 1. Create ScrollTrigger to pin the card in place
+      const pinTrigger = ScrollTrigger.create({
+        trigger: card,
+        start: "top top+=" + (100 + i * 25), // slight stacked offset per card
+        pin: true,
+        pinSpacing: false, // this is what makes them STACK instead of pushing content down
+        end: () => "+=" + (cards.length - i) * 400, // reserve scroll distance
       });
-    };
+      createdTriggers.push(pinTrigger);
 
-    // Run once on load to initialize scale/opacity values
-    setTimeout(handleScroll, 100);
-
-    container.addEventListener("scroll", handleScroll);
-    window.addEventListener("resize", handleScroll);
+      // 2. Scale down cards as they get buried under new ones
+      const scaleTween = gsap.to(card, {
+        scale: 0.96 - (cards.length - 1 - i) * 0.015,
+        filter: "brightness(0.85)",
+        scrollTrigger: {
+          trigger: cards[i + 1] || card,
+          start: "top top+=" + (100 + (i + 1) * 25),
+          end: "bottom top",
+          scrub: true,
+        },
+      });
+      createdTriggers.push(scaleTween.scrollTrigger);
+    });
 
     return () => {
-      container.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleScroll);
+      createdTriggers.forEach((t) => t?.kill());
     };
   }, []);
 
   return (
-    <section className="bg-white text-black py-24 md:py-32 border-b border-grey-800/10 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
-        {/* Section Header */}
-        <div className="mb-16 flex justify-between items-end flex-wrap gap-6">
-          <div className="max-w-2xl">
-            <span className="text-[10px] font-bold tracking-[0.2em] text-orange uppercase">
-              Testimonials
-            </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-display tracking-tight text-black mt-1.5 leading-none">
-              Trusted by growth teams.
-            </h2>
-          </div>
-          <div className="text-xs text-grey-500 font-semibold tracking-wider uppercase hidden sm:block">
-            Scroll to navigate →
-          </div>
+    <section
+      className="testimonials-stack bg-white text-black py-24 md:py-32 border-b border-grey-800/10"
+      ref={stackRef}
+    >
+      <div className="max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row md:gap-12 items-start justify-between">
+        
+        {/* Left Side Header (Sticky) */}
+        <div className="stack-header md:sticky md:top-32 md:w-1/3 mb-16 md:mb-0">
+          <p className="eyebrow text-[10px] font-bold tracking-[0.2em] text-orange uppercase">
+            TESTIMONIALS
+          </p>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-display tracking-tight text-black mt-2 leading-none">
+            Trusted by growth teams.
+          </h2>
+          <p className="text-xs text-grey-500 font-semibold tracking-wider uppercase mt-4">
+            Scroll down to watch them stack ↓
+          </p>
         </div>
 
-        {/* Scroll-Snap Carousel Container */}
-        {/* display: flex, overflow-x: auto, scroll-snap-type: x mandatory, gap: 24px */}
-        <div
-          ref={containerRef}
-          className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-8 no-scrollbar scroll-smooth px-6 md:px-12"
-        >
-          {TESTIMONIALS_DATA.map((item, index) => (
+        {/* Right Side Cards Track */}
+        <div className="cards-track md:w-2/3 w-full flex flex-col space-y-24 md:space-y-36 pb-32">
+          {TESTIMONIALS_DATA.map((t, i) => (
             <div
-              key={index}
-              className="testimonial-card flex-none w-[290px] sm:w-[380px] md:w-[450px] bg-white border border-grey-800/15 p-8 md:p-10 snap-start flex flex-col justify-between transition-colors duration-300 ease-out"
-              style={{ transform: "scale(1)", opacity: 1 }}
+              key={i}
+              className="testimonial-card w-full max-w-[550px] bg-white border border-grey-800/20 p-8 md:p-12 shadow-md flex flex-col justify-between"
+              style={{ zIndex: i + 1 }}
             >
-              {/* Rating stars */}
+              {/* Star Rating */}
               <div className="flex space-x-1 mb-6 text-orange">
-                {Array.from({ length: item.rating }).map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-current" />
+                {Array.from({ length: t.rating }).map((_, starIndex) => (
+                  <Star key={starIndex} className="w-4 h-4 fill-current" />
                 ))}
               </div>
 
-              {/* Quote text */}
+              {/* Quote */}
               <blockquote className="text-base sm:text-lg md:text-xl font-normal leading-relaxed text-black mb-8 font-display">
-                &ldquo;{item.quote}&rdquo;
+                &ldquo;{t.quote}&rdquo;
               </blockquote>
 
-              {/* Author metadata */}
-              <div className="flex items-center space-x-3.5 border-t border-grey-800/10 pt-6 mt-auto">
-                <div className="w-10 h-10 rounded-full bg-off-black text-white flex items-center justify-center font-bold font-display text-sm">
-                  {item.author.split(" ").map(n => n[0]).join("")}
+              {/* Author Row */}
+              <div className="flex items-center space-x-4 border-t border-grey-800/10 pt-6 mt-auto">
+                <div className="relative w-11 h-11 rounded-full overflow-hidden shrink-0 border border-grey-800/20">
+                  <Image
+                    src={t.avatar}
+                    alt={t.author}
+                    fill
+                    sizes="44px"
+                    className="object-cover"
+                  />
                 </div>
                 <div>
                   <cite className="not-italic text-sm font-bold text-black block">
-                    {item.author}
+                    {t.author}
                   </cite>
                   <span className="text-xs text-grey-500 font-medium">
-                    {item.role}, {item.company}
+                    {t.role}, {t.company}
                   </span>
                 </div>
               </div>
             </div>
           ))}
         </div>
+
       </div>
     </section>
   );
 }
-
