@@ -8,12 +8,12 @@ import { gsap } from "gsap";
 export function PixxeluLogo({ isDarkNav }: { isDarkNav?: boolean }) {
   return (
     <Link href="/" className="flex flex-col items-start leading-none group">
-      <span className="text-xl font-black font-display uppercase tracking-tight text-white select-none">
+      <span className="text-2xl font-black font-display uppercase tracking-tight text-white select-none">
         <span className="text-orange">p</span>
-        <span className={isDarkNav ? "text-white" : "text-white"}>ixxel</span>
+        <span className="text-white">ixxel</span>
         <span className="text-orange">u</span>
       </span>
-      <span className="text-[6.5px] font-bold tracking-[0.25em] text-grey-500 uppercase mt-0.5 select-none">
+      <span className="text-[7.5px] font-bold tracking-[0.25em] text-grey-500 uppercase mt-0.5 select-none">
         Digital Technology
       </span>
     </Link>
@@ -83,7 +83,7 @@ export default function Navbar() {
           ? "bg-[#0c0c0c]/85 backdrop-blur-md border-b border-white/5 py-4" 
           : "bg-transparent py-6"
       }`}>
-        <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
+        <div className="w-full px-8 md:px-16 flex items-center justify-between">
           {/* Left Side Wordmark Logo */}
           <PixxeluLogo isDarkNav={true} />
 
@@ -93,7 +93,7 @@ export default function Navbar() {
             {/* Let's Talk link (underline-reveal) */}
             <Link
               href="#contact"
-              className="underline-reveal text-xs font-bold tracking-[0.15em] text-white uppercase transition-colors duration-300 hidden sm:inline-block"
+              className="underline-reveal text-sm font-bold tracking-[0.2em] text-white uppercase transition-colors duration-300 hidden sm:inline-block"
             >
               Let&apos;s Talk
             </Link>
@@ -101,10 +101,10 @@ export default function Navbar() {
             {/* Hamburger circular button */}
             <button
               onClick={() => setIsOpen(true)}
-              className="w-11 h-11 rounded-full bg-white text-black flex items-center justify-center shadow-lg transition-transform duration-300 hover:scale-105 cursor-pointer focus:outline-none"
+              className="w-14 h-14 rounded-full bg-white text-black flex items-center justify-center shadow-lg transition-transform duration-300 hover:scale-105 cursor-pointer focus:outline-none"
               aria-label="Open Navigation Menu"
             >
-              <Menu className="w-5 h-5 stroke-[2.5]" />
+              <Menu className="w-6 h-6 stroke-[2.5]" />
             </button>
           </div>
         </div>
