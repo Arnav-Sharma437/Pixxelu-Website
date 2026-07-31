@@ -150,7 +150,7 @@ export default function ProblemStatement() {
 
         {/* Main thesis statement */}
         <div className="max-w-4xl mb-16 md:mb-20">
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-black font-display tracking-tight text-black leading-[1.05]">
+          <h2 className="reveal-text text-4xl sm:text-5xl md:text-6xl font-black font-display tracking-tight text-black leading-[1.05]">
             Choosing the wrong platform{" "}
             <span className="text-orange underline decoration-orange/30 decoration-wavy underline-offset-[12px]">
               costs more

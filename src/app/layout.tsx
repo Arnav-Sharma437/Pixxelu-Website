@@ -1,19 +1,19 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans, Inter } from "next/font/google";
+import { Syne, Space_Grotesk } from "next/font/google";
 import GSAPInit from "@/components/GSAPInit";
 import CustomCursor from "@/components/CustomCursor";
 import "./globals.css";
 
-const displayFont = Plus_Jakarta_Sans({
+const displayFont = Syne({
   variable: "--font-display",
   subsets: ["latin"],
-  weight: ["500", "600", "700", "800"],
+  weight: ["700", "800"],
 });
 
-const bodyFont = Inter({
+const bodyFont = Space_Grotesk({
   variable: "--font-body",
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {

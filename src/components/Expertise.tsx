@@ -91,7 +91,7 @@ export default function Expertise() {
           <span className="text-[10px] font-bold tracking-[0.2em] text-orange uppercase">
             Our Areas of Expertise
           </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-display tracking-tight text-black mt-1.5 leading-tight animate-[pulse_8s_infinite_ease-in-out]">
+          <h2 className="reveal-text text-3xl sm:text-4xl md:text-5xl font-bold font-display tracking-tight text-black mt-1.5 leading-tight animate-[pulse_8s_infinite_ease-in-out]">
             Full-stack support for growth-focused teams.
           </h2>
         </div>

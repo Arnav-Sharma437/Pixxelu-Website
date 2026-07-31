@@ -93,7 +93,7 @@ export default function PlatformDeepDive() {
             <span className="text-[10px] font-bold tracking-[0.15em] uppercase text-orange">
               Signature Service
             </span>
-            <h3 className="text-xl md:text-2xl font-bold font-display tracking-tight text-white mt-1.5 mb-8">
+            <h3 className="reveal-text text-xl md:text-2xl font-bold font-display tracking-tight text-white mt-1.5 mb-8">
               Platform Matrix
             </h3>
           </div>

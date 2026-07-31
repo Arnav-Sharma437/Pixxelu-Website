@@ -91,7 +91,7 @@ export default function Testimonials() {
           <p className="eyebrow text-[10px] font-bold tracking-[0.2em] text-orange uppercase">
             TESTIMONIALS
           </p>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-display tracking-tight text-black mt-2 leading-none">
+          <h2 className="reveal-text text-3xl sm:text-4xl md:text-5xl font-bold font-display tracking-tight text-black mt-2 leading-none">
             Trusted by growth teams.
           </h2>
         </div>

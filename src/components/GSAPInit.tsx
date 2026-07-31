@@ -46,6 +46,35 @@ export default function GSAPInit() {
   }, []);
 
   useEffect(() => {
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReducedMotion) return;
+
+    const ctx = gsap.context(() => {
+      const elements = gsap.utils.toArray(".reveal-text");
+      elements.forEach((el: any) => {
+        gsap.fromTo(
+          el,
+          { y: 35, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.85,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: el,
+              start: "top 88%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+      });
+    }, typeof document !== "undefined" ? document.body : undefined);
+
+    return () => ctx.revert();
+  }, []);
+
+
+  useEffect(() => {
     // Refresh ScrollTrigger calculations after everything (fonts, lazy heights) finishes loading
     const handleLoad = () => {
       ScrollTrigger.refresh();
