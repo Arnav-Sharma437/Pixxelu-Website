@@ -30,30 +30,36 @@ export default function StatsBar() {
 
     if (prefersReducedMotion) return;
 
-    const statsElements = barRef.current?.querySelectorAll(".stat-number");
-    if (!statsElements) return;
+    const ctx = gsap.context(() => {
+      const statsElements = barRef.current?.querySelectorAll(".stat-number");
+      if (!statsElements || !statsElements.length) return;
 
-    statsElements.forEach((el: any, index: number) => {
-      const data = STATS_DATA[index];
-      const targetVal = data.value;
-      const decimals = data.decimals;
-      
-      const obj = { val: 0 };
-      
-      gsap.to(obj, {
-        val: targetVal,
-        duration: 1.8,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: el,
-          start: "top 90%",
-        },
-        onUpdate: () => {
-          el.innerText = (data.prefix || "") + obj.val.toFixed(decimals) + data.suffix;
-        },
+      statsElements.forEach((el: any, index: number) => {
+        const data = STATS_DATA[index];
+        const targetVal = data.value;
+        const decimals = data.decimals;
+        
+        const obj = { val: 0 };
+        
+        gsap.to(obj, {
+          val: targetVal,
+          duration: 1.8,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: el,
+            start: "top 90%",
+            toggleActions: "play none none none"
+          },
+          onUpdate: () => {
+            el.innerText = (data.prefix || "") + obj.val.toFixed(decimals) + data.suffix;
+          },
+        });
       });
-    });
+    }, barRef);
+
+    return () => ctx.revert();
   }, []);
+
 
   return (
     <section

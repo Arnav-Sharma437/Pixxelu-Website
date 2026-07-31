@@ -61,3 +61,25 @@ body {
   scrollbar-width: none;
 }
 
+/* Custom underline reveal utility */
+.underline-reveal {
+  position: relative;
+}
+.underline-reveal::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 1.5px;
+  bottom: -2px;
+  left: 0;
+  background-color: var(--color-orange);
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+.underline-reveal:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+

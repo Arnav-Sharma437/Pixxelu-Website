@@ -50,25 +50,31 @@ export default function FeaturedOutcomes() {
 
     if (prefersReducedMotion) return;
 
-    const rows = containerRef.current?.querySelectorAll(".case-row");
-    if (!rows) return;
+    const ctx = gsap.context(() => {
+      const rows = containerRef.current?.querySelectorAll(".case-row");
+      if (!rows || !rows.length) return;
 
-    gsap.fromTo(
-      rows,
-      { opacity: 0, y: 40 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.75,
-        stagger: 0.18,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top 75%",
-        },
-      }
-    );
+      gsap.fromTo(
+        rows,
+        { opacity: 0, y: 40 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.75,
+          stagger: 0.18,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top 75%",
+            toggleActions: "play none none none"
+          },
+        }
+      );
+    }, containerRef);
+
+    return () => ctx.revert();
   }, []);
+
 
   return (
     <section

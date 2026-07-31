@@ -61,35 +61,32 @@ export default function Testimonials() {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (prefersReducedMotion) return;
 
-    const cards = gsap.utils.toArray('.testimonial-card');
-    cards.forEach((card: any, i: number) => {
-      ScrollTrigger.create({
-        trigger: card,
-        start: 'top top+=' + (100 + i * 20), // slight stacked offset per card
-        pin: true,
-        pinSpacing: false, // this is what makes them STACK instead of pushing content down
-        end: () => '+=' + (cards.length - i) * 400,
+    const ctx = gsap.context(() => {
+      const cards = gsap.utils.toArray('.testimonial-card');
+      cards.forEach((card: any, i: number) => {
+        ScrollTrigger.create({
+          trigger: card,
+          start: 'top top+=' + (100 + i * 20), // slight stacked offset per card
+          pin: true,
+          pinSpacing: false, // this is what makes them STACK instead of pushing content down
+          end: () => '+=' + (cards.length - i) * 400,
+        });
+        // optional: subtly scale down + darken cards as they get buried under new ones
+        gsap.to(card, {
+          scale: 0.96 - i * 0.01,
+          scrollTrigger: {
+            trigger: cards[i + 1] || card,
+            start: 'top top',
+            end: 'bottom top',
+            scrub: true,
+          }
+        });
       });
-      // optional: subtly scale down + darken cards as they get buried under new ones
-      gsap.to(card, {
-        scale: 0.96 - i * 0.01,
-        scrollTrigger: {
-          trigger: cards[i + 1] || card,
-          start: 'top top',
-          end: 'bottom top',
-          scrub: true,
-        }
-      });
-    });
+    }, stackRef);
 
-    return () => {
-      ScrollTrigger.getAll().forEach(t => {
-        if (t.vars.id !== "matrixTrigger") {
-          t.kill();
-        }
-      });
-    };
+    return () => ctx.revert();
   }, []);
+
 
   return (
     <section className="testimonials-stack bg-white text-black py-24 md:py-32 border-b border-grey-800/10" ref={stackRef}>

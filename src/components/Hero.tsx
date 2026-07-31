@@ -249,36 +249,8 @@ export default function Hero() {
           </div>
         </div>
       </div>
-
-      {/* Bottom Stats Strip (White section with hairline vertical dividers) */}
-      <div className="bg-white text-black mt-20 border-t border-grey-800/10">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 py-10 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-0">
-          <div className="flex flex-col items-center md:items-start md:px-8 py-2 justify-center">
-            <span className="text-3xl font-bold font-display tracking-tight text-black">
-              50+
-            </span>
-            <span className="text-[10px] font-bold tracking-[0.15em] uppercase text-grey-500 mt-1">
-              Custom Sites Launched
-            </span>
-          </div>
-          <div className="flex flex-col items-center md:items-start md:px-8 py-2 justify-center border-y md:border-y-0 md:border-x border-grey-800/10">
-            <span className="text-3xl font-bold font-display tracking-tight text-black">
-              4 Platforms
-            </span>
-            <span className="text-[10px] font-bold tracking-[0.15em] uppercase text-grey-500 mt-1">
-              Mastered & Custom-Built
-            </span>
-          </div>
-          <div className="flex flex-col items-center md:items-start md:px-8 py-2 justify-center">
-            <span className="text-3xl font-bold font-display tracking-tight text-black">
-              5.0 Avg
-            </span>
-            <span className="text-[10px] font-bold tracking-[0.15em] uppercase text-grey-500 mt-1">
-              Client Satisfaction Rating
-            </span>
-          </div>
-        </div>
-      </div>
     </section>
   );
 }
+
+

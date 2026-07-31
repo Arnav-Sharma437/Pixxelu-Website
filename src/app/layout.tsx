@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Inter } from "next/font/google";
+import GSAPInit from "@/components/GSAPInit";
 import "./globals.css";
 
 const displayFont = Plus_Jakarta_Sans({
@@ -30,9 +31,11 @@ export default function RootLayout({
       className={`${displayFont.variable} ${bodyFont.variable} h-full antialiased scroll-smooth`}
     >
       <body className="min-h-full bg-white text-black font-body select-none">
+        <GSAPInit />
         {children}
       </body>
     </html>
   );
 }
+
 

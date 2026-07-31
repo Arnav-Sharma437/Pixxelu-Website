@@ -115,48 +115,50 @@ export default function PlatformDeepDive() {
       return; // Skip GSAP ScrollTrigger pinning and let it scroll naturally
     }
 
-    const panels = gsap.utils.toArray(".panel");
-    const leftLinks = leftColRef.current?.querySelectorAll(".platform-nav-btn");
+    const ctx = gsap.context(() => {
+      const panels = gsap.utils.toArray(".panel");
+      const leftLinks = leftColRef.current?.querySelectorAll(".platform-nav-btn");
 
-    if (!sectionRef.current || !panels.length || !leftLinks) return;
+      if (!sectionRef.current || !panels.length || !leftLinks) return;
 
-    // Set initial active state for nav links
-    gsap.set(leftLinks, { color: "#6B6B6B", borderLeftColor: "transparent" });
-    gsap.set(leftLinks[0], { color: "#FFFFFF", borderLeftColor: "#E85C2B" });
+      // Set initial active state for links
+      gsap.set(leftLinks, { color: "#6B6B6B", borderLeftColor: "transparent" });
+      gsap.set(leftLinks[0], { color: "#FFFFFF", borderLeftColor: "#E85C2B" });
 
-    // 1. Literal GSAP setup as requested
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        id: "matrixTrigger",
-        pin: true,
-        scrub: 1,
-        start: "top top",
-        end: "+=4000",
-        onUpdate: (self) => {
-          const progress = self.progress;
-          let activeIndex = 0;
-          if (progress > 0.83) activeIndex = 3;
-          else if (progress > 0.5) activeIndex = 2;
-          else if (progress > 0.17) activeIndex = 1;
-          
-          setActivePlatform(PLATFORM_LIST[activeIndex].key);
+      // 1. Literal GSAP setup as requested
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          id: "matrixTrigger",
+          pin: true,
+          scrub: 1,
+          start: "top top",
+          end: "+=4000",
+          onUpdate: (self) => {
+            const progress = self.progress;
+            let activeIndex = 0;
+            if (progress > 0.83) activeIndex = 3;
+            else if (progress > 0.5) activeIndex = 2;
+            else if (progress > 0.17) activeIndex = 1;
+            
+            setActivePlatform(PLATFORM_LIST[activeIndex].key);
+          },
         },
-      },
-    });
+      });
 
-    panels.forEach((panel: any, i: number) => {
-      if (i === 0) return; // first panel already visible
-      const prevPanel = panels[i - 1] as any;
-      const label = `seg${i}`;
-      
-      tl.to(prevPanel, { autoAlpha: 0, duration: 0.3 }, label)
-        .to(panel, { autoAlpha: 1, duration: 0.3 }, label)
-        .to(leftLinks[i - 1], { color: "#6B6B6B", borderLeftColor: "transparent", duration: 0.2 }, label)
-        .to(leftLinks[i], { color: "#FFFFFF", borderLeftColor: "#E85C2B", duration: 0.2 }, label);
-    });
+      panels.forEach((panel: any, i: number) => {
+        if (i === 0) return; // first panel already visible
+        const prevPanel = panels[i - 1] as any;
+        const label = `seg${i}`;
+        
+        tl.to(prevPanel, { autoAlpha: 0, duration: 0.3 }, label)
+          .to(panel, { autoAlpha: 1, duration: 0.3 }, label)
+          .to(leftLinks[i - 1], { color: "#6B6B6B", borderLeftColor: "transparent", duration: 0.2 }, label)
+          .to(leftLinks[i], { color: "#FFFFFF", borderLeftColor: "#E85C2B", duration: 0.2 }, label);
+      });
+    }, sectionRef);
 
-    return () => tl.scrollTrigger?.kill();
+    return () => ctx.revert();
   }, []);
 
   return (
