@@ -44,7 +44,7 @@ export default function Hero() {
       tl.fromTo(
         ".hero-bg-asset",
         { opacity: 0, scale: 0.97 },
-        { opacity: 0.25, scale: 1, duration: 1.2, ease: "power2.out" },
+        { opacity: 1, scale: 1, duration: 1.2, ease: "power2.out" },
         "-=0.7"
       );
     }, containerRef);
@@ -57,25 +57,79 @@ export default function Hero() {
       ref={containerRef}
       className="relative bg-[#0c0c0c] text-white min-h-screen flex items-center justify-between overflow-hidden pt-36 pb-24 md:pb-36"
     >
-      
-      {/* Background circular outline vector (hero-bg-asset) */}
-      <div className="hero-bg-asset absolute right-[-10%] top-1/2 -translate-y-1/2 w-[70vw] h-[70vw] max-w-[850px] max-h-[850px] pointer-events-none select-none z-0 opacity-15">
-        <svg className="w-full h-full text-white" viewBox="0 0 100 100">
-          <circle cx="50" cy="50" r="49.5" stroke="currentColor" strokeWidth="0.1" fill="none" />
+      {/* Horizontal outlined watermark behind text (opacity: 3%) (hero-bg-asset) */}
+      <div className="hero-bg-asset absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center pointer-events-none select-none z-0 opacity-5">
+        <span
+          className="text-[14vw] font-black font-display uppercase tracking-[0.15em] block leading-none"
+          style={{
+            WebkitTextStroke: "1.5px rgba(255, 255, 255, 0.25)",
+            color: "transparent",
+          }}
+        >
+          pixxelu
+        </span>
+      </div>
+
+      {/* Right Side Generative Orbital Network (Continuous Animation) (hero-bg-asset) */}
+      <div className="hero-bg-asset absolute right-[-10%] top-1/2 -translate-y-1/2 w-[70vw] h-[70vw] max-w-[800px] max-h-[800px] pointer-events-none select-none z-0 flex items-center justify-center">
+        
+        {/* CSS Keyframes for opposite rotations */}
+        <style jsx>{`
+          @keyframes rot-clockwise {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+          }
+          @keyframes rot-counter {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(-360deg); }
+          }
+          @keyframes pulse-slow {
+            0%, 100% { opacity: 0.12; }
+            50% { opacity: 0.28; }
+          }
+          .animate-clockwise {
+            animation: rot-clockwise 55s linear infinite;
+            transform-origin: center;
+          }
+          .animate-counter {
+            animation: rot-counter 38s linear infinite;
+            transform-origin: center;
+          }
+          .animate-pulse-slow {
+            animation: pulse-slow 8s ease-in-out infinite;
+          }
+        `}</style>
+
+        <svg className="w-full h-full text-white/10" viewBox="0 0 100 100">
+          {/* Static outer boundaries */}
+          <circle cx="50" cy="50" r="49" stroke="currentColor" strokeWidth="0.08" fill="none" />
+          
+          {/* Clockwise rotating ring */}
+          <g className="animate-clockwise">
+            <circle cx="50" cy="50" r="40" stroke="currentColor" strokeWidth="0.12" strokeDasharray="1, 8" fill="none" />
+            <circle cx="50" cy="50" r="30" stroke="currentColor" strokeWidth="0.08" fill="none" />
+            {/* Crosshairs */}
+            <line x1="50" y1="10" x2="50" y2="90" stroke="currentColor" strokeWidth="0.05" strokeDasharray="2, 2" />
+            <line x1="10" y1="50" x2="90" y2="50" stroke="currentColor" strokeWidth="0.05" strokeDasharray="2, 2" />
+            {/* Small nodes */}
+            <circle cx="50" cy="10" r="0.8" fill="#E85C2B" />
+            <circle cx="50" cy="90" r="0.8" fill="currentColor" />
+          </g>
+
+          {/* Counter-clockwise rotating ring */}
+          <g className="animate-counter">
+            <circle cx="50" cy="50" r="35" stroke="currentColor" strokeWidth="0.1" strokeDasharray="10, 15" fill="none" />
+            <circle cx="50" cy="50" r="22" stroke="currentColor" strokeWidth="0.08" fill="none" strokeDasharray="2, 4" />
+            <circle cx="15" cy="50" r="0.8" fill="currentColor" />
+            <circle cx="85" cy="50" r="0.8" fill="#E85C2B" />
+          </g>
+
+          {/* Core glow pulse */}
+          <circle cx="50" cy="50" r="12" className="animate-pulse-slow text-orange/10" fill="currentColor" />
+          <circle cx="50" cy="50" r="6" stroke="currentColor" strokeWidth="0.15" fill="none" />
         </svg>
-      </div>
 
-      {/* Massive vertical stacked letters watermark running down the right-center (hero-bg-asset) */}
-      <div className="hero-bg-asset absolute right-[15%] top-1/2 -translate-y-1/2 flex flex-col items-center justify-center space-y-2 md:space-y-3 text-white font-black text-[6.5vw] font-display uppercase select-none pointer-events-none leading-none z-0 opacity-10">
-        <span>p</span>
-        <span>i</span>
-        <span>x</span>
-        <span>x</span>
-        <span>e</span>
-        <span>l</span>
-        <span>u</span>
       </div>
-
 
       {/* Micro-coordinate dots (hero-bg-asset) */}
       <div className="hero-bg-asset absolute top-[28%] right-[42%] text-white pointer-events-none opacity-20 z-0">
