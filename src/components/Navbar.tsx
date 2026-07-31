@@ -22,8 +22,21 @@ export function PixxeluLogo({ isDarkNav }: { isDarkNav?: boolean }) {
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const overlayRef = useRef<HTMLDivElement>(null);
   const menuLinksRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 40) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // Synchronize full screen overlay animations using GSAP
   useEffect(() => {
@@ -65,10 +78,15 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="fixed top-0 left-0 w-full z-40 bg-transparent transition-all duration-300">
-        <div className="max-w-7xl mx-auto px-6 md:px-12 py-6 flex items-center justify-between">
+      <header className={`fixed top-0 left-0 w-full z-40 transition-all duration-300 ${
+        isScrolled 
+          ? "bg-[#0c0c0c]/85 backdrop-blur-md border-b border-white/5 py-4" 
+          : "bg-transparent py-6"
+      }`}>
+        <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
           {/* Left Side Wordmark Logo */}
           <PixxeluLogo isDarkNav={true} />
+
 
           {/* Right Side Controls */}
           <div className="flex items-center space-x-8">

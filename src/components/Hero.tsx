@@ -66,7 +66,7 @@ export default function Hero() {
       </div>
 
       {/* Massive vertical stacked letters watermark running down the right-center (hero-bg-asset) */}
-      <div className="hero-bg-asset absolute right-[15%] top-1/2 -translate-y-1/2 flex flex-col items-center justify-center space-y-4 text-white font-black text-[9vw] font-display uppercase select-none pointer-events-none leading-none z-0 opacity-10">
+      <div className="hero-bg-asset absolute right-[15%] top-1/2 -translate-y-1/2 flex flex-col items-center justify-center space-y-2 md:space-y-3 text-white font-black text-[6.5vw] font-display uppercase select-none pointer-events-none leading-none z-0 opacity-10">
         <span>p</span>
         <span>i</span>
         <span>x</span>
@@ -75,6 +75,7 @@ export default function Hero() {
         <span>l</span>
         <span>u</span>
       </div>
+
 
       {/* Micro-coordinate dots (hero-bg-asset) */}
       <div className="hero-bg-asset absolute top-[28%] right-[42%] text-white pointer-events-none opacity-20 z-0">
