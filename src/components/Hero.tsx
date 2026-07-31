@@ -57,18 +57,19 @@ export default function Hero() {
       ref={containerRef}
       className="relative bg-[#0c0c0c] text-white min-h-screen flex items-center justify-between overflow-hidden pt-36 pb-24 md:pb-36"
     >
-      {/* Horizontal outlined watermark behind text (opacity: 3%) (hero-bg-asset) */}
-      <div className="hero-bg-asset absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center pointer-events-none select-none z-0 opacity-5">
+      {/* Horizontal outlined watermark behind text (opacity: 2%) (hero-bg-asset) */}
+      <div className="hero-bg-asset absolute left-1/2 bottom-[12%] -translate-x-1/2 w-full text-center pointer-events-none select-none z-0 opacity-[0.02]">
         <span
           className="text-[14vw] font-black font-display uppercase tracking-[0.15em] block leading-none"
           style={{
-            WebkitTextStroke: "1.5px rgba(255, 255, 255, 0.25)",
+            WebkitTextStroke: "1px rgba(255, 255, 255, 0.2)",
             color: "transparent",
           }}
         >
           pixxelu
         </span>
       </div>
+
 
       {/* Right Side Generative Orbital Network (Continuous Animation) (hero-bg-asset) */}
       <div className="hero-bg-asset absolute right-[-10%] top-1/2 -translate-y-1/2 w-[70vw] h-[70vw] max-w-[800px] max-h-[800px] pointer-events-none select-none z-0 flex items-center justify-center">
