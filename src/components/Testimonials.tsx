@@ -55,6 +55,7 @@ export default function Testimonials() {
     const handleScroll = () => {
       const cards = container.querySelectorAll(".testimonial-card");
       const containerRect = container.getBoundingClientRect();
+      // Calculate active center focal point
       const containerCenter = containerRect.left + containerRect.width / 2;
 
       cards.forEach((card: any) => {
@@ -63,7 +64,7 @@ export default function Testimonials() {
         const distance = Math.abs(containerCenter - cardCenter);
 
         // Adjust scale and opacity based on distance from center
-        const maxDistance = containerRect.width * 0.8;
+        const maxDistance = containerRect.width * 0.7;
         const ratio = Math.min(distance / maxDistance, 1);
         
         const scale = 1 - ratio * 0.08; // scale from 1.0 to 0.92
@@ -74,7 +75,7 @@ export default function Testimonials() {
       });
     };
 
-    // Run once on load
+    // Run once on load to initialize scale/opacity values
     setTimeout(handleScroll, 100);
 
     container.addEventListener("scroll", handleScroll);
@@ -100,21 +101,21 @@ export default function Testimonials() {
             </h2>
           </div>
           <div className="text-xs text-grey-500 font-semibold tracking-wider uppercase hidden sm:block">
-            Swipe or scroll to navigate →
+            Scroll to navigate →
           </div>
         </div>
 
         {/* Scroll-Snap Carousel Container */}
+        {/* display: flex, overflow-x: auto, scroll-snap-type: x mandatory, gap: 24px */}
         <div
           ref={containerRef}
-          className="flex overflow-x-auto snap-x snap-mandatory no-scrollbar space-x-6 pb-8 px-[10vw] md:px-[25vw] cursor-grab active:cursor-grabbing"
-          style={{ scrollPadding: "0 25vw" }}
+          className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-8 no-scrollbar scroll-smooth px-6 md:px-12"
         >
           {TESTIMONIALS_DATA.map((item, index) => (
             <div
               key={index}
-              className="testimonial-card flex-shrink-0 w-[290px] sm:w-[380px] md:w-[450px] bg-white border border-grey-800/15 p-8 md:p-10 snap-center flex flex-col justify-between transition-all duration-300 ease-out"
-              style={{ transform: "scale(0.96)", opacity: 0.7 }}
+              className="testimonial-card flex-none w-[290px] sm:w-[380px] md:w-[450px] bg-white border border-grey-800/15 p-8 md:p-10 snap-start flex flex-col justify-between transition-colors duration-300 ease-out"
+              style={{ transform: "scale(1)", opacity: 1 }}
             >
               {/* Rating stars */}
               <div className="flex space-x-1 mb-6 text-orange">
@@ -130,7 +131,6 @@ export default function Testimonials() {
 
               {/* Author metadata */}
               <div className="flex items-center space-x-3.5 border-t border-grey-800/10 pt-6 mt-auto">
-                {/* Custom Avatar Placeholder */}
                 <div className="w-10 h-10 rounded-full bg-off-black text-white flex items-center justify-center font-bold font-display text-sm">
                   {item.author.split(" ").map(n => n[0]).join("")}
                 </div>
@@ -150,3 +150,4 @@ export default function Testimonials() {
     </section>
   );
 }
+

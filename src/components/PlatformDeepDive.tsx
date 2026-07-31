@@ -88,6 +88,28 @@ export default function PlatformDeepDive() {
   const rightColRef = useRef<HTMLDivElement>(null);
   const [activePlatform, setActivePlatform] = useState<string>("squarespace");
 
+  const handleLinkClick = (index: number, key: string) => {
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const isMobile = window.matchMedia("(max-width: 767px)").matches;
+
+    if (prefersReducedMotion || isMobile) {
+      const element = document.getElementById(`section-${key}`);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+      return;
+    }
+
+    const trigger = ScrollTrigger.getById("matrixTrigger");
+    if (trigger) {
+      const start = trigger.start;
+      const end = trigger.end;
+      // Calculate target scroll based on active segments
+      const targetScroll = start + (end - start) * (index / 3);
+      window.scrollTo({ top: targetScroll + 5, behavior: "smooth" });
+    }
+  };
+
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const isMobile = window.matchMedia("(max-width: 767px)").matches;
@@ -103,48 +125,54 @@ export default function PlatformDeepDive() {
     if (!container || !leftLinks || !rightPanels) return;
 
     // Set initial states for right panels (hide panels 1, 2, 3)
-    gsap.set(rightPanels, { opacity: 0, y: 30, pointerEvents: "none" });
-    gsap.set(rightPanels[0], { opacity: 1, y: 0, pointerEvents: "auto" });
+    gsap.set(rightPanels, { autoAlpha: 0, zIndex: 1, y: 15, pointerEvents: "none" });
+    gsap.set(rightPanels[0], { autoAlpha: 1, zIndex: 2, y: 0, pointerEvents: "auto" });
+
+    // Set initial states for left links
+    gsap.set(leftLinks, { color: "#6B6B6B", borderLeftColor: "transparent" });
+    gsap.set(leftLinks[0], { color: "#FFFFFF", borderLeftColor: "#E85C2B" });
 
     // Create pinning scrolltrigger timeline
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: container,
+        id: "matrixTrigger",
         start: "top top",
-        end: "+=300%", // 3 additional scrolls worth of distance
+        end: "+=3000", // 3000px scroll distance
         pin: true,
-        scrub: true,
+        scrub: 1, // Smooth scrub tracking
         anticipatePin: 1,
         onUpdate: (self) => {
-          // Dynamically compute active index for non-GSAP states if needed
           const progress = self.progress;
           let activeIndex = 0;
-          if (progress > 0.85) activeIndex = 3;
-          else if (progress > 0.55) activeIndex = 2;
-          else if (progress > 0.22) activeIndex = 1;
+          if (progress > 0.83) activeIndex = 3;
+          else if (progress > 0.5) activeIndex = 2;
+          else if (progress > 0.17) activeIndex = 1;
           
           setActivePlatform(PLATFORM_LIST[activeIndex].key);
         },
       },
     });
 
-    // Segment 1 -> 2 (Squarespace -> Wix)
-    tl.to(rightPanels[0], { opacity: 0, y: -30, duration: 0.8, pointerEvents: "none" })
-      .to(rightPanels[1], { opacity: 1, y: 0, duration: 0.8, pointerEvents: "auto" }, "<")
-      .to(leftLinks[0], { color: "#6B6B6B", borderLeftColor: "transparent", duration: 0.4 }, "<")
-      .to(leftLinks[1], { color: "#FFFFFF", borderLeftColor: "#E85C2B", duration: 0.4 }, "<");
+    // Segment 1: Squarespace -> Wix
+    tl.to(rightPanels[0], { autoAlpha: 0, zIndex: 1, y: -15, duration: 1 }, "seg1")
+      .to(rightPanels[1], { autoAlpha: 1, zIndex: 2, y: 0, duration: 1 }, "seg1")
+      .to(leftLinks[0], { color: "#6B6B6B", borderLeftColor: "transparent", duration: 0.6 }, "seg1")
+      .to(leftLinks[1], { color: "#FFFFFF", borderLeftColor: "#E85C2B", duration: 0.6 }, "seg1")
+      .to({}, { duration: 0.5 }) // hold frame
 
-    // Segment 2 -> 3 (Wix -> Shopify)
-    tl.to(rightPanels[1], { opacity: 0, y: -30, duration: 0.8, pointerEvents: "none" })
-      .to(rightPanels[2], { opacity: 1, y: 0, duration: 0.8, pointerEvents: "auto" }, "<")
-      .to(leftLinks[1], { color: "#6B6B6B", borderLeftColor: "transparent", duration: 0.4 }, "<")
-      .to(leftLinks[2], { color: "#FFFFFF", borderLeftColor: "#E85C2B", duration: 0.4 }, "<");
+      // Segment 2: Wix -> Shopify
+      .to(rightPanels[1], { autoAlpha: 0, zIndex: 1, y: -15, duration: 1 }, "seg2")
+      .to(rightPanels[2], { autoAlpha: 1, zIndex: 2, y: 0, duration: 1 }, "seg2")
+      .to(leftLinks[1], { color: "#6B6B6B", borderLeftColor: "transparent", duration: 0.6 }, "seg2")
+      .to(leftLinks[2], { color: "#FFFFFF", borderLeftColor: "#E85C2B", duration: 0.6 }, "seg2")
+      .to({}, { duration: 0.5 }) // hold frame
 
-    // Segment 3 -> 4 (Shopify -> WordPress)
-    tl.to(rightPanels[2], { opacity: 0, y: -30, duration: 0.8, pointerEvents: "none" })
-      .to(rightPanels[3], { opacity: 1, y: 0, duration: 0.8, pointerEvents: "auto" }, "<")
-      .to(leftLinks[2], { color: "#6B6B6B", borderLeftColor: "transparent", duration: 0.4 }, "<")
-      .to(leftLinks[3], { color: "#FFFFFF", borderLeftColor: "#E85C2B", duration: 0.4 }, "<");
+      // Segment 3: Shopify -> WordPress
+      .to(rightPanels[2], { autoAlpha: 0, zIndex: 1, y: -15, duration: 1 }, "seg3")
+      .to(rightPanels[3], { autoAlpha: 1, zIndex: 2, y: 0, duration: 1 }, "seg3")
+      .to(leftLinks[2], { color: "#6B6B6B", borderLeftColor: "transparent", duration: 0.6 }, "seg3")
+      .to(leftLinks[3], { color: "#FFFFFF", borderLeftColor: "#E85C2B", duration: 0.6 }, "seg3");
 
     return () => {
       ScrollTrigger.getAll().forEach((t) => t.kill());
@@ -178,13 +206,7 @@ export default function PlatformDeepDive() {
                     ? "text-white border-orange"
                     : "text-grey-500 border-transparent hover:text-white"
                 }`}
-                onClick={() => {
-                  // Fallback scrolling behavior if not pinned / mobile
-                  const element = document.getElementById(`section-${platform.key}`);
-                  if (element) {
-                    element.scrollIntoView({ behavior: "smooth" });
-                  }
-                }}
+                onClick={() => handleLinkClick(index, platform.key)}
               >
                 {platform.label}
               </button>

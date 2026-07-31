@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { ChevronDown, ArrowRight, Menu, X } from "lucide-react";
 
@@ -82,6 +82,34 @@ export default function Navbar() {
   const [hoveredPlatform, setHoveredPlatform] = useState<keyof typeof PLATFORMS_DATA>("squarespace");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const openMegaMenu = () => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
+    setIsMegaMenuOpen(true);
+  };
+
+  const closeMegaMenu = () => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+    }
+    closeTimeoutRef.current = setTimeout(() => {
+      setIsMegaMenuOpen(false);
+    }, 180);
+  };
+
+  // Clean up timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (closeTimeoutRef.current) {
+        clearTimeout(closeTimeoutRef.current);
+      }
+    };
+  }, []);
+
   // Monitor scroll height
   useEffect(() => {
     const handleScroll = () => {
@@ -120,8 +148,8 @@ export default function Navbar() {
           {/* Platforms trigger */}
           <div
             className="relative"
-            onMouseEnter={() => setIsMegaMenuOpen(true)}
-            onMouseLeave={() => setIsMegaMenuOpen(false)}
+            onMouseEnter={openMegaMenu}
+            onMouseLeave={closeMegaMenu}
           >
             <button
               onClick={() => setIsMegaMenuOpen(!isMegaMenuOpen)}
@@ -200,8 +228,8 @@ export default function Navbar() {
             : "opacity-0 scale-y-95 pointer-events-none invisible"
         }`}
         style={{ top: "100%" }}
-        onMouseEnter={() => setIsMegaMenuOpen(true)}
-        onMouseLeave={() => setIsMegaMenuOpen(false)}
+        onMouseEnter={openMegaMenu}
+        onMouseLeave={closeMegaMenu}
       >
         <div className="max-w-7xl mx-auto px-12 py-10 grid grid-cols-[250px_1fr] gap-12">
           {/* Left Column - Platform Stack */}
