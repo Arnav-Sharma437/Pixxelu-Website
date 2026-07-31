@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { gsap } from "gsap";
 
 export default function Hero() {
@@ -191,17 +190,19 @@ export default function Hero() {
             </svg>
           </div>
 
-          {/* Floating Main Hero Graphic Image Card */}
+          {/* Floating Main Hero Video Card */}
           <div className="hero-bg-asset relative w-full max-w-[500px] aspect-[4/3] rounded-lg overflow-hidden border border-white/10 shadow-2xl z-10 animate-[float-ambient_6s_infinite_ease-in-out]">
-            <Image
-              src="/hero-sketch.jpg"
-              alt="Pixxelu Web Design Sketch Illustration"
-              fill
-              sizes="500px"
-              className="object-cover opacity-95 hover:opacity-100 transition-opacity duration-300"
-              priority
+            <video
+              src="/videos/banner-pixxel.mp4"
+              poster="/hero-sketch.jpg"
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="w-full h-full object-cover opacity-95 hover:opacity-100 transition-opacity duration-300"
             />
           </div>
+
 
 
 
