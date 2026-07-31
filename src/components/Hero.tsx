@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { gsap } from "gsap";
 
 export default function Hero() {
@@ -190,61 +191,18 @@ export default function Hero() {
             </svg>
           </div>
 
-          {/* Floating Glassmorphic Card 1 (Speed Dial - top right) */}
-          <div
-            className="hero-bg-asset absolute z-10"
-            style={{
-              transform: "translate(40px, -70px) rotate(4deg)"
-            }}
-          >
-            <div className="animate-[float-ambient_6s_infinite_ease-in-out] w-[170px] h-[130px] bg-white/[0.02] backdrop-blur-md border border-white/10 p-3.5 flex flex-col justify-between shadow-2xl rounded-lg">
-              <div className="flex justify-between items-center border-b border-white/5 pb-1.5">
-                <span className="text-[7px] font-bold text-grey-800 tracking-wider uppercase">Lighthouse</span>
-                <span className="text-[7px] font-bold text-green-500 uppercase">Passed</span>
-              </div>
-              <div className="flex items-center space-x-3 py-2">
-                <div className="relative w-9 h-9 flex items-center justify-center shrink-0">
-                  <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
-                    <circle cx="18" cy="18" r="16" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="2.5" />
-                    <circle cx="18" cy="18" r="16" fill="none" stroke="#22c55e" strokeWidth="2.5" strokeDasharray="99, 100" />
-                  </svg>
-                  <span className="absolute text-[9px] font-black text-green-500 font-mono">99</span>
-                </div>
-                <div className="flex-1 space-y-1">
-                  <div className="h-1 bg-white/20 w-4/5 rounded"></div>
-                  <div className="h-1 bg-white/10 w-2/3 rounded"></div>
-                </div>
-              </div>
-              <div className="text-[6px] text-grey-500 uppercase tracking-widest">
-                Blistering Page Speeds
-              </div>
-            </div>
+          {/* Floating Main Hero Graphic Image Card */}
+          <div className="hero-bg-asset relative w-full max-w-[360px] aspect-[4/3] rounded-lg overflow-hidden border border-white/10 shadow-2xl z-10 animate-[float-ambient_6s_infinite_ease-in-out]">
+            <Image
+              src="/hero-sketch.jpg"
+              alt="Pixxelu Web Design Sketch Illustration"
+              fill
+              sizes="360px"
+              className="object-cover opacity-95 hover:opacity-100 transition-opacity duration-300"
+              priority
+            />
           </div>
 
-          {/* Floating Glassmorphic Card 2 (Conversion Funnel - bottom left) */}
-          <div
-            className="hero-bg-asset absolute z-10"
-            style={{
-              transform: "translate(-80px, 80px) rotate(-4deg)"
-            }}
-          >
-            <div className="animate-[float-ambient_7s_infinite_ease-in-out_1.5s] w-[180px] h-[130px] bg-white/[0.02] backdrop-blur-md border border-white/10 p-3.5 flex flex-col justify-between shadow-2xl rounded-lg">
-              <div className="flex justify-between items-center border-b border-white/5 pb-1.5">
-                <span className="text-[7px] font-bold text-grey-800 tracking-wider uppercase">Conversion</span>
-                <span className="text-[7px] font-bold text-orange uppercase">+2.4x</span>
-              </div>
-              <div className="h-10 flex items-end justify-between px-1.5 py-1 bg-white/5 border border-white/5 mt-1.5">
-                <div className="w-2.5 bg-orange/40 h-[30%]"></div>
-                <div className="w-2.5 bg-orange/50 h-[55%]"></div>
-                <div className="w-2.5 bg-orange/60 h-[45%]"></div>
-                <div className="w-2.5 bg-orange h-[85%]"></div>
-                <div className="w-2.5 bg-orange/70 h-[65%]"></div>
-              </div>
-              <div className="text-[6px] text-grey-500 uppercase tracking-widest mt-1.5">
-                Optimized Checkout Flow
-              </div>
-            </div>
-          </div>
 
         </div>
 
