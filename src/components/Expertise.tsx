@@ -1,0 +1,88 @@
+"use client";
+
+import { Shuffle, Code2, Gauge, TrendingUp, Cpu, ShieldCheck } from "lucide-react";
+
+interface ExpertiseItem {
+  icon: React.ComponentType<{ className?: string }>;
+  title: string;
+  desc: string;
+}
+
+const EXPERTISE_DATA: ExpertiseItem[] = [
+  {
+    icon: Shuffle,
+    title: "Platform Migration",
+    desc: "Seamless, secure transition of databases, asset libraries, design layouts, and URL structures from legacy CMS hosts without losing search index positioning.",
+  },
+  {
+    icon: Code2,
+    title: "Custom Development",
+    desc: "Liquid, Velo, Gutenberg custom block creation, API connections, and clean CSS codebases written for specific features beyond default platform setups.",
+  },
+  {
+    icon: Gauge,
+    title: "SEO & Core Web Vitals",
+    desc: "Speed tuning, content delivery configurations, schema structures, structured data injection, and search console integrations to scale search impressions.",
+  },
+  {
+    icon: TrendingUp,
+    title: "Conversion Optimization",
+    desc: "A/B checkout tuning, analytical funnel tracing, friction minimization, user flow design, and page layout updates to maximize revenue.",
+  },
+  {
+    icon: Cpu,
+    title: "Systems Integration",
+    desc: "Syncing front-end page layouts directly with payment gateways, enterprise ERPs, booking systems, CRMs, and email marketing databases.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Support & Maintenance",
+    desc: "Continuous technical maintenance, security monitoring, plugin updates, bug testing, asset updates, and regular feature updates.",
+  },
+];
+
+export default function Expertise() {
+  return (
+    <section
+      id="company"
+      className="bg-white text-black py-24 md:py-32 border-b border-grey-800/10"
+    >
+      <div className="max-w-7xl mx-auto px-6 md:px-12">
+        {/* Section Header */}
+        <div className="max-w-3xl mb-16 md:mb-20">
+          <span className="text-[10px] font-bold tracking-[0.2em] text-orange uppercase">
+            Our Areas of Expertise
+          </span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-display tracking-tight text-black mt-1.5 leading-tight">
+            Full-stack support for growth-focused teams.
+          </h2>
+        </div>
+
+        {/* Grid of Expertise Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {EXPERTISE_DATA.map((item, index) => {
+            const Icon = item.icon;
+            return (
+              <div
+                key={index}
+                className="bg-white border border-grey-800/15 p-8 flex flex-col justify-between hover:border-orange transition-all duration-300 group hover:shadow-sm"
+              >
+                <div>
+                  <div className="w-10 h-10 bg-off-black text-white flex items-center justify-center mb-6 group-hover:bg-orange group-hover:text-white transition-colors duration-300">
+                    <Icon className="w-5 h-5" />
+                  </div>
+                  <h3 className="text-lg font-bold font-display tracking-tight text-black mb-3">
+                    {item.title}
+                  </h3>
+                  <p className="text-sm text-grey-500 font-normal leading-relaxed">
+                    {item.desc}
+                  </p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
