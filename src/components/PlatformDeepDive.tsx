@@ -1,13 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { ArrowUpRight } from "lucide-react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 interface ServiceCardProps {
   title: string;
@@ -82,94 +76,19 @@ const PLATFORM_LIST = [
 ];
 
 export default function PlatformDeepDive() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const leftColRef = useRef<HTMLDivElement>(null);
   const [activePlatform, setActivePlatform] = useState<string>("squarespace");
 
-  const handleLinkClick = (index: number, key: string) => {
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const isMobile = window.matchMedia("(max-width: 767px)").matches;
-
-    if (prefersReducedMotion || isMobile) {
-      const element = document.getElementById(`section-${key}`);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
-      }
-      return;
-    }
-
-    const trigger = ScrollTrigger.getById("matrixTrigger");
-    if (trigger) {
-      const start = trigger.start;
-      const end = trigger.end;
-      const targetScroll = start + (end - start) * (index / 3);
-      window.scrollTo({ top: targetScroll + 5, behavior: "smooth" });
-    }
-  };
-
-  useEffect(() => {
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const isMobile = window.matchMedia("(max-width: 767px)").matches;
-
-    if (prefersReducedMotion || isMobile) {
-      return; // Skip GSAP ScrollTrigger pinning and let it scroll naturally
-    }
-
-    const ctx = gsap.context(() => {
-      const panels = gsap.utils.toArray(".panel");
-      const leftLinks = leftColRef.current?.querySelectorAll(".platform-nav-btn");
-
-      if (!sectionRef.current || !panels.length || !leftLinks) return;
-
-      // Set initial active state for links
-      gsap.set(leftLinks, { color: "#6B6B6B", borderLeftColor: "transparent" });
-      gsap.set(leftLinks[0], { color: "#FFFFFF", borderLeftColor: "#E85C2B" });
-
-      // 1. Literal GSAP setup as requested
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          id: "matrixTrigger",
-          pin: true,
-          scrub: 1,
-          start: "top top",
-          end: "+=4000",
-          onUpdate: (self) => {
-            const progress = self.progress;
-            let activeIndex = 0;
-            if (progress > 0.83) activeIndex = 3;
-            else if (progress > 0.5) activeIndex = 2;
-            else if (progress > 0.17) activeIndex = 1;
-            
-            setActivePlatform(PLATFORM_LIST[activeIndex].key);
-          },
-        },
-      });
-
-      panels.forEach((panel: any, i: number) => {
-        if (i === 0) return; // first panel already visible
-        const prevPanel = panels[i - 1] as any;
-        const label = `seg${i}`;
-        
-        tl.to(prevPanel, { autoAlpha: 0, duration: 0.3 }, label)
-          .to(panel, { autoAlpha: 1, duration: 0.3 }, label)
-          .to(leftLinks[i - 1], { color: "#6B6B6B", borderLeftColor: "transparent", duration: 0.2 }, label)
-          .to(leftLinks[i], { color: "#FFFFFF", borderLeftColor: "#E85C2B", duration: 0.2 }, label);
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
+  const currentPlatformData = PLATFORM_LIST.find((p) => p.key === activePlatform) || PLATFORM_LIST[0];
 
   return (
     <section
-      className="platform-matrix bg-off-black text-white relative min-h-screen flex items-center justify-center py-20 md:py-0 border-b border-grey-800/10"
-      ref={sectionRef}
+      className="platform-matrix bg-off-black text-white py-24 md:py-32 border-b border-grey-800/10"
       id="platform-dive"
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12 w-full grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 items-start">
+        
         {/* Left Column (Sticky Sidebar on Desktop) */}
-        <div className="matrix-left md:col-span-4 flex flex-col space-y-6 md:py-12 md:sticky md:top-32" ref={leftColRef}>
+        <div className="matrix-left md:col-span-4 flex flex-col space-y-6 md:sticky md:top-32">
           <div>
             <span className="text-[10px] font-bold tracking-[0.15em] uppercase text-orange">
               Signature Service
@@ -179,8 +98,9 @@ export default function PlatformDeepDive() {
             </h3>
           </div>
 
+          {/* Interactive Navigation (Click/Hover transitions active state) */}
           <div className="flex flex-col space-y-4">
-            {PLATFORM_LIST.map((platform, index) => (
+            {PLATFORM_LIST.map((platform) => (
               <button
                 key={platform.key}
                 className={`platform-nav-btn text-left text-lg md:text-xl font-bold tracking-wide transition-all uppercase pl-4 border-l-2 focus:outline-none cursor-pointer ${
@@ -188,7 +108,8 @@ export default function PlatformDeepDive() {
                     ? "text-white border-orange"
                     : "text-grey-500 border-transparent hover:text-white"
                 }`}
-                onClick={() => handleLinkClick(index, platform.key)}
+                onClick={() => setActivePlatform(platform.key)}
+                onMouseEnter={() => setActivePlatform(platform.key)}
               >
                 {platform.label}
               </button>
@@ -196,123 +117,26 @@ export default function PlatformDeepDive() {
           </div>
         </div>
 
-        {/* Right Column (Stacked absolute cards) */}
-        <div className="md:col-span-8 w-full flex items-center md:items-stretch">
-          
-          {/* Desktop Overlay Container */}
-          <div className="hidden md:block w-full h-full relative">
-            <div className="matrix-right" style={{ position: "relative", height: "500px", width: "100%" }}>
-              
-              {/* Panel 1: Squarespace */}
-              <div
-                className="panel panel-squarespace w-full flex flex-col justify-center space-y-6"
-                style={{ position: "absolute", inset: 0 }}
-              >
-                <div>
-                  <span className="text-[11px] font-bold tracking-widest text-grey-800 uppercase bg-white/5 border border-white/15 px-3 py-1">
-                    {PLATFORM_LIST[0].tagline}
-                  </span>
-                  <h4 className="text-2xl md:text-3xl font-bold font-display tracking-tight text-white mt-4 max-w-xl">
-                    {PLATFORM_LIST[0].headline}
-                  </h4>
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {PLATFORM_LIST[0].services.map((service, sIndex) => (
-                    <ServiceCard key={sIndex} title={service.title} desc={service.desc} />
-                  ))}
-                </div>
-              </div>
-
-              {/* Panel 2: Wix */}
-              <div
-                className="panel panel-wix w-full flex flex-col justify-center space-y-6"
-                style={{ position: "absolute", inset: 0, visibility: "hidden", opacity: 0 }}
-              >
-                <div>
-                  <span className="text-[11px] font-bold tracking-widest text-grey-800 uppercase bg-white/5 border border-white/15 px-3 py-1">
-                    {PLATFORM_LIST[1].tagline}
-                  </span>
-                  <h4 className="text-2xl md:text-3xl font-bold font-display tracking-tight text-white mt-4 max-w-xl">
-                    {PLATFORM_LIST[1].headline}
-                  </h4>
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {PLATFORM_LIST[1].services.map((service, sIndex) => (
-                    <ServiceCard key={sIndex} title={service.title} desc={service.desc} />
-                  ))}
-                </div>
-              </div>
-
-              {/* Panel 3: Shopify */}
-              <div
-                className="panel panel-shopify w-full flex flex-col justify-center space-y-6"
-                style={{ position: "absolute", inset: 0, visibility: "hidden", opacity: 0 }}
-              >
-                <div>
-                  <span className="text-[11px] font-bold tracking-widest text-grey-800 uppercase bg-white/5 border border-white/15 px-3 py-1">
-                    {PLATFORM_LIST[2].tagline}
-                  </span>
-                  <h4 className="text-2xl md:text-3xl font-bold font-display tracking-tight text-white mt-4 max-w-xl">
-                    {PLATFORM_LIST[2].headline}
-                  </h4>
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {PLATFORM_LIST[2].services.map((service, sIndex) => (
-                    <ServiceCard key={sIndex} title={service.title} desc={service.desc} />
-                  ))}
-                </div>
-              </div>
-
-              {/* Panel 4: WordPress */}
-              <div
-                className="panel panel-wordpress w-full flex flex-col justify-center space-y-6"
-                style={{ position: "absolute", inset: 0, visibility: "hidden", opacity: 0 }}
-              >
-                <div>
-                  <span className="text-[11px] font-bold tracking-widest text-grey-800 uppercase bg-white/5 border border-white/15 px-3 py-1">
-                    {PLATFORM_LIST[3].tagline}
-                  </span>
-                  <h4 className="text-2xl md:text-3xl font-bold font-display tracking-tight text-white mt-4 max-w-xl">
-                    {PLATFORM_LIST[3].headline}
-                  </h4>
-                </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {PLATFORM_LIST[3].services.map((service, sIndex) => (
-                    <ServiceCard key={sIndex} title={service.title} desc={service.desc} />
-                  ))}
-                </div>
-              </div>
-
+        {/* Right Column (Standard Content Grid - No Parallax/Overlaps) */}
+        <div className="md:col-span-8 w-full">
+          <div className="transition-all duration-300 ease-in-out flex flex-col space-y-6">
+            <div>
+              <span className="inline-block text-[11px] font-bold tracking-widest text-grey-800 uppercase bg-white/5 border border-white/15 px-3 py-1">
+                {currentPlatformData.tagline}
+              </span>
+              <h4 className="text-2xl md:text-3xl font-bold font-display tracking-tight text-white mt-4 max-w-xl">
+                {currentPlatformData.headline}
+              </h4>
+            </div>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {currentPlatformData.services.map((service, sIndex) => (
+                <ServiceCard key={sIndex} title={service.title} desc={service.desc} />
+              ))}
             </div>
           </div>
-
-          {/* Mobile Stacking Version */}
-          <div className="md:hidden flex flex-col space-y-16 w-full">
-            {PLATFORM_LIST.map((platform) => (
-              <div
-                key={platform.key}
-                id={`section-${platform.key}`}
-                className="flex flex-col space-y-5 pt-8 border-t border-white/10"
-              >
-                <div>
-                  <span className="text-[10px] font-bold tracking-widest text-grey-800 uppercase bg-white/5 border border-white/15 px-2.5 py-1">
-                    {platform.tagline}
-                  </span>
-                  <h4 className="text-xl font-bold font-display tracking-tight text-white mt-3">
-                    {platform.headline}
-                  </h4>
-                </div>
-
-                <div className="grid grid-cols-1 gap-4">
-                  {platform.services.map((service, sIndex) => (
-                    <ServiceCard key={sIndex} title={service.title} desc={service.desc} />
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-
         </div>
+
       </div>
     </section>
   );
