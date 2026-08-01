@@ -6,7 +6,7 @@ export default function WhyAi() {
   return (
     <section
       id="insights"
-      className="bg-transparent text-white py-12 md:py-32 relative overflow-hidden border-b border-white/5"
+      className="bg-transparent text-white py-24 md:py-32 relative overflow-hidden border-b border-white/5"
     >
       {/* Background radial accent */}
       <div className="absolute top-1/2 left-0 w-[400px] h-[400px] bg-orange/[0.015] rounded-full blur-[100px] pointer-events-none" />

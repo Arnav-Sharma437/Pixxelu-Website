@@ -82,7 +82,7 @@ export default function Expertise() {
     <section
       ref={containerRef}
       id="company"
-      className="bg-transparent text-white py-12 md:py-32 border-b border-white/5"
+      className="bg-transparent text-white py-24 md:py-32 border-b border-white/5"
     >
       {/* 1. Header */}
       <div className="max-w-7xl mx-auto px-6 md:px-12">

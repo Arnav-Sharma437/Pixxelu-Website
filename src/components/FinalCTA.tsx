@@ -44,7 +44,7 @@ export default function FinalCTA() {
     <section
       ref={containerRef}
       id="contact"
-      className="bg-transparent text-white py-12 md:py-36 relative overflow-hidden border-b border-white/5"
+      className="bg-transparent text-white py-24 md:py-36 relative overflow-hidden border-b border-white/5"
     >
       {/* Dynamic drifting background glows */}
       <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-orange/[0.015] rounded-full blur-[120px] pointer-events-none animate-[pulse_10s_infinite_ease-in-out]" />
