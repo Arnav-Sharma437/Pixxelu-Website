@@ -10,7 +10,7 @@ export default function Footer() {
     <footer className="bg-black text-white relative py-20 md:py-28 overflow-hidden border-t border-white/15 select-none bg-gradient-to-b from-[#0d0d0d] to-black">
       
       {/* Huge solid-fill horizontal wordmark in background (matching Baunfire style) */}
-      <div className="absolute bottom-[-5vw] left-0 w-full overflow-hidden select-none pointer-events-none z-0 leading-none text-center">
+      <div className="absolute bottom-[-12vw] left-0 w-full overflow-hidden select-none pointer-events-none z-0 leading-none text-center">
         <span
           className="text-[22vw] font-black font-display uppercase tracking-[0.05em] text-white/[0.035] inline-block"
         >
