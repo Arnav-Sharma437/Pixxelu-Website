@@ -26,10 +26,10 @@ export default function AmbientBackground() {
       if (!canvas || !ctx) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       
-      // Slow-drifting soft radial gradient blobs in orange tones, extremely low opacity (0.015 - 0.02)
+      // Slow-drifting soft radial gradient blobs in orange tones, extremely low opacity
       const blobs = [
-        { x: canvas.width * 0.15, y: canvas.height * 0.25, r: 500, color: 'rgba(232,92,43,0.02)' },
-        { x: canvas.width * 0.85, y: canvas.height * 0.7, r: 600, color: 'rgba(232,92,43,0.015)' },
+        { x: canvas.width * 0.15, y: canvas.height * 0.25, r: 500, color: 'rgba(232,92,43,0.05)' },
+        { x: canvas.width * 0.85, y: canvas.height * 0.7, r: 600, color: 'rgba(232,92,43,0.04)' },
       ];
 
       blobs.forEach((b, i) => {
@@ -64,9 +64,9 @@ export default function AmbientBackground() {
       style={{
         position: 'fixed',
         inset: 0,
-        zIndex: -1,
+        zIndex: 40,
         pointerEvents: 'none',
-        mixBlendMode: 'multiply',
+        mixBlendMode: 'screen',
       }}
     />
   );
