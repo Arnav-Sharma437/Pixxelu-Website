@@ -9,12 +9,12 @@ export default function Footer() {
   return (
     <footer className="bg-black text-white relative py-20 md:py-28 overflow-hidden border-t border-white/15 select-none bg-gradient-to-b from-[#0d0d0d] to-black">
       
-      {/* Huge outlines wordmark in background (high-end pattern) with slow neon pulse glow */}
-      <div className="absolute bottom-[-4vw] left-0 w-full overflow-hidden select-none pointer-events-none z-0 leading-none">
+      {/* Huge outlines wordmark in background (high-end pattern, matching hero style) */}
+      <div className="absolute bottom-[-3vw] left-0 w-full overflow-hidden select-none pointer-events-none z-0 leading-none opacity-[0.04]">
         <span
-          className="text-[20vw] font-black font-display uppercase tracking-wider text-center block animate-[text-pulse-glow_10s_infinite_ease-in-out]"
+          className="text-[20vw] font-black font-display uppercase tracking-[0.15em] text-center block"
           style={{
-            WebkitTextStroke: "1.5px rgba(255, 255, 255, 0.18)",
+            WebkitTextStroke: "1.5px rgba(255, 255, 255, 0.35)",
             color: "transparent",
           }}
         >
