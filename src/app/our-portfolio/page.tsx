@@ -181,8 +181,9 @@ function HeroSection() {
       {/* Hero Header Title (Centered/Pushed top) */}
       <div className="flex-1 flex flex-col justify-center items-center px-6 text-center relative z-20">
         <div className="overflow-hidden w-full">
-          <FadeIn as="h1" delay={0.15} y={40} className="hero-heading font-black uppercase tracking-tight leading-none whitespace-nowrap w-full text-[14vw] sm:text-[15vw] md:text-[16vw] lg:text-[17.5vw] mt-6 sm:mt-4 md:-mt-5">
-            we are pixxelu
+          <FadeIn as="h1" delay={0.15} y={40} className="hero-heading font-black uppercase tracking-tight leading-[0.95] w-full text-[9vw] sm:text-[10vw] md:text-[11vw] lg:text-[12vw] flex flex-col items-center">
+            <span className="block">we are pixxelu</span>
+            <span className="block text-[#BBCCD7] text-[6.5vw] sm:text-[7vw] md:text-[7.5vw] lg:text-[8vw] tracking-normal font-medium mt-2">digital technology</span>
           </FadeIn>
         </div>
       </div>
@@ -193,7 +194,7 @@ function HeroSection() {
           <Magnet padding={150} strength={3}>
             <div className="relative w-[280px] sm:w-[360px] md:w-[440px] lg:w-[520px] aspect-[4/5] overflow-hidden rounded-t-full shadow-2xl border border-white/5 bg-[#121212]/50 backdrop-blur-sm">
               <Image
-                src="https://shrug-person-78902957.figma.site/_components/v2/d24c01ad3a56fc65e942a1f501eb73db42d7cf9a/Rectangle_40443.81459862.png"
+                src="https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?q=80&w=800"
                 alt="Pixxelu visual backdrop"
                 fill
                 sizes="(max-width: 640px) 280px, (max-width: 768px) 360px, (max-width: 1024px) 440px, 520px"
@@ -207,8 +208,8 @@ function HeroSection() {
 
       {/* Bottom Bar Content */}
       <div className="w-full px-8 md:px-16 pb-7 sm:pb-8 md:pb-10 flex justify-between items-end z-25 relative">
-        <FadeIn delay={0.35} y={20} className="text-[#D7E2EA] font-light uppercase tracking-wide leading-snug text-[10px] sm:text-xs md:text-sm lg:text-base max-w-[160px] sm:max-w-[220px] md:max-w-[260px] text-left">
-          a digital technology agency driven by crafting striking and unforgettable websites
+        <FadeIn delay={0.35} y={20} className="text-[#D7E2EA] font-light uppercase tracking-wide leading-snug text-[10px] sm:text-xs md:text-sm lg:text-base max-w-[200px] sm:max-w-[280px] md:max-w-[360px] text-left">
+          we design, develop, and optimize high-conversion websites, seo, and digital marketing campaigns
         </FadeIn>
         
         <FadeIn delay={0.5} y={20}>
@@ -446,10 +447,10 @@ function ServiceRow({ num, title, desc, delay }: ServiceItemProps) {
 
 function ServicesSection() {
   const services = [
-    { num: "01", title: "Shopify Development", desc: "Scalable transaction systems tuned for high conversion. Custom Liquid code, app connections, ERP integrations, and checkout speed optimizations." },
-    { num: "02", title: "Squarespace Design", desc: "Design-first web presences engineered for rapid launch. Visual brand integrations, custom code extensions, subscription setup, and migration." },
-    { num: "03", title: "Wix Studio", desc: "High-speed solutions built for ultimate editor autonomy. Leveraging Velo database custom coding and advanced interactive layouts." },
-    { num: "04", title: "WordPress CMS", desc: "Custom CMS environments built for complete custom scale. Headless Next.js decoupling, Gutenberg block engineering, and query speed tuning." }
+    { num: "01", title: "Wix Studio", desc: "Next-generation website design, Velo full-stack custom database development, API connections, search engine optimization (SEO), and interactive pixel-perfect user experiences." },
+    { num: "02", title: "Squarespace", desc: "Design-first web presences engineered for rapid launch. Visual brand integrations, custom code modifications, localized SEO tuning, and automated client booking portals." },
+    { num: "03", title: "WordPress", desc: "Custom CMS engineering and backend development. Headless React decoupings, Gutenberg block codings, speed-optimized SEO structures, and dynamic marketing pipelines." },
+    { num: "04", title: "Shopify", desc: "High-conversion e-commerce development. Custom Liquid theme overrides, product schema SEO tweaks, ERP connection hooks, and optimized digital marketing conversion checkouts." }
   ];
 
   return (

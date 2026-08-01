@@ -133,10 +133,11 @@ export default function Navbar() {
             <div ref={menuLinksRef} className="md:col-span-7 flex flex-col space-y-4 md:space-y-6">
               {[
                 { label: "Home", href: "/" },
-                { label: "Platform Matrix", href: "#platform-dive" },
-                { label: "Case Studies", href: "#cases" },
-                { label: "Expertise", href: "#company" },
-                { label: "Contact", href: "#contact" },
+                { label: "Our Portfolio", href: "/our-portfolio" },
+                { label: "Platform Matrix", href: "/#platform-dive" },
+                { label: "Case Studies", href: "/#cases" },
+                { label: "Expertise", href: "/#company" },
+                { label: "Contact", href: "/#contact" },
               ].map((item, index) => (
                 <div key={index} className="overflow-hidden py-1">
                   <Link
