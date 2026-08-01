@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
+import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -80,80 +81,14 @@ const PLATFORM_LIST = [
 ];
 
 /* ─────────────────────────────────────────────────────────
-   Inline SVG Watermarks — flat white, no external assets needed
+   Watermark image paths — drop your real SVGs into public/logos/
+   with these exact filenames and they will appear automatically.
 ───────────────────────────────────────────────────────── */
-function SquarespaceWatermark() {
-  return (
-    <svg viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <path
-        d="M150 30C84.3 30 30 84.3 30 150s54.3 120 120 120 120-54.3 120-120S215.7 30 150 30zm0 210c-49.7 0-90-40.3-90-90s40.3-90 90-90 90 40.3 90 90-40.3 90-90 90z"
-        fill="white"
-      />
-      <path
-        d="M185 115l-35 35-35-35-21.2 21.2L150 192.4l56.2-56.2L185 115z"
-        fill="white"
-      />
-    </svg>
-  );
-}
-
-function WixWatermark() {
-  return (
-    <svg viewBox="0 0 300 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <text
-        x="0"
-        y="100"
-        fontFamily="'Arial Black', sans-serif"
-        fontWeight="900"
-        fontSize="120"
-        fill="white"
-        letterSpacing="-5"
-      >
-        Wix
-      </text>
-    </svg>
-  );
-}
-
-function ShopifyWatermark() {
-  return (
-    <svg viewBox="0 0 300 340" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      {/* Shopify bag icon */}
-      <path
-        d="M248.5 75.3l-3.5-.3c-.3 0-29-2.2-29-2.2s-19.2-19-21.2-21c-.7-.7-1.6-1-2.6-1.2l-11 192.8 59.3-12.8L248.5 75.3z"
-        fill="white"
-      />
-      <path
-        d="M181.8 52.3c-.3 0-.6 0-1 .1-.3-1-1-2-1.8-3C176 45.5 171 43.4 165 44c-1.2.1-2.3.4-3.4.7-1-2.7-2.6-5.1-4.8-7C151.4 32.7 142 33 136 38.6c-10.4 9.6-14.6 24-15.6 37.7l-21 6.5 3 186.6 98.6-18.5L181.8 52.3zM160 48c4-.4 7 .8 9 3.5.5.7 1 1.5 1.3 2.3l-22.7 7c1.4-9 5.4-17.2 12.4-12.8zm-15 6.7c-.5 6-1.7 12-4 17.4l-13 4c2.4-13.4 7-24 17-21.4zm-4.8 159.6c.7 8.3 5.4 15 14.7 15.8 9.8.8 18-5.3 18.8-15.3.8-9.3-5.4-17.3-14-18.7v-29c12.7 1.7 22.7 12.3 21.3 26.3-1.5 17-14.6 27.6-31.4 26.2-15.7-1.4-25.5-14-24-30 1-10.7 7.6-19 16.3-23v28.7c-1 .2-1.5 1.6-1.7 3z"
-        fill="white"
-      />
-    </svg>
-  );
-}
-
-function WordPressWatermark() {
-  return (
-    <svg viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <circle cx="150" cy="150" r="120" stroke="white" strokeWidth="14" fill="none" />
-      <circle cx="150" cy="150" r="5" fill="white" />
-      {/* W letter */}
-      <path
-        d="M72 110l26 80 20-50 20 50 26-80"
-        stroke="white"
-        strokeWidth="14"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        fill="none"
-      />
-    </svg>
-  );
-}
-
-const WATERMARKS: Record<string, React.ComponentType> = {
-  squarespace: SquarespaceWatermark,
-  wix: WixWatermark,
-  shopify: ShopifyWatermark,
-  wordpress: WordPressWatermark,
+const WATERMARK_SRCS: Record<string, string> = {
+  squarespace: "/logos/squarespace-mark-white.svg",
+  wix:         "/logos/wix-mark-white.svg",
+  shopify:     "/logos/shopify-mark-white.svg",
+  wordpress:   "/logos/wordpress-mark-white.svg",
 };
 
 /* ─────────────────────────────────────────────────────────
@@ -329,21 +264,24 @@ export default function PlatformDeepDive() {
             style={{ zIndex: 0 }}
             aria-hidden="true"
           >
-            {PLATFORM_LIST.map(({ key }) => {
-              const WatermarkSVG = WATERMARKS[key];
-              return (
-                <div
-                  key={key}
-                  ref={(el) => { watermarkRefs.current[key] = el; }}
-                  className="absolute inset-0 flex items-center justify-center"
-                  style={{ opacity: 0 }}
-                >
-                  <div className="w-[55%] max-w-[260px] select-none">
-                    <WatermarkSVG />
-                  </div>
+            {PLATFORM_LIST.map(({ key }) => (
+              <div
+                key={key}
+                ref={(el) => { watermarkRefs.current[key] = el; }}
+                className="absolute inset-0 flex items-center justify-center"
+                style={{ opacity: 0 }}
+              >
+                <div className="relative w-[55%] max-w-[260px] aspect-square select-none">
+                  <Image
+                    src={WATERMARK_SRCS[key]}
+                    alt={`${key} logo watermark`}
+                    fill
+                    className="object-contain"
+                    sizes="260px"
+                  />
                 </div>
-              );
-            })}
+              </div>
+            ))}
           </div>
 
           {/* ── Panel content (z-index above watermark) ── */}
