@@ -200,7 +200,7 @@ export default function Hero() {
               muted
               loop
               playsInline
-              className="w-full h-full object-cover opacity-95 hover:opacity-100 transition-opacity duration-300"
+              className="w-full h-full object-contain object-center opacity-95 hover:opacity-100 transition-opacity duration-300"
             />
           </div>
 
