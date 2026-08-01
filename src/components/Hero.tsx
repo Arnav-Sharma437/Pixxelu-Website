@@ -192,7 +192,7 @@ export default function Hero() {
           </div>
 
           {/* Floating Main Hero Video Card */}
-          <div className="hero-bg-asset relative w-full max-w-[500px] lg:max-w-[850px] aspect-[16/10] rounded-xl overflow-hidden border border-white/10 shadow-2xl z-10 animate-[float-ambient_6s_infinite_ease-in-out]">
+          <div className="hero-bg-asset relative w-full max-w-[800px] lg:max-w-[1000px] aspect-[16/9] rounded-xl overflow-hidden border border-white/10 shadow-2xl z-10 animate-[float-ambient_6s_infinite_ease-in-out]">
             <video
               src="/videos/banner-pixxel.mp4"
               poster="/hero-sketch.jpg"
@@ -200,7 +200,7 @@ export default function Hero() {
               muted
               loop
               playsInline
-              className="w-full h-full object-contain object-center opacity-95 hover:opacity-100 transition-opacity duration-300"
+              className="w-full h-full object-cover opacity-95 hover:opacity-100 transition-opacity duration-300"
             />
           </div>
 
