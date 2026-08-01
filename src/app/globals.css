@@ -128,7 +128,7 @@ html.lenis, html.lenis body {
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.25em;
-  -webkit-text-stroke: 1.2px rgba(0, 0, 0, 0.15);
+  -webkit-text-stroke: 1.2px rgba(255, 255, 255, 0.22);
   color: transparent;
 }
 

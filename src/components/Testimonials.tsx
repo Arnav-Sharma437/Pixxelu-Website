@@ -83,7 +83,7 @@ export default function Testimonials() {
   }, []);
 
   return (
-    <section className="testimonials-stack bg-white text-black py-24 md:py-32 border-b border-grey-800/10" ref={stackRef}>
+    <section className="testimonials-stack bg-transparent text-white py-24 md:py-32 border-b border-white/5" ref={stackRef}>
       <div className="max-w-7xl mx-auto px-6 md:px-12 flex flex-col space-y-16">
         
         {/* Section Header */}
@@ -91,7 +91,7 @@ export default function Testimonials() {
           <p className="eyebrow text-[10px] font-bold tracking-[0.2em] text-orange uppercase">
             TESTIMONIALS
           </p>
-          <h2 className="reveal-text text-3xl sm:text-4xl md:text-5xl font-bold font-display tracking-tight text-black mt-2 leading-none">
+          <h2 className="reveal-text text-3xl sm:text-4xl md:text-5xl font-bold font-display tracking-tight text-white mt-2 leading-none">
             Trusted by growth teams.
           </h2>
         </div>
@@ -101,27 +101,27 @@ export default function Testimonials() {
           {TESTIMONIALS_DATA.map((t, i) => (
             <div
               key={i}
-              className="testimonial-card w-full bg-white border border-grey-800/20 p-8 md:p-12 shadow-2xl flex flex-col justify-between"
+              className="testimonial-card w-full bg-[#121212]/95 backdrop-blur-md border border-white/10 p-8 md:p-12 shadow-2xl flex flex-col justify-between rounded-2xl"
               style={{ zIndex: i + 1 }}
             >
               <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-center w-full">
                 
                 {/* Column 1: Left Hook Question (md:col-span-3) */}
                 <div className="md:col-span-3 flex flex-col justify-start">
-                  <h3 className="text-lg md:text-xl lg:text-2xl font-bold font-display text-black leading-tight">
+                  <h3 className="text-lg md:text-xl lg:text-2xl font-bold font-display text-white leading-tight">
                     {t.hook}
                   </h3>
                 </div>
 
                 {/* Column 2: Middle Client Quote & CTA Button (md:col-span-5) */}
                 <div className="md:col-span-5 flex flex-col space-y-6">
-                  <p className="text-sm sm:text-base text-grey-500 font-normal leading-relaxed">
+                  <p className="text-sm sm:text-base text-zinc-400 font-normal leading-relaxed">
                     &ldquo;{t.quote}&rdquo;
                   </p>
                   <div>
                     <a
                       href="#contact"
-                      className="inline-flex items-center justify-center text-xs font-bold tracking-[0.1em] uppercase bg-[#ff6b00] hover:bg-[#e05e00] text-white px-6 py-3.5 transition-all duration-300 font-display"
+                      className="inline-flex items-center justify-center text-xs font-bold tracking-[0.1em] uppercase bg-[#ff6b00] hover:bg-[#e05e00] text-white px-6 py-3.5 rounded-lg transition-all duration-300 font-display"
                     >
                       <span>REDESIGN MY WEBSITE</span>
                       <ArrowRight className="w-4 h-4 ml-2" />
@@ -131,7 +131,7 @@ export default function Testimonials() {
 
                 {/* Column 3: Right Client Portrait Mockup (md:col-span-4) */}
                 <div className="md:col-span-4 flex justify-center md:justify-end">
-                  <div className="relative w-full max-w-[240px] aspect-[3/4] rounded-lg overflow-hidden border border-grey-800/10 shadow-lg group cursor-pointer">
+                  <div className="relative w-full max-w-[240px] aspect-[3/4] rounded-lg overflow-hidden border border-white/10 shadow-lg group cursor-pointer">
                     <Image
                       src={t.avatar}
                       alt={t.author}
@@ -153,7 +153,7 @@ export default function Testimonials() {
                     </div>
 
                     {/* Bottom right semi-transparent label */}
-                    <div className="absolute bottom-4 right-4 bg-orange text-white text-[9px] font-bold tracking-widest uppercase px-3 py-1.5">
+                    <div className="absolute bottom-4 right-4 bg-orange text-white text-[9px] font-bold tracking-widest uppercase px-3 py-1.5 rounded">
                       {t.authorShort}
                     </div>
                   </div>

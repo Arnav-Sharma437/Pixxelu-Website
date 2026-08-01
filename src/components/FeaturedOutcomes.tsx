@@ -134,7 +134,7 @@ export default function FeaturedOutcomes() {
     <section
       ref={containerRef}
       id="cases"
-      className="bg-white text-black py-28 md:py-36 border-b border-grey-800/10 relative overflow-hidden"
+      className="bg-transparent text-white py-28 md:py-36 border-b border-white/5 relative overflow-hidden"
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         
@@ -143,7 +143,7 @@ export default function FeaturedOutcomes() {
           <span className="text-[10px] font-bold tracking-[0.2em] text-orange uppercase">
             Outcomes &mdash; 3 recent case studies
           </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-display tracking-tight text-black mt-2">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold font-display tracking-tight text-white mt-2">
             Real systems. Provable business results.
           </h2>
         </div>
@@ -164,7 +164,7 @@ export default function FeaturedOutcomes() {
                       isEven ? "lg:order-1" : "lg:order-2"
                     }`}
                   >
-                    <div className="bg-[#121212] relative border border-grey-800/15 aspect-[16/10] w-full p-3 overflow-hidden flex flex-col justify-between shadow-[0_15px_35px_rgba(0,0,0,0.06)] hover:shadow-[0_25px_60px_rgba(232,92,43,0.06)] hover:border-orange/20 rounded-xl transition-all duration-500 hover:scale-[1.02] group">
+                    <div className="bg-[#121212] relative border border-white/10 aspect-[16/10] w-full p-3 overflow-hidden flex flex-col justify-between shadow-2xl hover:shadow-[0_25px_60px_rgba(232,92,43,0.12)] hover:border-orange/30 rounded-xl transition-all duration-500 hover:scale-[1.02] group">
                       
                       {/* Browser Header Bar */}
                       <div className="flex items-center justify-between pb-2 border-b border-white/10 shrink-0">
@@ -176,7 +176,7 @@ export default function FeaturedOutcomes() {
                         
                         {/* Fake URL bar */}
                         <div className="w-3/5 h-3.5 bg-white/5 border border-white/10 rounded flex items-center justify-center">
-                          <span className="text-[6px] text-grey-800 font-mono tracking-wider truncate">
+                          <span className="text-[6px] text-zinc-400 font-mono tracking-wider truncate">
                             case-outcome-0{index + 1}.pixxelu.co
                           </span>
                         </div>
@@ -197,7 +197,7 @@ export default function FeaturedOutcomes() {
                             <div className="flex-1 flex items-end justify-between space-x-2 py-1">
                               <div className="flex-1 flex flex-col justify-end h-full">
                                 <div className="bg-white/10 hover:bg-white/20 transition-all h-[95%] w-full relative flex items-center justify-center">
-                                  <span className="text-[7px] text-grey-500 font-mono">Cart</span>
+                                  <span className="text-[7px] text-zinc-400 font-mono">Cart</span>
                                 </div>
                               </div>
                               <div className="flex-1 flex flex-col justify-end h-full">
@@ -263,7 +263,7 @@ export default function FeaturedOutcomes() {
                             {/* PageSpeed Performance ring */}
                             <div className="flex flex-col items-center space-y-1">
                               <div className="relative w-16 h-16 flex items-center justify-center">
-                                {/* Outer green circle progress */}
+                                {/* Outer circle progress */}
                                 <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
                                   <path
                                     className="text-white/10"
@@ -288,8 +288,8 @@ export default function FeaturedOutcomes() {
                             </div>
 
                             {/* Page load statistics curve */}
-                            <div className="w-[180px] h-[55px] bg-white/5 border border-white/10 p-2 flex flex-col justify-between">
-                              <div className="flex justify-between items-center text-[5px] text-grey-800 uppercase tracking-widest border-b border-white/5 pb-1">
+                            <div className="w-[180px] h-[55px] bg-black/20 border border-white/10 p-2 flex flex-col justify-between">
+                              <div className="flex justify-between items-center text-[5px] text-zinc-400 uppercase tracking-widest border-b border-white/5 pb-1">
                                 <span>Page Load Speed</span>
                                 <span className="text-green-500">0.4s (Blistering)</span>
                               </div>
@@ -326,16 +326,16 @@ export default function FeaturedOutcomes() {
                   >
                     <div>
                       {/* Platform tag with brand colored dot */}
-                      <span className="inline-flex items-center space-x-2 text-[9px] font-bold tracking-widest uppercase bg-grey-800/5 text-grey-500 border border-grey-800/15 px-3 py-1 rounded mb-4">
+                      <span className="inline-flex items-center space-x-2 text-[9px] font-bold tracking-widest uppercase bg-white/5 text-zinc-400 border border-white/10 px-3 py-1 rounded mb-4">
                         <span className={`w-1.5 h-1.5 rounded-full ${
                           item.platform === "Shopify" ? "bg-[#96bf48]" :
-                          item.platform === "Squarespace" ? "bg-black" :
+                          item.platform === "Squarespace" ? "bg-white" :
                           "bg-[#21759b]"
                         }`} />
                         <span>{item.platform}</span>
                       </span>
 
-                      <h3 className="text-3xl sm:text-4xl font-extrabold font-display tracking-tight text-black leading-tight max-w-xl">
+                      <h3 className="text-3xl sm:text-4xl font-extrabold font-display tracking-tight text-white leading-tight max-w-xl">
                         {item.headline}
                       </h3>
                     </div>
@@ -349,7 +349,7 @@ export default function FeaturedOutcomes() {
                       >
                         0{item.platform === "Shopify" ? "x" : "%"}
                       </span>
-                      <span className="text-xs font-bold text-grey-500 uppercase tracking-widest">
+                      <span className="text-xs font-bold text-zinc-400 uppercase tracking-widest">
                         {item.metric.split(" ").slice(1).join(" ")}
                       </span>
                     </div>
@@ -357,7 +357,7 @@ export default function FeaturedOutcomes() {
                     <div>
                       <Link
                         href="#contact"
-                        className="inline-flex items-center text-xs font-bold tracking-[0.1em] text-orange hover:text-black uppercase group transition-colors duration-300"
+                        className="inline-flex items-center text-xs font-bold tracking-[0.1em] text-orange hover:text-white uppercase group transition-colors duration-300"
                       >
                         <span>{item.linkText}</span>
                         <ArrowUpRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -369,7 +369,7 @@ export default function FeaturedOutcomes() {
 
                 {/* Horizontal divider scales in on enter */}
                 {index < CASES_DATA.length - 1 && (
-                  <div className="case-divider w-full h-[1px] bg-grey-800/15 origin-left" />
+                  <div className="case-divider w-full h-[1px] bg-white/10 origin-left" />
                 )}
 
               </div>

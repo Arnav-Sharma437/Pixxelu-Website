@@ -39,7 +39,7 @@ const EXPERTISE_DATA: ExpertiseItem[] = [
   {
     icon: Cpu,
     title: "Systems Integration",
-    desc: "Syncing front-end page layouts directly with payment gateways, enterprise ERPs, booking systems, CRMs, and email marketing databases.",
+    desc: "Syncing front-end page layouts directly with payment gateways, enterprise ERPs, book-keeping systems, CRMs, and email marketing databases.",
   },
   {
     icon: ShieldCheck,
@@ -56,7 +56,7 @@ export default function Expertise() {
     if (prefersReducedMotion) return;
 
     const ctx = gsap.context(() => {
-      // Staggered slide+fade reveal for expertise cards
+      // Staggered reveal for cards
       gsap.fromTo(
         ".expertise-card",
         { opacity: 0, y: 30 },
@@ -82,39 +82,38 @@ export default function Expertise() {
     <section
       ref={containerRef}
       id="company"
-      className="bg-white text-black py-24 md:py-32 border-b border-grey-800/10"
+      className="bg-transparent text-white py-24 md:py-32 border-b border-white/5"
     >
-      {/* 1. Header (Inside container wrapper) */}
+      {/* 1. Header */}
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div className="max-w-3xl mb-16 md:mb-20">
           <span className="text-[10px] font-bold tracking-[0.2em] text-orange uppercase">
             Our Areas of Expertise
           </span>
-          <h2 className="reveal-text text-3xl sm:text-4xl md:text-5xl font-bold font-display tracking-tight text-black mt-1.5 leading-tight animate-[pulse_8s_infinite_ease-in-out]">
+          <h2 className="reveal-text text-3xl sm:text-4xl md:text-5xl font-bold font-display tracking-tight text-white mt-1.5 leading-tight animate-[pulse_8s_infinite_ease-in-out]">
             Full-stack support for growth-focused teams.
           </h2>
         </div>
       </div>
 
-      {/* 2. Infinite Carousel Slider (Spans full viewport width edge-to-edge) */}
+      {/* 2. Infinite Carousel Slider */}
       <div className="w-full overflow-hidden py-12 relative select-none">
         <div className="flex gap-6 w-[200%] shrink-0 animate-[marquee_28s_linear_infinite] hover:[animation-play-state:paused]">
-          {/* Render cards twice for seamless loop */}
           {[...EXPERTISE_DATA, ...EXPERTISE_DATA].map((item, index) => {
             const Icon = item.icon;
             return (
               <div
                 key={index}
-                className="expertise-card w-[290px] md:w-[380px] shrink-0 bg-white border border-grey-800/15 p-8 flex flex-col justify-between hover:border-orange hover:bg-orange/[0.02] hover:shadow-[0_25px_60px_rgba(232,92,43,0.18)] hover:-translate-y-4 transition-all duration-300 group cursor-pointer"
+                className="expertise-card w-[290px] md:w-[380px] shrink-0 bg-white/5 border border-white/10 p-8 flex flex-col justify-between hover:border-orange hover:bg-orange/[0.03] hover:shadow-[0_25px_60px_rgba(232,92,43,0.25)] hover:-translate-y-4 rounded-2xl transition-all duration-300 group cursor-pointer"
               >
                 <div>
-                  <div className="w-10 h-10 bg-off-black text-white flex items-center justify-center mb-6 group-hover:bg-orange group-hover:text-white transition-colors duration-300">
+                  <div className="w-10 h-10 bg-white/10 text-white flex items-center justify-center mb-6 rounded-lg group-hover:bg-orange group-hover:text-white transition-colors duration-300">
                     <Icon className="w-5 h-5" />
                   </div>
-                  <h3 className="text-lg font-bold font-display tracking-tight text-black mb-3">
+                  <h3 className="text-lg font-bold font-display tracking-tight text-white mb-3">
                     {item.title}
                   </h3>
-                  <p className="text-sm text-grey-500 font-normal leading-relaxed">
+                  <p className="text-sm text-zinc-400 font-normal leading-relaxed">
                     {item.desc}
                   </p>
                 </div>

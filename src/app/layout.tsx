@@ -32,7 +32,7 @@ export default function RootLayout({
       lang="en"
       className={`${displayFont.variable} ${bodyFont.variable} h-full antialiased scroll-smooth`}
     >
-      <body className="min-h-full bg-transparent text-black font-body select-none">
+      <body className="min-h-full bg-transparent text-white font-body select-none">
         <GSAPInit />
         <CustomCursor />
         <AmbientBackground />

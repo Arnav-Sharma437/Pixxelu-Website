@@ -8,7 +8,7 @@ import { gsap } from "gsap";
 export function PixxeluLogo({ isDarkNav }: { isDarkNav?: boolean }) {
   return (
     <Link href="/" className="flex flex-col items-start leading-none group">
-      <span className="text-2xl font-black font-display uppercase tracking-tight text-black select-none">
+      <span className="text-2xl font-black font-display uppercase tracking-tight text-white select-none">
         <span className="text-orange">p</span>
         <span>ixxel</span>
         <span className="text-orange">u</span>
@@ -80,7 +80,7 @@ export default function Navbar() {
     <>
       <header className={`fixed top-0 left-0 w-full z-40 transition-all duration-300 ${
         isScrolled 
-          ? "bg-white/80 backdrop-blur-md border-b border-black/5 py-4 shadow-sm" 
+          ? "bg-[#0c0c0c]/85 backdrop-blur-md border-b border-white/5 py-4 shadow-lg" 
           : "bg-transparent py-6"
       }`}>
         <div className="w-full px-8 md:px-16 flex items-center justify-between">
@@ -92,7 +92,7 @@ export default function Navbar() {
             {/* Let's Talk link (underline-reveal) */}
             <Link
               href="#contact"
-              className="underline-reveal text-sm font-bold tracking-[0.2em] text-black uppercase transition-colors duration-300 hidden sm:inline-block"
+              className="underline-reveal text-sm font-bold tracking-[0.2em] text-white uppercase transition-colors duration-300 hidden sm:inline-block"
             >
               Let&apos;s Talk
             </Link>
@@ -100,7 +100,7 @@ export default function Navbar() {
             {/* Hamburger circular button */}
             <button
               onClick={() => setIsOpen(true)}
-              className="w-14 h-14 rounded-full bg-black text-white flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-105 hover:bg-orange cursor-pointer focus:outline-none"
+              className="w-14 h-14 rounded-full bg-white text-black flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-105 hover:bg-orange hover:text-white cursor-pointer focus:outline-none"
               aria-label="Open Navigation Menu"
             >
               <Menu className="w-6 h-6 stroke-[2.5]" />
@@ -113,14 +113,14 @@ export default function Navbar() {
       {isOpen && (
         <div
           ref={overlayRef}
-          className="fixed inset-0 w-full h-full bg-white/95 backdrop-blur-md text-black z-50 flex flex-col justify-between p-8 md:p-16"
+          className="fixed inset-0 w-full h-full bg-[#0c0c0c]/95 backdrop-blur-md text-white z-50 flex flex-col justify-between p-8 md:p-16"
         >
           {/* Top Row: Logo & Close button */}
           <div className="flex items-center justify-between w-full">
             <PixxeluLogo />
             <button
               onClick={closeMenu}
-              className="w-11 h-11 rounded-full bg-black/10 text-black border border-black/10 flex items-center justify-center transition-all duration-300 hover:scale-105 hover:bg-black hover:text-white cursor-pointer focus:outline-none"
+              className="w-11 h-11 rounded-full bg-white/10 text-white border border-white/10 flex items-center justify-center transition-all duration-300 hover:scale-105 hover:bg-white hover:text-black cursor-pointer focus:outline-none"
               aria-label="Close Navigation Menu"
             >
               <X className="w-5 h-5 stroke-[2]" />
@@ -151,18 +151,18 @@ export default function Navbar() {
             </div>
 
             {/* Right Sub-Info columns (md:col-span-4) */}
-            <div className="md:col-span-5 flex flex-col space-y-8 text-left border-l border-black/10 pl-8 md:pl-12 hidden md:block">
+            <div className="md:col-span-5 flex flex-col space-y-8 text-left border-l border-white/10 pl-8 md:pl-12 hidden md:block">
               <div>
                 <span className="text-[10px] font-bold tracking-[0.25em] text-orange uppercase block mb-3">
                   Say Hello
                 </span>
                 <Link
                   href="mailto:info@pixxelu.com"
-                  className="underline-reveal text-sm font-semibold tracking-wider text-grey-500 hover:text-black transition-colors"
+                  className="underline-reveal text-sm font-semibold tracking-wider text-zinc-400 hover:text-white transition-colors"
                 >
                   info@pixxelu.com
                 </Link>
-                <div className="text-sm text-grey-500 mt-2 font-medium">
+                <div className="text-sm text-zinc-400 mt-2 font-medium">
                   +91 92180 00707
                 </div>
               </div>
@@ -171,17 +171,17 @@ export default function Navbar() {
                 <span className="text-[10px] font-bold tracking-[0.25em] text-orange uppercase block mb-3">
                   Follow Us
                 </span>
-                <div className="flex flex-col space-y-1 text-sm font-semibold tracking-wider text-grey-500">
-                  <Link href="#" className="hover:text-black transition-colors py-0.5">GitHub</Link>
-                  <Link href="#" className="hover:text-black transition-colors py-0.5">LinkedIn</Link>
-                  <Link href="#" className="hover:text-black transition-colors py-0.5">Twitter / X</Link>
+                <div className="flex flex-col space-y-1 text-sm font-semibold tracking-wider text-zinc-400">
+                  <Link href="#" className="hover:text-white transition-colors py-0.5">GitHub</Link>
+                  <Link href="#" className="hover:text-white transition-colors py-0.5">LinkedIn</Link>
+                  <Link href="#" className="hover:text-white transition-colors py-0.5">Twitter / X</Link>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Bottom Row: Legal / AI tag */}
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-[9px] text-grey-500 font-semibold tracking-widest uppercase border-t border-black/10 pt-6">
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-4 text-[9px] text-zinc-400 font-semibold tracking-widest uppercase border-t border-white/10 pt-6">
             <div>
               &copy; {new Date().getFullYear()} Pixxelu Ltd. All rights reserved.
             </div>

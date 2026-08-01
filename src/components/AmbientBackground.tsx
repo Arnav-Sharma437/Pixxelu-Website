@@ -297,7 +297,7 @@ export default function AmbientBackground() {
         inset: 0,
         zIndex: -1,
         pointerEvents: 'none',
-        background: '#ffffff',
+        background: '#000000',
       }}
     />
   );
