@@ -3,8 +3,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, Globe, ArrowUpRight } from "lucide-react";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 /* ==========================================================================
    REUSABLE COMPONENTS
@@ -28,7 +30,7 @@ export function ContactButton() {
         outlineOffset: "-3px",
       }}
     >
-      Contact Me
+      Contact Us
     </button>
   );
 }
@@ -143,7 +145,6 @@ export function AnimatedText({ text, className }: { text: string; className?: st
         return (
           <span key={wordIdx} className="inline-block mr-2 whitespace-nowrap">
             {word.split("").map((char, charIdx) => {
-              // Flat overall index based on word indices to distribute scroll offsets
               const charGlobalIdx = text.indexOf(word) + charIdx;
               const start = charGlobalIdx / text.length;
               const end = (charGlobalIdx + 1) / text.length;
@@ -175,30 +176,13 @@ export function AnimatedText({ text, className }: { text: string; className?: st
 // 1. HeroSection
 function HeroSection() {
   return (
-    <section className="relative min-h-screen flex flex-col justify-between overflow-hidden pt-6 md:pt-8 bg-[#0C0C0C]">
-      {/* Top Navbar */}
-      <FadeIn as="nav" delay={0} y={-20} className="w-full px-6 md:px-10 flex items-center justify-between z-30">
-        <span className="font-extrabold uppercase tracking-widest text-[#D7E2EA] text-sm md:text-lg">
-          Jack
-        </span>
-        <div className="flex space-x-6 md:space-x-12">
-          {["About", "Price", "Projects", "Contact"].map((item, idx) => (
-            <Link
-              key={idx}
-              href={`#${item.toLowerCase()}`}
-              className="text-[#D7E2EA] font-medium uppercase tracking-wider text-xs md:text-sm lg:text-[1.1rem] hover:opacity-70 transition-opacity duration-200"
-            >
-              {item}
-            </Link>
-          ))}
-        </div>
-      </FadeIn>
-
+    <section className="relative min-h-screen flex flex-col justify-between overflow-hidden pt-40 pb-28 md:pb-40 bg-[#0C0C0C]">
+      
       {/* Hero Header Title (Centered/Pushed top) */}
       <div className="flex-1 flex flex-col justify-center items-center px-6 text-center relative z-20">
         <div className="overflow-hidden w-full">
           <FadeIn as="h1" delay={0.15} y={40} className="hero-heading font-black uppercase tracking-tight leading-none whitespace-nowrap w-full text-[14vw] sm:text-[15vw] md:text-[16vw] lg:text-[17.5vw] mt-6 sm:mt-4 md:-mt-5">
-            Hi, i&apos;m jack
+            we are pixxelu
           </FadeIn>
         </div>
       </div>
@@ -210,10 +194,10 @@ function HeroSection() {
             <div className="relative w-[280px] sm:w-[360px] md:w-[440px] lg:w-[520px] aspect-[4/5] overflow-hidden rounded-t-full shadow-2xl border border-white/5 bg-[#121212]/50 backdrop-blur-sm">
               <Image
                 src="https://shrug-person-78902957.figma.site/_components/v2/d24c01ad3a56fc65e942a1f501eb73db42d7cf9a/Rectangle_40443.81459862.png"
-                alt="Jack portrait"
+                alt="Pixxelu visual backdrop"
                 fill
                 sizes="(max-width: 640px) 280px, (max-width: 768px) 360px, (max-width: 1024px) 440px, 520px"
-                className="object-cover object-top"
+                className="object-cover object-top opacity-30"
                 priority
               />
             </div>
@@ -222,9 +206,9 @@ function HeroSection() {
       </div>
 
       {/* Bottom Bar Content */}
-      <div className="w-full px-6 md:px-12 pb-7 sm:pb-8 md:pb-10 flex justify-between items-end z-25 relative">
+      <div className="w-full px-8 md:px-16 pb-7 sm:pb-8 md:pb-10 flex justify-between items-end z-25 relative">
         <FadeIn delay={0.35} y={20} className="text-[#D7E2EA] font-light uppercase tracking-wide leading-snug text-[10px] sm:text-xs md:text-sm lg:text-base max-w-[160px] sm:max-w-[220px] md:max-w-[260px] text-left">
-          a 3d creator driven by crafting striking and unforgettable projects
+          a digital technology agency driven by crafting striking and unforgettable websites
         </FadeIn>
         
         <FadeIn delay={0.5} y={20}>
@@ -411,13 +395,13 @@ function AboutSection() {
         {/* Title */}
         <FadeIn delay={0} y={40}>
           <h2 className="hero-heading font-black uppercase leading-none tracking-tight text-[3rem] sm:text-[6rem] md:text-[8rem] lg:text-[10rem]">
-            About me
+            About us
           </h2>
         </FadeIn>
 
         {/* Character scroll reveal text block */}
         <AnimatedText
-          text="With more than five years of experience in design, i focus on branding, web design, and user experience, i truly enjoy working with businesses that aim to stand out and present their best image. Let's build something incredible together!"
+          text="We leverage advanced AI models to scaffold structure, test modules, and write clean boilerplate. This efficiency frees our engineers to focus 100% of their energy on bespoke animations, accessibility audits, and custom integrations. Let's build something incredible together!"
           className="text-[#D7E2EA] font-medium leading-relaxed max-w-[560px] text-base sm:text-lg md:text-xl lg:text-[1.35rem]"
         />
 
@@ -431,7 +415,7 @@ function AboutSection() {
   );
 }
 
-// 4. ServicesSection (Horizontal lists inside a rounded white banner block)
+// 4. ServicesSection (Platform Matrix aligned with Homepage)
 interface ServiceItemProps {
   num: string;
   title: string;
@@ -462,15 +446,14 @@ function ServiceRow({ num, title, desc, delay }: ServiceItemProps) {
 
 function ServicesSection() {
   const services = [
-    { num: "01", title: "3D Modeling", desc: "Creation of detailed objects, characters, or environments tailored to specific client needs, ideal for games, products, and visualizations." },
-    { num: "02", title: "Rendering", desc: "High-quality, photorealistic renders that showcase designs with custom lighting, textures, and materials to bring concepts to life." },
-    { num: "03", title: "Motion Design", desc: "Dynamic animations and motion graphics that add energy and storytelling to brands, products, and digital experiences." },
-    { num: "04", title: "Branding", desc: "Crafting cohesive visual identities -- from logos to full brand systems -- that communicate a clear and memorable presence." },
-    { num: "05", title: "Web Design", desc: "Designing clean, modern, and conversion-focused websites with attention to layout, typography, and user experience." }
+    { num: "01", title: "Shopify Development", desc: "Scalable transaction systems tuned for high conversion. Custom Liquid code, app connections, ERP integrations, and checkout speed optimizations." },
+    { num: "02", title: "Squarespace Design", desc: "Design-first web presences engineered for rapid launch. Visual brand integrations, custom code extensions, subscription setup, and migration." },
+    { num: "03", title: "Wix Studio", desc: "High-speed solutions built for ultimate editor autonomy. Leveraging Velo database custom coding and advanced interactive layouts." },
+    { num: "04", title: "WordPress CMS", desc: "Custom CMS environments built for complete custom scale. Headless Next.js decoupling, Gutenberg block engineering, and query speed tuning." }
   ];
 
   return (
-    <section id="price" className="bg-white rounded-t-[40px] sm:rounded-t-[50px] md:rounded-t-[60px] px-5 sm:px-8 md:px-10 py-20 sm:py-24 md:py-32 relative z-20">
+    <section id="services" className="bg-white rounded-t-[40px] sm:rounded-t-[50px] md:rounded-t-[60px] px-5 sm:px-8 md:px-10 py-20 sm:py-24 md:py-32 relative z-20">
       <div className="max-w-5xl mx-auto flex flex-col items-center">
         
         {/* Title */}
@@ -496,7 +479,7 @@ function ServicesSection() {
   );
 }
 
-// 5. ProjectsSection (Sticky Stacking cards using Framer Motion)
+// 5. ProjectsSection (Sticky Stacking cards mapping Homepage Outcomes)
 interface ProjectData {
   num: string;
   category: string;
@@ -509,24 +492,24 @@ interface ProjectData {
 const PROJECTS_DATA: ProjectData[] = [
   {
     num: "01",
-    category: "Client",
-    name: "Nextlevel Studio",
+    category: "Shopify Case Study",
+    name: "Nextlevel Fashion",
     col1Img1: "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055344_5eff02e0-87a5-41ce-b64f-eb08da8f33db.png&w=1280&q=85",
     col1Img2: "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055431_11d841fd-8b41-46a5-82e4-b04f2407a7d8.png&w=1280&q=85",
     col2Img: "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055451_e317bf2d-28d4-48cc-86b0-6f72f25b6327.png&w=1280&q=85"
   },
   {
     num: "02",
-    category: "Personal",
-    name: "Aura Brand Identity",
+    category: "Squarespace Case Study",
+    name: "Aura Architecture",
     col1Img1: "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055654_911201c5-36d9-4bc6-bac7-331adfce159f.png&w=1280&q=85",
     col1Img2: "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055723_5ceda0b8-d9c2-4665-b2e3-83ba19ba76d1.png&w=1280&q=85",
     col2Img: "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055753_adc5dcbd-a8e6-49c0-b43a-9b030d835cea.png&w=1280&q=85"
   },
   {
     num: "03",
-    category: "Client",
-    name: "Solaris Digital",
+    category: "WordPress Case Study",
+    name: "Solaris Publication",
     col1Img1: "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055759_963cfb0b-4bd1-4b0f-9d0a-09bd6cf95b2f.png&w=1280&q=85",
     col1Img2: "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_060108_438f781a-9846-4dcc-89ab-c4e6cb830f5b.png&w=1280&q=85",
     col2Img: "https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055818_9d062121-ad7e-46b9-999a-1a6a692ef1ee.png&w=1280&q=85"
@@ -538,7 +521,6 @@ function ProjectCard({ project, index, scrollProgress }: { project: ProjectData;
   
   // Scale down card as we scroll past it
   const targetScale = 1 - (totalCards - 1 - index) * 0.03;
-  // Calculate relative transform range based on card index
   const scale = useTransform(scrollProgress, [index / totalCards, (index + 1) / totalCards], [1, targetScale]);
 
   return (
@@ -626,7 +608,6 @@ function ProjectCard({ project, index, scrollProgress }: { project: ProjectData;
 function ProjectsSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   
-  // Track scroll of projects section container for sticky stacking scale interpolations
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"],
@@ -671,15 +652,22 @@ function ProjectsSection() {
    ========================================================================== */
 export default function PortfolioPage() {
   return (
-    <main className="w-full min-h-screen bg-[#0C0C0C] text-[#D7E2EA] select-text overflow-x-clip">
-      <HeroSection />
-      <MarqueeSection />
-      <AboutSection />
-      <ServicesSection />
-      <ProjectsSection />
-      
-      {/* Anchor targets contact action */}
-      <div id="contact" className="h-2" />
-    </main>
+    <div className="w-full min-h-screen bg-[#0C0C0C] text-[#D7E2EA] select-text">
+      {/* Primary Site Header */}
+      <Navbar />
+
+      <main className="w-full overflow-x-clip">
+        <HeroSection />
+        <MarqueeSection />
+        <AboutSection />
+        <ServicesSection />
+        <ProjectsSection />
+        
+        <div id="contact" className="h-2" />
+      </main>
+
+      {/* Primary Site Footer */}
+      <Footer />
+    </div>
   );
 }
