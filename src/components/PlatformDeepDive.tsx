@@ -15,17 +15,17 @@ interface ServiceCardProps {
 }
 
 const ServiceCard = ({ title, desc }: ServiceCardProps) => (
-  <div className="bg-white/5 border border-white/10 p-5 hover:border-orange hover:bg-white/10 transition-all duration-300 flex flex-col justify-between group cursor-pointer h-full">
+  <div className="bg-white/60 backdrop-blur-sm border border-black/10 p-5 hover:border-orange hover:bg-white transition-all duration-300 flex flex-col justify-between group cursor-pointer h-full shadow-sm rounded-lg">
     <div>
-      <h4 className="text-sm font-bold tracking-tight text-white mb-1.5 group-hover:text-orange transition-colors">
+      <h4 className="text-sm font-bold tracking-tight text-black mb-1.5 group-hover:text-orange transition-colors font-display">
         {title}
       </h4>
-      <p className="text-xs text-grey-800 leading-relaxed font-normal">
+      <p className="text-xs text-grey-500 leading-relaxed font-normal">
         {desc}
       </p>
     </div>
     <div className="flex justify-end mt-4">
-      <ArrowUpRight className="w-4 h-4 text-grey-800 group-hover:text-orange group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+      <ArrowUpRight className="w-4 h-4 text-grey-400 group-hover:text-orange group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
     </div>
   </div>
 );
@@ -146,15 +146,15 @@ export default function PlatformDeepDive() {
   return (
     <section
       ref={sectionRef}
-      className="platform-matrix bg-[#0c0c0c] text-white py-24 md:py-32 border-b border-white/5 relative overflow-hidden"
+      className="platform-matrix bg-transparent text-black py-24 md:py-32 border-b border-black/5 relative overflow-hidden"
       id="platform-dive"
     >
       {/* Decorative Parallax Background shapes */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="parallax-bg-shape absolute top-10 right-[-10%] w-[500px] h-[500px] bg-orange/5 rounded-full blur-[120px] pointer-events-none" />
+        <div className="parallax-bg-shape absolute top-10 right-[-10%] w-[500px] h-[500px] bg-orange/[0.015] rounded-full blur-[120px] pointer-events-none" />
         
         {/* Outline rotating geometry that slides slowly */}
-        <svg className="parallax-bg-shape absolute bottom-10 left-[5%] w-72 h-72 text-white/5 opacity-50" viewBox="0 0 100 100">
+        <svg className="parallax-bg-shape absolute bottom-10 left-[5%] w-72 h-72 text-black/[0.04] opacity-80" viewBox="0 0 100 100">
           <circle cx="50" cy="50" r="45" stroke="currentColor" strokeWidth="0.1" fill="none" strokeDasharray="3,3" />
           <path d="M50 5 L50 95 M5 50 L95 50" stroke="currentColor" strokeWidth="0.05" />
         </svg>
@@ -168,7 +168,7 @@ export default function PlatformDeepDive() {
             <span className="text-[10px] font-bold tracking-[0.15em] uppercase text-orange">
               Signature Service
             </span>
-            <h3 className="reveal-text text-xl md:text-2xl font-bold font-display tracking-tight text-white mt-1.5 mb-8">
+            <h3 className="reveal-text text-xl md:text-2xl font-bold font-display tracking-tight text-black mt-1.5 mb-8">
               Platform Matrix
             </h3>
           </div>
@@ -180,8 +180,8 @@ export default function PlatformDeepDive() {
                 key={platform.key}
                 className={`platform-nav-btn text-left text-lg md:text-xl font-bold tracking-wide transition-all uppercase pl-4 border-l-2 focus:outline-none cursor-pointer ${
                   activePlatform === platform.key
-                    ? "text-white border-orange font-black"
-                    : "text-grey-500 border-transparent hover:text-white"
+                    ? "text-black border-orange font-black"
+                    : "text-grey-400 border-transparent hover:text-black"
                 }`}
                 onClick={() => setActivePlatform(platform.key)}
                 onMouseEnter={() => setActivePlatform(platform.key)}
@@ -196,10 +196,10 @@ export default function PlatformDeepDive() {
         <div className="md:col-span-8 w-full">
           <div className="transition-all duration-300 ease-in-out flex flex-col space-y-6">
             <div>
-              <span className="inline-block text-[11px] font-bold tracking-widest text-grey-800 uppercase bg-white/5 border border-white/15 px-3 py-1 rounded">
+              <span className="inline-block text-[11px] font-bold tracking-widest text-grey-500 uppercase bg-black/5 border border-black/10 px-3 py-1 rounded">
                 {currentPlatformData.tagline}
               </span>
-              <h4 className="text-2xl md:text-3xl font-bold font-display tracking-tight text-white mt-4 max-w-xl">
+              <h4 className="text-2xl md:text-3xl font-bold font-display tracking-tight text-black mt-4 max-w-xl">
                 {currentPlatformData.headline}
               </h4>
             </div>

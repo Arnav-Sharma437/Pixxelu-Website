@@ -64,7 +64,7 @@ export default function StatsBar() {
   return (
     <section
       ref={barRef}
-      className="bg-orange text-white py-16 md:py-20 overflow-hidden relative"
+      className="bg-orange/90 backdrop-blur-sm text-white py-16 md:py-20 overflow-hidden relative border-y border-white/10 shadow-sm"
     >
       {/* Background patterns */}
       <div className="absolute inset-0 opacity-10 pointer-events-none">
