@@ -44,11 +44,11 @@ export default function FinalCTA() {
     <section
       ref={containerRef}
       id="contact"
-      className="bg-transparent text-black py-24 md:py-36 relative overflow-hidden border-b border-black/5"
+      className="bg-transparent text-white py-24 md:py-36 relative overflow-hidden border-b border-white/5"
     >
       {/* Dynamic drifting background glows */}
       <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-orange/[0.015] rounded-full blur-[120px] pointer-events-none animate-[pulse_10s_infinite_ease-in-out]" />
-      <div className="absolute top-0 left-1/4 w-[300px] h-[300px] bg-black/[0.01] rounded-full blur-[100px] pointer-events-none animate-[pulse_15s_infinite_ease-in-out_2s]" />
+      <div className="absolute top-0 left-1/4 w-[300px] h-[300px] bg-white/[0.01] rounded-full blur-[100px] pointer-events-none animate-[pulse_15s_infinite_ease-in-out_2s]" />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10 flex flex-col items-center text-center">
         
@@ -58,7 +58,7 @@ export default function FinalCTA() {
         </span>
 
         {/* Big display title */}
-        <h2 className="cta-animate text-4xl sm:text-6xl md:text-8xl font-extrabold font-display tracking-tight text-black max-w-4xl leading-[0.95] mb-10">
+        <h2 className="cta-animate text-4xl sm:text-6xl md:text-8xl font-extrabold font-display tracking-tight text-white max-w-4xl leading-[0.95] mb-10">
           Have a project in mind? Let&apos;s talk.
         </h2>
 
@@ -66,7 +66,7 @@ export default function FinalCTA() {
         <div className="cta-animate mb-14">
           <Link
             href="mailto:info@pixxelu.com"
-            className="inline-flex items-center justify-center text-xs font-bold tracking-[0.15em] uppercase bg-black text-white px-9 py-5 rounded-full hover:bg-orange hover:text-white hover:scale-[1.03] transition-all duration-300 group"
+            className="inline-flex items-center justify-center text-xs font-bold tracking-[0.15em] uppercase bg-white text-black px-9 py-5 rounded-full hover:bg-orange hover:text-white hover:scale-[1.03] transition-all duration-300 group"
           >
             <span>Get in touch</span>
             <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
@@ -74,21 +74,21 @@ export default function FinalCTA() {
         </div>
 
         {/* Contact links */}
-        <div className="cta-animate flex flex-col sm:flex-row items-center sm:space-x-8 space-y-3 sm:space-y-0 border-t border-black/10 pt-8 w-full max-w-xl justify-center">
+        <div className="cta-animate flex flex-col sm:flex-row items-center sm:space-x-8 space-y-3 sm:space-y-0 border-t border-white/10 pt-8 w-full max-w-xl justify-center">
           <Link
             href="mailto:info@pixxelu.com"
-            className="underline-reveal text-xs sm:text-sm font-semibold tracking-wider text-grey-500 hover:text-black transition-colors"
+            className="underline-reveal text-xs sm:text-sm font-semibold tracking-wider text-zinc-400 hover:text-white transition-colors"
           >
             info@pixxelu.com
           </Link>
-          <span className="hidden sm:inline text-black/10">/</span>
-          <span className="text-xs sm:text-sm font-semibold tracking-wider text-grey-500 select-all">
+          <span className="hidden sm:inline text-white/10">/</span>
+          <span className="text-xs sm:text-sm font-semibold tracking-wider text-zinc-400 select-all">
             +91 92180 00707
           </span>
-          <span className="hidden sm:inline text-black/10">/</span>
+          <span className="hidden sm:inline text-white/10">/</span>
           <Link
             href="#"
-            className="underline-reveal text-xs sm:text-sm font-semibold tracking-wider text-grey-500 hover:text-black transition-colors"
+            className="underline-reveal text-xs sm:text-sm font-semibold tracking-wider text-zinc-400 hover:text-white transition-colors"
           >
             @pixxelu
           </Link>

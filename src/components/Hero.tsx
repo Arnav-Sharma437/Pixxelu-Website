@@ -55,17 +55,17 @@ export default function Hero() {
   return (
     <section
       ref={containerRef}
-      className="relative bg-transparent text-black min-h-screen flex items-center justify-between overflow-hidden pt-40 pb-28 md:pb-40"
+      className="relative bg-transparent text-white min-h-screen flex items-center justify-between overflow-hidden pt-40 pb-28 md:pb-40"
     >
       {/* Background Grid Pattern Overlay */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#000000/[0.03]_1px,transparent_1px),linear-gradient(to_bottom,#000000/[0.03]_1px,transparent_1px)] bg-[size:5rem_5rem] pointer-events-none z-0" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff/[0.015]_1px,transparent_1px),linear-gradient(to_bottom,#ffffff/[0.015]_1px,transparent_1px)] bg-[size:5rem_5rem] pointer-events-none z-0" />
 
       {/* Dynamic Drifting Background Glows */}
       <div className="hero-bg-asset absolute top-1/4 left-[5%] w-[450px] h-[450px] bg-orange/[0.02] rounded-full blur-[120px] pointer-events-none animate-[pulse_10s_infinite_ease-in-out] z-0" />
-      <div className="hero-bg-asset absolute bottom-[10%] right-[10%] w-[500px] h-[500px] bg-black/[0.01] rounded-full blur-[140px] pointer-events-none animate-[pulse_15s_infinite_ease-in-out_2.5s] z-0" />
+      <div className="hero-bg-asset absolute bottom-[10%] right-[10%] w-[500px] h-[500px] bg-white/[0.01] rounded-full blur-[140px] pointer-events-none animate-[pulse_15s_infinite_ease-in-out_2.5s] z-0" />
 
       {/* Infinite Horizontal Scrolling Marquee Ticker at the bottom */}
-      <div className="absolute bottom-0 left-0 w-full overflow-hidden border-y border-black/5 bg-white/40 backdrop-blur-sm py-5 z-20 select-none pointer-events-none">
+      <div className="absolute bottom-0 left-0 w-full overflow-hidden border-y border-white/5 bg-black/40 backdrop-blur-sm py-5 z-20 select-none pointer-events-none">
         <div className="flex whitespace-nowrap animate-[marquee_25s_linear_infinite] w-[200%] shrink-0">
           <div className="flex justify-around items-center w-1/2 shrink-0">
             <span className="marquee-text text-lg sm:text-xl md:text-2xl">pixxelu</span>
@@ -107,7 +107,7 @@ export default function Hero() {
           </div>
 
           {/* Large display title (A digital agency focused on web.) */}
-          <h1 className="text-5xl sm:text-6xl md:text-[80px] font-black font-display tracking-tight text-black leading-[0.98]">
+          <h1 className="text-5xl sm:text-6xl md:text-[80px] font-black font-display tracking-tight text-white leading-[0.98]">
             <span className="block overflow-hidden py-1">
               <span className="hero-title-line inline-block">A digital agency</span>
             </span>
@@ -117,7 +117,7 @@ export default function Hero() {
           </h1>
 
           {/* Subhead Description Paragraph */}
-          <p className="hero-body-element text-base sm:text-lg text-grey-500 max-w-2xl font-normal leading-relaxed">
+          <p className="hero-body-element text-base sm:text-lg text-zinc-400 max-w-2xl font-normal leading-relaxed">
             We are a creative team of designers, developers, strategists, and producers building elevated websites on Squarespace, Wix, Shopify, and WordPress.
           </p>
 
@@ -125,7 +125,7 @@ export default function Hero() {
           <div className="hero-body-element pt-4">
             <Link
               href="#platform-dive"
-              className="inline-flex items-center justify-center space-x-4 bg-black/5 border border-black/10 rounded-full px-8 py-4.5 hover:bg-black hover:text-white hover:border-black text-black transition-all duration-300 group"
+              className="inline-flex items-center justify-center space-x-4 bg-white/5 border border-white/10 rounded-full px-8 py-4.5 hover:bg-white hover:text-black hover:border-white text-white transition-all duration-300 group"
             >
               <span className="text-xs font-bold uppercase tracking-[0.15em]">Get to know us</span>
               <span className="text-sm font-light leading-none translate-y-[-0.5px]">+</span>
@@ -164,7 +164,7 @@ export default function Hero() {
               }
             `}</style>
 
-            <svg className="w-full h-full text-black/[0.08]" viewBox="0 0 100 100">
+            <svg className="w-full h-full text-white/20" viewBox="0 0 100 100">
               <circle cx="50" cy="50" r="49" stroke="currentColor" strokeWidth="0.08" fill="none" />
               
               {/* Clockwise rotating ring */}
@@ -192,7 +192,7 @@ export default function Hero() {
           </div>
 
           {/* Floating Main Hero Video Card */}
-          <div className="hero-bg-asset relative w-full max-w-[500px] aspect-[4/3] rounded-lg overflow-hidden border border-black/15 shadow-xl z-10 animate-[float-ambient_6s_infinite_ease-in-out]">
+          <div className="hero-bg-asset relative w-full max-w-[500px] aspect-[4/3] rounded-lg overflow-hidden border border-white/10 shadow-xl z-10 animate-[float-ambient_6s_infinite_ease-in-out]">
             <video
               src="/videos/banner-pixxel.mp4"
               poster="/hero-sketch.jpg"
@@ -209,11 +209,11 @@ export default function Hero() {
       </div>
 
       {/* Scroll indicator (Bottom-right corner) */}
-      <div className="absolute bottom-12 right-12 hidden md:flex flex-col items-center space-y-4 text-black/30 z-10 select-none">
+      <div className="absolute bottom-12 right-12 hidden md:flex flex-col items-center space-y-4 text-white/30 z-10 select-none">
         <span className="text-[9px] font-bold tracking-[0.25em] uppercase [writing-mode:vertical-lr]">
           Scroll
         </span>
-        <div className="w-[1px] h-12 bg-black/10 relative overflow-hidden">
+        <div className="w-[1px] h-12 bg-white/10 relative overflow-hidden">
           <div 
             className="absolute top-0 left-0 w-full h-1/2 bg-orange"
             style={{
