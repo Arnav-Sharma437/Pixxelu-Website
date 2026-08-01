@@ -7,7 +7,7 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-transparent text-white relative pt-24 pb-48 md:pb-[24vw] overflow-hidden border-t border-white/5 select-none">
+    <footer className="bg-transparent text-white relative pt-24 pb-48 md:pb-[24vw] overflow-hidden border-t border-white/5">
       
       {/* Huge solid-fill horizontal wordmark in background (matching Baunfire style, fully visible) */}
       <div className="absolute bottom-4 md:bottom-8 left-0 w-full overflow-hidden select-none pointer-events-none z-0 leading-none text-center">
