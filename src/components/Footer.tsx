@@ -25,60 +25,60 @@ export default function Footer() {
           {/* Logo & description */}
           <div className="flex flex-col space-y-4 max-w-sm">
             <PixxeluLogo isDarkNav={true} />
-            <p className="text-xs text-grey-800 leading-relaxed font-normal">
+            <p className="text-sm text-grey-800 leading-relaxed font-normal">
               Pixxelu is a specialized web agency crafting high-performance, responsive sites. Exclusively built on Squarespace, Wix, Shopify, and WordPress.
             </p>
           </div>
 
-          {/* Sitemaps (tightened vertical rhythm) */}
+          {/* Sitemaps */}
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-8 md:gap-16">
-            <div className="flex flex-col space-y-2">
-              <span className="text-[9px] font-bold tracking-[0.25em] text-orange uppercase mb-2">
+            <div className="flex flex-col space-y-3">
+              <span className="text-[11px] font-bold tracking-[0.25em] text-orange uppercase mb-1">
                 Platforms
               </span>
-              <Link href="#platform-dive" className="text-xs text-grey-800 hover:text-white transition-colors py-0.5">
+              <Link href="#platform-dive" className="text-sm text-grey-800 hover:text-white transition-colors py-0.5">
                 Squarespace
               </Link>
-              <Link href="#platform-dive" className="text-xs text-grey-800 hover:text-white transition-colors py-0.5">
+              <Link href="#platform-dive" className="text-sm text-grey-800 hover:text-white transition-colors py-0.5">
                 Wix Studio
               </Link>
-              <Link href="#platform-dive" className="text-xs text-grey-800 hover:text-white transition-colors py-0.5">
+              <Link href="#platform-dive" className="text-sm text-grey-800 hover:text-white transition-colors py-0.5">
                 Shopify
               </Link>
-              <Link href="#platform-dive" className="text-xs text-grey-800 hover:text-white transition-colors py-0.5">
+              <Link href="#platform-dive" className="text-sm text-grey-800 hover:text-white transition-colors py-0.5">
                 WordPress
               </Link>
             </div>
 
-            <div className="flex flex-col space-y-2">
-              <span className="text-[9px] font-bold tracking-[0.25em] text-orange uppercase mb-2">
+            <div className="flex flex-col space-y-3">
+              <span className="text-[11px] font-bold tracking-[0.25em] text-orange uppercase mb-1">
                 Company
               </span>
-              <Link href="#cases" className="text-xs text-grey-800 hover:text-white transition-colors py-0.5">
+              <Link href="#cases" className="text-sm text-grey-800 hover:text-white transition-colors py-0.5">
                 Case Studies
               </Link>
-              <Link href="#company" className="text-xs text-grey-800 hover:text-white transition-colors py-0.5">
+              <Link href="#company" className="text-sm text-grey-800 hover:text-white transition-colors py-0.5">
                 Our Method
               </Link>
-              <Link href="#insights" className="text-xs text-grey-800 hover:text-white transition-colors py-0.5">
+              <Link href="#insights" className="text-sm text-grey-800 hover:text-white transition-colors py-0.5">
                 AI Pipeline
               </Link>
-              <Link href="#contact" className="text-xs text-grey-800 hover:text-white transition-colors py-0.5">
+              <Link href="#contact" className="text-sm text-grey-800 hover:text-white transition-colors py-0.5">
                 Contact
               </Link>
             </div>
 
-            <div className="flex flex-col space-y-2 col-span-2 sm:col-span-1">
-              <span className="text-[9px] font-bold tracking-[0.25em] text-orange uppercase mb-2">
+            <div className="flex flex-col space-y-3 col-span-2 sm:col-span-1">
+              <span className="text-[11px] font-bold tracking-[0.25em] text-orange uppercase mb-1">
                 Connect
               </span>
-              <Link href="#" className="text-xs text-grey-800 hover:text-white transition-colors py-0.5">
+              <Link href="#" className="text-sm text-grey-800 hover:text-white transition-colors py-0.5">
                 GitHub
               </Link>
-              <Link href="#" className="text-xs text-grey-800 hover:text-white transition-colors py-0.5">
+              <Link href="#" className="text-sm text-grey-800 hover:text-white transition-colors py-0.5">
                 LinkedIn
               </Link>
-              <Link href="#" className="text-xs text-grey-800 hover:text-white transition-colors py-0.5">
+              <Link href="#" className="text-sm text-grey-800 hover:text-white transition-colors py-0.5">
                 Twitter/X
               </Link>
             </div>
@@ -86,7 +86,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom row (copyright + AI tag line, clean single line) */}
-        <div className="border-t border-white/10 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-[10px] text-grey-800 font-semibold tracking-widest uppercase mt-4">
+        <div className="border-t border-white/10 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-grey-800 font-semibold tracking-widest uppercase mt-4">
           <div>
             &copy; {currentYear} Pixxelu Ltd. All rights reserved.
           </div>
