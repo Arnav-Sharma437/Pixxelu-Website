@@ -146,7 +146,7 @@ export default function PlatformDeepDive() {
   return (
     <section
       ref={sectionRef}
-      className="platform-matrix bg-transparent text-white py-24 md:py-32 border-b border-white/5 relative overflow-hidden"
+      className="platform-matrix bg-transparent text-white py-12 md:py-32 border-b border-white/5 relative overflow-hidden"
       id="platform-dive"
     >
       {/* Decorative Parallax Background shapes */}

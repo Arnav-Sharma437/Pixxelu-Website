@@ -86,7 +86,7 @@ export default function ProblemStatement() {
     <section
       ref={sectionRef}
       id="problem"
-      className="bg-transparent text-white py-24 md:py-32 relative overflow-hidden border-b border-white/5"
+      className="bg-transparent text-white py-12 md:py-32 relative overflow-hidden border-b border-white/5"
     >
       {/* Structural crosshairs decoration */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20">

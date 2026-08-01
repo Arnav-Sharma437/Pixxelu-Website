@@ -134,7 +134,7 @@ export default function FeaturedOutcomes() {
     <section
       ref={containerRef}
       id="cases"
-      className="bg-transparent text-white py-28 md:py-36 border-b border-white/5 relative overflow-hidden"
+      className="bg-transparent text-white py-12 md:py-36 border-b border-white/5 relative overflow-hidden"
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         
