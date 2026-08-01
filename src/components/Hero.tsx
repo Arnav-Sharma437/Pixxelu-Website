@@ -96,10 +96,10 @@ export default function Hero() {
 
 
       {/* Main Content Grid (Full width container alignment) */}
-      <div className="w-full px-8 md:px-16 grid grid-cols-1 lg:grid-cols-12 gap-16 items-center z-10 relative">
+      <div className="w-full px-8 md:px-16 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center z-10 relative">
         
         {/* Left Column (Content copy stack) */}
-        <div className="lg:col-span-7 flex flex-col space-y-6 text-left">
+        <div className="lg:col-span-5 flex flex-col space-y-6 text-left">
           
           {/* Muted red/orange eyebrow */}
           <div className="hero-eyebrow text-[10px] font-bold tracking-[0.3em] uppercase text-orange">
@@ -134,7 +134,7 @@ export default function Hero() {
         </div>
 
         {/* Right Column (Generative Orb Spinner + Floating Glassmorphic Cards) */}
-        <div className="lg:col-span-5 relative flex items-center justify-center min-h-[380px] md:min-h-[480px] w-full">
+        <div className="lg:col-span-7 relative flex items-center justify-center min-h-[380px] md:min-h-[480px] lg:min-h-[600px] w-full">
           
           {/* SVG Orbital Network backdrop (hero-bg-asset) */}
           <div className="hero-bg-asset absolute w-[110%] h-[110%] pointer-events-none select-none z-0 flex items-center justify-center opacity-100">
@@ -192,7 +192,7 @@ export default function Hero() {
           </div>
 
           {/* Floating Main Hero Video Card */}
-          <div className="hero-bg-asset relative w-full max-w-[500px] aspect-[4/3] rounded-lg overflow-hidden border border-white/10 shadow-xl z-10 animate-[float-ambient_6s_infinite_ease-in-out]">
+          <div className="hero-bg-asset relative w-full max-w-[500px] lg:max-w-[850px] aspect-[16/10] rounded-xl overflow-hidden border border-white/10 shadow-2xl z-10 animate-[float-ambient_6s_infinite_ease-in-out]">
             <video
               src="/videos/banner-pixxel.mp4"
               poster="/hero-sketch.jpg"
