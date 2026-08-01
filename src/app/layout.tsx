@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Outfit, Inter } from "next/font/google";
 import GSAPInit from "@/components/GSAPInit";
 import CustomCursor from "@/components/CustomCursor";
+import AmbientBackground from "@/components/AmbientBackground";
 import "./globals.css";
 
 const displayFont = Outfit({
@@ -34,6 +35,7 @@ export default function RootLayout({
       <body className="min-h-full bg-white text-black font-body select-none">
         <GSAPInit />
         <CustomCursor />
+        <AmbientBackground />
         {children}
       </body>
     </html>
