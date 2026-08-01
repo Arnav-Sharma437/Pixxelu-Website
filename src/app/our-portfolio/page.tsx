@@ -175,43 +175,97 @@ export function AnimatedText({ text, className }: { text: string; className?: st
 
 // 1. HeroSection
 function HeroSection() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const fadeAnimId = useRef<number | null>(null);
+  const fadingOutRef = useRef(false);
+
+  const fadeVideo = (targetOpacity: number, duration: number, onComplete?: () => void) => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (fadeAnimId.current !== null) cancelAnimationFrame(fadeAnimId.current);
+    const startOpacity = parseFloat(video.style.opacity || "0");
+    const startTime = performance.now();
+    const animate = (now: number) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      video.style.opacity = (startOpacity + (targetOpacity - startOpacity) * progress).toString();
+      if (progress < 1) {
+        fadeAnimId.current = requestAnimationFrame(animate);
+      } else {
+        if (onComplete) onComplete();
+      }
+    };
+    fadeAnimId.current = requestAnimationFrame(animate);
+  };
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.style.opacity = "0";
+    const handleCanPlay = () => fadeVideo(0.55, 500);
+    const handleTimeUpdate = () => {
+      const remaining = video.duration - video.currentTime;
+      if (remaining <= 0.55 && !fadingOutRef.current) {
+        fadingOutRef.current = true;
+        fadeVideo(0, 500);
+      }
+    };
+    const handleEnded = () => {
+      video.style.opacity = "0";
+      setTimeout(() => {
+        video.currentTime = 0;
+        video.play().then(() => {
+          fadingOutRef.current = false;
+          fadeVideo(0.55, 500);
+        }).catch(() => {});
+      }, 100);
+    };
+    video.addEventListener("canplay", handleCanPlay, { once: true });
+    video.addEventListener("timeupdate", handleTimeUpdate);
+    video.addEventListener("ended", handleEnded);
+    return () => {
+      if (fadeAnimId.current !== null) cancelAnimationFrame(fadeAnimId.current);
+      video.removeEventListener("canplay", handleCanPlay);
+      video.removeEventListener("timeupdate", handleTimeUpdate);
+      video.removeEventListener("ended", handleEnded);
+    };
+  }, []);
+
   return (
     <section className="relative min-h-screen flex flex-col justify-between overflow-hidden pt-40 pb-28 md:pb-40 bg-[#0C0C0C]">
-      
-      {/* Hero Header Title (Centered/Pushed top) */}
+
+      {/* Background Video */}
+      <div className="absolute inset-0 z-0 overflow-hidden select-none pointer-events-none">
+        <video
+          ref={videoRef}
+          src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260328_115001_bcdaa3b4-03de-47e7-ad63-ae3e392c32d4.mp4"
+          autoPlay
+          muted
+          playsInline
+          className="w-full h-full object-cover translate-y-[17%]"
+          style={{ opacity: 0, transition: "none" }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0C0C0C] via-transparent to-[#0C0C0C]/60" />
+      </div>
+
+      {/* Hero Header Title */}
       <div className="flex-1 flex flex-col justify-center items-center px-6 text-center relative z-20">
         <div className="overflow-hidden w-full">
-          <FadeIn as="h1" delay={0.15} y={40} className="hero-heading font-black uppercase tracking-tight leading-[0.95] w-full text-[9vw] sm:text-[10vw] md:text-[11vw] lg:text-[12vw] flex flex-col items-center">
-            <span className="block">we are pixxelu</span>
-            <span className="block text-[#BBCCD7] text-[6.5vw] sm:text-[7vw] md:text-[7.5vw] lg:text-[8vw] tracking-normal font-medium mt-2">digital technology</span>
+          <FadeIn as="h1" delay={0.15} y={40} className="font-black uppercase tracking-tight leading-[0.95] w-full text-[7vw] sm:text-[8vw] md:text-[9vw] lg:text-[10vw] flex flex-col items-center">
+            <span className="block" style={{ background: "linear-gradient(180deg, #FFFFFF 0%, #C8D8E4 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>we are pixxelu</span>
+            <span className="block tracking-normal font-medium mt-2 text-[5vw] sm:text-[5.5vw] md:text-[6vw] lg:text-[6.5vw]" style={{ background: "linear-gradient(180deg, #E0ECFF 0%, #BBCCD7 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>digital technology</span>
+          </FadeIn>
+          <FadeIn delay={0.35} y={20} className="mt-6 text-white/70 text-sm sm:text-base md:text-lg font-light tracking-wide max-w-xl mx-auto">
+            We design, develop &amp; launch websites on Wix, Squarespace, WordPress &amp; Shopify
           </FadeIn>
         </div>
       </div>
 
-      {/* Hero Portrait (Centered absolutely behind text overlay constraints) */}
-      <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 sm:top-auto sm:translate-y-0 sm:bottom-0 z-10">
-        <FadeIn delay={0.6} y={30}>
-          <Magnet padding={150} strength={3}>
-            <div className="relative w-[280px] sm:w-[360px] md:w-[440px] lg:w-[520px] aspect-[4/5] overflow-hidden rounded-t-full shadow-2xl border border-white/5 bg-[#121212]/50 backdrop-blur-sm">
-              <Image
-                src="https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?q=80&w=800"
-                alt="Pixxelu visual backdrop"
-                fill
-                sizes="(max-width: 640px) 280px, (max-width: 768px) 360px, (max-width: 1024px) 440px, 520px"
-                className="object-cover object-top opacity-30"
-                priority
-              />
-            </div>
-          </Magnet>
-        </FadeIn>
-      </div>
-
       {/* Bottom Bar Content */}
       <div className="w-full px-8 md:px-16 pb-7 sm:pb-8 md:pb-10 flex justify-between items-end z-25 relative">
-        <FadeIn delay={0.35} y={20} className="text-[#D7E2EA] font-light uppercase tracking-wide leading-snug text-[10px] sm:text-xs md:text-sm lg:text-base max-w-[200px] sm:max-w-[280px] md:max-w-[360px] text-left">
-          we design, develop, and optimize high-conversion websites, seo, and digital marketing campaigns
+        <FadeIn delay={0.35} y={20} className="text-white/60 font-light uppercase tracking-widest leading-snug text-[9px] sm:text-[10px] md:text-xs max-w-[200px] sm:max-w-[280px] text-left">
+          seo · digital marketing · high-conversion websites
         </FadeIn>
-        
         <FadeIn delay={0.5} y={20}>
           <ContactButton />
         </FadeIn>
@@ -221,28 +275,29 @@ function HeroSection() {
 }
 
 // 2. MarqueeSection (Horizontal parallax scrolls)
+// Using reliable Unsplash images showing web design / digital agency work
 const MARQUEE_GIFS = [
-  "https://motionsites.ai/assets/hero-space-voyage-preview-eECLH3Yc.gif",
-  "https://motionsites.ai/assets/hero-codenest-preview-Cgppc2qV.gif",
-  "https://motionsites.ai/assets/hero-vex-ventures-preview-BczMFIiw.gif",
-  "https://motionsites.ai/assets/hero-stellar-ai-v2-preview-DjvxjG3C.gif",
-  "https://motionsites.ai/assets/hero-asme-preview-B_nGDnTP.gif",
-  "https://motionsites.ai/assets/hero-transform-data-preview-Cx5OU29N.gif",
-  "https://motionsites.ai/assets/hero-vitara-preview-Cjz2QYyU.gif",
-  "https://motionsites.ai/assets/hero-terra-preview-BFjrCr7T.gif",
-  "https://motionsites.ai/assets/hero-skyelite-preview-DHaZIgUv.gif",
-  "https://motionsites.ai/assets/hero-aethera-preview-DknSlcTa.gif",
-  "https://motionsites.ai/assets/hero-designpro-preview-D8c5_een.gif",
-  "https://motionsites.ai/assets/hero-stellar-ai-preview-D3HL6bw1.gif",
-  "https://motionsites.ai/assets/hero-xportfolio-preview-D4A8maiC.gif",
-  "https://motionsites.ai/assets/hero-orbit-web3-preview-BXt4OttD.gif",
-  "https://motionsites.ai/assets/hero-nexora-preview-cx5HmUgo.gif",
-  "https://motionsites.ai/assets/hero-evr-ventures-preview-DZxeVFEX.gif",
-  "https://motionsites.ai/assets/hero-planet-orbit-preview-DWAP8Z1P.gif",
-  "https://motionsites.ai/assets/hero-new-era-preview-CocuDUm9.gif",
-  "https://motionsites.ai/assets/hero-wealth-preview-B70idl_u.gif",
-  "https://motionsites.ai/assets/hero-luminex-preview-CxOP7ce6.gif",
-  "https://motionsites.ai/assets/hero-celestia-preview-0yO3jXO8.gif"
+  "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=800&q=80",
+  "https://images.unsplash.com/photo-1547658719-da2b51169166?w=800&q=80",
+  "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=800&q=80",
+  "https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=800&q=80",
+  "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&q=80",
+  "https://images.unsplash.com/photo-1600132806370-bf17e65e942f?w=800&q=80",
+  "https://images.unsplash.com/photo-1522542550221-31fd19575a2d?w=800&q=80",
+  "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
+  "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800&q=80",
+  "https://images.unsplash.com/photo-1555421689-d68471e189f2?w=800&q=80",
+  "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=800&q=80",
+  "https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=800&q=80",
+  "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&q=80",
+  "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&q=80",
+  "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80",
+  "https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=800&q=80",
+  "https://images.unsplash.com/photo-1587620962725-abab19836100?w=800&q=80",
+  "https://images.unsplash.com/photo-1618788372246-79faff0c3742?w=800&q=80",
+  "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=800&q=80",
+  "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&q=80",
+  "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800&q=80",
 ];
 
 function MarqueeSection() {
@@ -268,7 +323,7 @@ function MarqueeSection() {
   const row2Gifs = [...MARQUEE_GIFS.slice(11), ...MARQUEE_GIFS.slice(11), ...MARQUEE_GIFS.slice(11)];
 
   return (
-    <section ref={sectionRef} className="bg-[#0C0C0C] pt-24 sm:pt-32 md:pt-40 pb-10 overflow-hidden relative w-full">
+    <section ref={sectionRef} className="bg-transparent pt-24 sm:pt-32 md:pt-40 pb-10 overflow-hidden relative w-full">
       <div className="flex flex-col space-y-6">
         
         {/* Row 1 (Moves Right) */}
