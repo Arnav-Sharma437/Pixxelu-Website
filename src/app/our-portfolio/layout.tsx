@@ -18,7 +18,7 @@ export default function PortfolioLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className={`${kanitFont.variable} font-kanit min-h-screen bg-[#0C0C0C] text-[#D7E2EA] antialiased`}>
+    <div className={`${kanitFont.variable} font-sans min-h-screen text-[#D7E2EA] antialiased`}>
       {children}
     </div>
   );
