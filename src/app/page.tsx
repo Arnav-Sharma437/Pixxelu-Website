@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import ProblemStatement from "@/components/ProblemStatement";
+import ProcessSection from "@/components/ProcessSection";
 import PlatformDeepDive from "@/components/PlatformDeepDive";
 import FeaturedOutcomes from "@/components/FeaturedOutcomes";
 import Expertise from "@/components/Expertise";
@@ -17,6 +18,7 @@ export default function Home() {
       <main className="flex-1 flex flex-col">
         <Hero />
         <ProblemStatement />
+        <ProcessSection />
         <PlatformDeepDive />
         <FeaturedOutcomes />
         <Expertise />
