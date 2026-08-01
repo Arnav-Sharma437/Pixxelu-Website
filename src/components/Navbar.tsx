@@ -158,13 +158,13 @@ export default function Navbar() {
                   Say Hello
                 </span>
                 <Link
-                  href="mailto:hello@pixxelu.co"
+                  href="mailto:info@pixxelu.com"
                   className="underline-reveal text-sm font-semibold tracking-wider text-grey-800 hover:text-white transition-colors"
                 >
-                  hello@pixxelu.co
+                  info@pixxelu.com
                 </Link>
                 <div className="text-sm text-grey-500 mt-2 font-medium">
-                  +1 (555) 902-8812
+                  +91 92180 00707
                 </div>
               </div>
 

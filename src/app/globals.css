@@ -132,6 +132,19 @@ html.lenis, html.lenis body {
   color: transparent;
 }
 
+/* Footer text glow pulse keyframes */
+@keyframes text-pulse-glow {
+  0%, 100% {
+    opacity: 0.03;
+    filter: drop-shadow(0 0 0px rgba(232, 92, 43, 0));
+  }
+  50% {
+    opacity: 0.12;
+    filter: drop-shadow(0 0 35px rgba(232, 92, 43, 0.5));
+  }
+}
+
+
 
 
 
