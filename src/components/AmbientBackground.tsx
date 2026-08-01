@@ -9,15 +9,13 @@ if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-// Custom Vertex Shader
+// Custom Vertex Shader for Google Antigravity-style infinite flight
 const vertexShader = `
   uniform float uTime;
   uniform float uScroll;
   uniform float uScrollVelocity;
   uniform vec2 uMouse;
   uniform float uHoverActive;
-  uniform float uRippleTime;
-  uniform vec2 uRippleCenter;
   uniform float uPixelRatio;
 
   attribute float aSize;
@@ -25,65 +23,55 @@ const vertexShader = `
 
   varying float vAlpha;
 
-  // Simple pseudo-random hash
-  float hash(vec2 p) {
-    return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);
-  }
-
-  // Simple 2D Noise
-  float noise(vec2 p) {
-    vec2 i = floor(p);
-    vec2 f = fract(p);
-    vec2 u = f * f * (3.0 - 2.0 * f);
-    return mix(mix(hash(i + vec2(0.0, 0.0)), hash(i + vec2(1.0, 0.0)), u.x),
-               mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), u.x), u.y);
-  }
-
   void main() {
     vec3 pos = position;
 
-    // 1. Organic floating movement based on perlin-noise approximation
-    float noiseX = noise(pos.xy * 0.15 + vec2(uTime * 0.04, uTime * 0.02 + aRandom.x)) * 2.0 - 1.0;
-    float noiseY = noise(pos.yx * 0.15 + vec2(uTime * 0.03 - aRandom.y, uTime * 0.05)) * 2.0 - 1.0;
-    pos.x += noiseX * 0.5;
-    pos.y += noiseY * 0.5;
+    // 1. Organic slow drift
+    pos.x += sin(uTime * 0.15 + aRandom.x * 6.28) * 0.25;
+    pos.y += cos(uTime * 0.1 + aRandom.y * 6.28) * 0.25;
 
-    // 2. Parallax vertical scroll based on Z-depth
-    // Particles further back (more negative Z) move slower than particles closer to screen
-    float zDepthFactor = (pos.z + 20.0) / 20.0; // scales from 0 to 1
-    pos.y += uScroll * 0.25 * zDepthFactor;
-    
-    // Add extra scroll speed push based on velocity
-    pos.y += uScrollVelocity * 1.5 * zDepthFactor * aRandom.z;
+    // 2. Scroll-driven Z-axis flight
+    // pos.z ranges from -50.0 to 10.0. Camera is at Z = 15.
+    // Scroll down moves camera forward (moves particles closer to camera)
+    float zOffset = uScroll * 1.4 + uScrollVelocity * 0.4 * aRandom.z;
+    pos.z += zOffset;
 
-    // 3. Elastic Mouse Repulsion
+    // Infinite Z wrapping loop
+    float zRange = 60.0; // from -50.0 to 10.0
+    float zMin = -50.0;
+    pos.z = zMin + mod(pos.z - zMin, zRange);
+
+    // 3. Scroll-driven spiraling rotation based on Z depth
+    float zDepthFactor = (pos.z + 50.0) / 60.0; // 0 (far) to 1 (near)
+    float angle = uScroll * 0.02 * zDepthFactor; // twist increases closer to screen
+    float s = sin(angle);
+    float c = cos(angle);
+    vec2 rotated = vec2(
+      pos.x * c - pos.y * s,
+      pos.x * s + pos.y * c
+    );
+    pos.xy = rotated;
+
+    // 4. Mouse repulsion on the XY plane
     float distToMouse = distance(pos.xy, uMouse);
-    if (distToMouse < 3.0 && uHoverActive > 0.5) {
-      float force = (1.0 - (distToMouse / 3.0)) * 1.2;
+    if (distToMouse < 4.5 && uHoverActive > 0.5) {
+      float force = (1.0 - (distToMouse / 4.5)) * 1.6;
       vec2 dir = normalize(pos.xy - uMouse);
-      pos.xy += dir * force;
-    }
-
-    // 4. Click ripple expansion wave
-    if (uRippleTime > 0.0 && uRippleTime < 2.5) {
-      float distToRipple = distance(pos.xy, uRippleCenter);
-      float rippleRadius = uRippleTime * 8.0; // shockwave speed
-      float thickness = 0.8;
-      if (distToRipple < rippleRadius && distToRipple > rippleRadius - thickness) {
-        float rippleForce = (1.0 - abs(distToRipple - (rippleRadius - thickness / 2.0)) / (thickness / 2.0)) * 0.7;
-        vec2 rippleDir = normalize(pos.xy - uRippleCenter);
-        pos.xy += rippleDir * rippleForce;
-      }
+      // scale force slightly based on proximity to screen (Z-parallax)
+      pos.xy += dir * force * zDepthFactor;
     }
 
     vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
     gl_Position = projectionMatrix * mvPosition;
 
-    // Size attenuates with distance
-    gl_PointSize = aSize * (350.0 / -mvPosition.z) * uPixelRatio;
+    // Perspective point size scale
+    gl_PointSize = aSize * (450.0 / -mvPosition.z) * uPixelRatio;
 
-    // Alpha breathing fade
-    vAlpha = 0.3 + 0.7 * sin(uTime * 0.4 + aRandom.x * 6.28);
+    // Smooth fade near clip planes (Z=10 and Z=-50) to prevent popping
+    float fadeNear = smoothstep(10.0, 5.0, pos.z);
+    float fadeFar = smoothstep(-50.0, -42.0, pos.z);
+    
+    vAlpha = fadeNear * fadeFar * (0.2 + 0.8 * sin(uTime * 0.5 + aRandom.x * 6.28));
   }
 `;
 
@@ -92,15 +80,14 @@ const fragmentShader = `
   varying float vAlpha;
 
   void main() {
-    // Crop circular points
     float dist = length(gl_PointCoord - vec2(0.5));
     if (dist > 0.5) discard;
 
-    // Soft glowing falloff
+    // Soft circle glow profile
     float glow = smoothstep(0.5, 0.05, dist);
 
-    // Premium glowing blue color (#0055ff)
-    vec3 color = vec3(0.0, 0.33, 1.0);
+    // Deep royal blue particle color (#0055ff)
+    vec3 color = vec3(0.0, 0.35, 1.0);
 
     gl_FragColor = vec4(color, glow * vAlpha * 0.85);
   }
@@ -113,15 +100,13 @@ export default function AmbientBackground() {
     const container = containerRef.current;
     if (!container) return;
 
-    // Check prefers-reduced-motion accessibility
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     // 1. Scene, Camera, Renderer Setup
     const scene = new THREE.Scene();
     
-    // Fit canvas in perspective space
     const camera = new THREE.PerspectiveCamera(
-      45,
+      50,
       window.innerWidth / window.innerHeight,
       0.1,
       100
@@ -133,25 +118,28 @@ export default function AmbientBackground() {
     renderer.setSize(window.innerWidth, window.innerHeight);
     container.appendChild(renderer.domElement);
 
-    // 2. Geometry creation (4000 particles)
-    const particleCount = prefersReducedMotion ? 1000 : 4000;
+    // 2. Particle Attributes creation (6000 particles)
+    const particleCount = prefersReducedMotion ? 1200 : 6000;
     const geometry = new THREE.BufferGeometry();
 
     const positions = new Float32Array(particleCount * 3);
     const sizes = new Float32Array(particleCount);
     const randoms = new Float32Array(particleCount * 3);
 
-    // Distribute particles in 3D box
+    // Distribute particles inside a 3D cylindrical tunnel
     for (let i = 0; i < particleCount; i++) {
-      // Position x: -14 to 14, y: -25 to 55 (extra height to allow scrolling), z: -20 to 0
-      positions[i * 3] = (Math.random() - 0.5) * 28;
-      positions[i * 3 + 1] = (Math.random() - 0.3) * 80;
-      positions[i * 3 + 2] = -Math.random() * 20;
+      // Cylinder radius 12.0
+      const radius = Math.random() * 12.0;
+      const theta = Math.random() * Math.PI * 2;
+      
+      positions[i * 3] = Math.cos(theta) * radius;
+      positions[i * 3 + 1] = Math.sin(theta) * radius;
+      // Z depth spans from -50.0 to 10.0
+      positions[i * 3 + 2] = -50.0 + Math.random() * 60.0;
 
-      // Particle size
-      sizes[i] = 0.06 + Math.random() * 0.12;
+      // Attenuated particle size
+      sizes[i] = 0.05 + Math.random() * 0.15;
 
-      // Custom attributes for shader noise offsets
       randoms[i * 3] = Math.random();
       randoms[i * 3 + 1] = Math.random();
       randoms[i * 3 + 2] = Math.random();
@@ -161,15 +149,13 @@ export default function AmbientBackground() {
     geometry.setAttribute('aSize', new THREE.BufferAttribute(sizes, 1));
     geometry.setAttribute('aRandom', new THREE.BufferAttribute(randoms, 3));
 
-    // 3. Shader Material setup
+    // 3. Shader Material configuration
     const uniforms = {
       uTime: { value: 0 },
       uScroll: { value: 0 },
       uScrollVelocity: { value: 0 },
       uMouse: { value: new THREE.Vector2(999, 999) },
       uHoverActive: { value: 0 },
-      uRippleTime: { value: 999 },
-      uRippleCenter: { value: new THREE.Vector2(0, 0) },
       uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) },
     };
 
@@ -185,7 +171,7 @@ export default function AmbientBackground() {
     const particles = new THREE.Points(geometry, material);
     scene.add(particles);
 
-    // 4. Interactive Events tracking
+    // 4. Interactive Events Tracking
     let targetMouse = new THREE.Vector2(999, 999);
     let currentMouse = new THREE.Vector2(999, 999);
     let isHovering = false;
@@ -195,16 +181,20 @@ export default function AmbientBackground() {
     let scrollVelocity = 0;
     let prevScrollY = typeof window !== 'undefined' ? window.scrollY : 0;
 
-    // Convert mouse pixels to WebGL coordinate bounds
+    let cameraTargetRotation = new THREE.Vector2(0, 0);
+    let cameraCurrentRotation = new THREE.Vector2(0, 0);
+
     const updateMouseCoords = (clientX: number, clientY: number) => {
-      // Mouse X normalized (-1 to 1)
       const nx = (clientX / window.innerWidth) * 2 - 1;
-      // Mouse Y normalized (1 to -1)
       const ny = -(clientY / window.innerHeight) * 2 + 1;
 
-      // Unproject mouse coordinates into WebGL flat plane coordinate limits (approx 12x8 at Z=0)
+      // Project mouse on XY plane at Z=0
       targetMouse.x = nx * 14;
       targetMouse.y = ny * 9;
+
+      // Camera tilt parallax target (yaw/pitch)
+      cameraTargetRotation.x = nx * 0.12; // Yaw rotation limit
+      cameraTargetRotation.y = ny * 0.08; // Pitch rotation limit
     };
 
     const onMouseMove = (e: MouseEvent) => {
@@ -222,26 +212,16 @@ export default function AmbientBackground() {
     const onMouseLeave = () => {
       isHovering = false;
       targetMouse.set(999, 999);
-    };
-
-    // Click Ripple shockwave activation
-    const onClick = (e: MouseEvent) => {
-      const nx = (e.clientX / window.innerWidth) * 2 - 1;
-      const ny = -(e.clientY / window.innerHeight) * 2 + 1;
-
-      uniforms.uRippleCenter.value.set(nx * 14, ny * 9);
-      uniforms.uRippleTime.value = 0;
+      cameraTargetRotation.set(0, 0);
     };
 
     window.addEventListener('mousemove', onMouseMove);
     window.addEventListener('touchmove', onTouchMove, { passive: true });
     document.addEventListener('mouseleave', onMouseLeave);
-    window.addEventListener('click', onClick);
 
-    // Scroll tracker
     const onScroll = () => {
       const currentScrollY = window.scrollY;
-      targetScroll = currentScrollY * 0.05; // speed factor
+      targetScroll = currentScrollY * 0.035; // velocity scaling factor
       
       const deltaScroll = currentScrollY - prevScrollY;
       scrollVelocity = deltaScroll;
@@ -249,7 +229,6 @@ export default function AmbientBackground() {
     };
     window.addEventListener('scroll', onScroll, { passive: true });
 
-    // Handle viewport resize
     const onResize = () => {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
@@ -258,7 +237,7 @@ export default function AmbientBackground() {
     };
     window.addEventListener('resize', onResize);
 
-    // 5. Render/Animation loop
+    // 5. High Performance Render loop
     let clock = new THREE.Clock();
     let animationId: number;
 
@@ -267,26 +246,26 @@ export default function AmbientBackground() {
       const elapsed = clock.getElapsedTime();
 
       if (!prefersReducedMotion) {
-        // Smoothly lerp mouse coordinate updates (elastic magnet effect)
-        currentMouse.lerp(targetMouse, 0.06);
+        // Elastic mouse tracking
+        currentMouse.lerp(targetMouse, 0.05);
         uniforms.uMouse.value.copy(currentMouse);
         uniforms.uHoverActive.value = isHovering ? 1.0 : 0.0;
 
-        // Smoothly lerp scroll values
-        currentScroll = THREE.MathUtils.lerp(currentScroll, targetScroll, 0.08);
+        // Camera tilt yaw/pitch rotation (creates stunning 3D parallax layout depth)
+        cameraCurrentRotation.lerp(cameraTargetRotation, 0.05);
+        camera.rotation.y = cameraCurrentRotation.x;
+        camera.rotation.x = -cameraCurrentRotation.y;
+
+        // Scroll mapping updates
+        currentScroll = THREE.MathUtils.lerp(currentScroll, targetScroll, 0.07);
         uniforms.uScroll.value = currentScroll;
 
-        // Decelerate scroll velocity representation
-        scrollVelocity = THREE.MathUtils.lerp(scrollVelocity, 0, 0.1);
+        // Scroll velocity decay
+        scrollVelocity = THREE.MathUtils.lerp(scrollVelocity, 0, 0.08);
         uniforms.uScrollVelocity.value = scrollVelocity;
 
-        // Increment time uniform
+        // Time updates
         uniforms.uTime.value = elapsed;
-
-        // Increment ripple wave time
-        if (uniforms.uRippleTime.value < 3.0) {
-          uniforms.uRippleTime.value += delta;
-        }
       }
 
       renderer.render(scene, camera);
@@ -295,13 +274,12 @@ export default function AmbientBackground() {
 
     tick();
 
-    // 6. Cleanup on unmount
+    // 6. Component unmount cleanups
     return () => {
       cancelAnimationFrame(animationId);
       window.removeEventListener('mousemove', onMouseMove);
       window.removeEventListener('touchmove', onTouchMove);
       document.removeEventListener('mouseleave', onMouseLeave);
-      window.removeEventListener('click', onClick);
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onResize);
       renderer.dispose();
@@ -317,7 +295,7 @@ export default function AmbientBackground() {
       style={{
         position: 'fixed',
         inset: 0,
-        zIndex: -1, // Sits at the bottom of the stack, behind transparent body & sections
+        zIndex: -1,
         pointerEvents: 'none',
         background: '#ffffff',
       }}
