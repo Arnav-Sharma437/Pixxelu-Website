@@ -1,14 +1,20 @@
 import type { Metadata } from "next";
-import { Kanit } from "next/font/google";
+import { Outfit, Inter } from "next/font/google";
 import GSAPInit from "@/components/GSAPInit";
 import CustomCursor from "@/components/CustomCursor";
 import AmbientBackground from "@/components/AmbientBackground";
 import "./globals.css";
 
-const kanitFont = Kanit({
-  variable: "--font-kanit",
+const displayFont = Outfit({
+  variable: "--font-display",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800", "900"],
+  weight: ["600", "700", "800"],
+});
+
+const bodyFont = Inter({
+  variable: "--font-body",
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
 });
 
 export const metadata: Metadata = {
@@ -24,7 +30,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${kanitFont.variable} h-full antialiased scroll-smooth`}
+      className={`${displayFont.variable} ${bodyFont.variable} h-full antialiased scroll-smooth`}
     >
       <body className="min-h-full bg-transparent text-white font-body">
         <GSAPInit />

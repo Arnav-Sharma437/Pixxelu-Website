@@ -176,21 +176,8 @@ export function AnimatedText({ text, className }: { text: string; className?: st
 // 1. HeroSection
 function HeroSection() {
   return (
-    <section className="relative min-h-screen flex flex-col justify-between overflow-hidden pt-40 pb-28 md:pb-40 bg-transparent">
-      {/* Background Video Overlay */}
-      <div className="absolute inset-0 z-0 overflow-hidden opacity-30 select-none pointer-events-none">
-        <video
-          src="/videos/banner-pixxel.mp4"
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="w-full h-full object-cover"
-        />
-        {/* Vignette fade to blend with ambient background */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/50" />
-      </div>
-
+    <section className="relative min-h-screen flex flex-col justify-between overflow-hidden pt-40 pb-28 md:pb-40 bg-[#0C0C0C]">
+      
       {/* Hero Header Title (Centered/Pushed top) */}
       <div className="flex-1 flex flex-col justify-center items-center px-6 text-center relative z-20">
         <div className="overflow-hidden w-full">
@@ -199,6 +186,24 @@ function HeroSection() {
             <span className="block text-[#BBCCD7] text-[6.5vw] sm:text-[7vw] md:text-[7.5vw] lg:text-[8vw] tracking-normal font-medium mt-2">digital technology</span>
           </FadeIn>
         </div>
+      </div>
+
+      {/* Hero Portrait (Centered absolutely behind text overlay constraints) */}
+      <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 sm:top-auto sm:translate-y-0 sm:bottom-0 z-10">
+        <FadeIn delay={0.6} y={30}>
+          <Magnet padding={150} strength={3}>
+            <div className="relative w-[280px] sm:w-[360px] md:w-[440px] lg:w-[520px] aspect-[4/5] overflow-hidden rounded-t-full shadow-2xl border border-white/5 bg-[#121212]/50 backdrop-blur-sm">
+              <Image
+                src="https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?q=80&w=800"
+                alt="Pixxelu visual backdrop"
+                fill
+                sizes="(max-width: 640px) 280px, (max-width: 768px) 360px, (max-width: 1024px) 440px, 520px"
+                className="object-cover object-top opacity-30"
+                priority
+              />
+            </div>
+          </Magnet>
+        </FadeIn>
       </div>
 
       {/* Bottom Bar Content */}
@@ -263,7 +268,7 @@ function MarqueeSection() {
   const row2Gifs = [...MARQUEE_GIFS.slice(11), ...MARQUEE_GIFS.slice(11), ...MARQUEE_GIFS.slice(11)];
 
   return (
-    <section ref={sectionRef} className="bg-transparent pt-24 sm:pt-32 md:pt-40 pb-10 overflow-hidden relative w-full">
+    <section ref={sectionRef} className="bg-[#0C0C0C] pt-24 sm:pt-32 md:pt-40 pb-10 overflow-hidden relative w-full">
       <div className="flex flex-col space-y-6">
         
         {/* Row 1 (Moves Right) */}
@@ -322,7 +327,7 @@ function MarqueeSection() {
 // 3. AboutSection (Corner 3D float decorations + character reveal narrative)
 function AboutSection() {
   return (
-    <section id="about" className="relative min-h-screen flex flex-col justify-center items-center bg-transparent px-5 sm:px-8 md:px-10 py-20 overflow-hidden text-center z-20">
+    <section id="about" className="relative min-h-screen flex flex-col justify-center items-center bg-[#0C0C0C] px-5 sm:px-8 md:px-10 py-20 overflow-hidden text-center z-20">
       
       {/* Decorative Corner Images */}
       {/* Top Left: Moon */}
@@ -531,7 +536,7 @@ function ProjectCard({ project, index, scrollProgress }: { project: ProjectData;
           scale,
           top: `${index * 28}px`,
         }}
-        className="relative w-full max-w-6xl bg-black/70 backdrop-blur-md border border-white/10 p-4 sm:p-6 md:p-8 rounded-[40px] sm:rounded-[50px] md:rounded-[60px] shadow-2xl flex flex-col justify-between h-[75vh] overflow-hidden"
+        className="relative w-full max-w-6xl bg-[#0C0C0C] border-2 border-[#D7E2EA] p-4 sm:p-6 md:p-8 rounded-[40px] sm:rounded-[50px] md:rounded-[60px] shadow-2xl flex flex-col justify-between h-[75vh] overflow-hidden"
       >
         
         {/* Top Row Card Info */}
@@ -613,7 +618,7 @@ function ProjectsSection() {
     <section
       id="projects"
       ref={containerRef}
-      className="relative bg-transparent rounded-t-[40px] sm:rounded-t-[50px] md:rounded-t-[60px] -mt-10 sm:-mt-12 md:-mt-14 pt-20 sm:pt-24 md:pt-32 pb-32 overflow-visible z-30"
+      className="relative bg-[#0C0C0C] rounded-t-[40px] sm:rounded-t-[50px] md:rounded-t-[60px] -mt-10 sm:-mt-12 md:-mt-14 pt-20 sm:pt-24 md:pt-32 pb-32 overflow-visible z-30"
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12 w-full flex flex-col items-center">
         
@@ -648,7 +653,7 @@ function ProjectsSection() {
    ========================================================================== */
 export default function PortfolioPage() {
   return (
-    <div className="w-full min-h-screen bg-transparent text-[#D7E2EA] select-text">
+    <div className="w-full min-h-screen bg-[#0C0C0C] text-[#D7E2EA] select-text">
       {/* Primary Site Header */}
       <Navbar />
 
