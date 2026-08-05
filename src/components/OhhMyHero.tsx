@@ -1,100 +1,237 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { gsap } from "gsap";
+import { useEffect, useRef, useCallback } from "react";
+import WaveText from "./WaveText";
+
+class Particle {
+  x: number;
+  y: number;
+  scatterX: number;
+  scatterY: number;
+  targetX: number;
+  targetY: number;
+  vx: number;
+  vy: number;
+  size: number;
+  color: string;
+
+  constructor(targetX: number, targetY: number, canvasWidth: number, canvasHeight: number) {
+    this.targetX = targetX;
+    this.targetY = targetY;
+    
+    // Start particles slightly scattered around their target for a quick assemble effect
+    this.x = targetX + (Math.random() - 0.5) * 100;
+    this.y = targetY + (Math.random() - 0.5) * 100;
+    
+    this.scatterX = this.x;
+    this.scatterY = this.y;
+    this.vx = 0;
+    this.vy = 0;
+    
+    this.size = Math.random() * 2 + 1.5;
+    // Pixxelu Orange or Dark Grey for particles
+    this.color = Math.random() > 0.4 ? "#f85c37" : "#1a1a1a";
+  }
+
+  update(mouseX: number, mouseY: number) {
+    // Mouse repulsion
+    let repX = 0;
+    let repY = 0;
+    
+    // Calculate distance to mouse
+    const dx = this.x - mouseX;
+    const dy = this.y - mouseY;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    
+    // Interaction radius
+    const interactionRadius = 100;
+    
+    if (dist < interactionRadius && dist > 0) {
+      const force = (interactionRadius - dist) / interactionRadius;
+      repX = (dx / dist) * force * 15; // Push strength
+      repY = (dy / dist) * force * 15;
+    }
+
+    // Spring toward target (very strong spring so it holds shape well)
+    const spring = 0.1;
+    const friction = 0.8;
+    
+    this.vx += (this.targetX - this.x) * spring;
+    this.vy += (this.targetY - this.y) * spring;
+    
+    this.vx += repX;
+    this.vy += repY;
+    
+    this.vx *= friction;
+    this.vy *= friction;
+    
+    this.x += this.vx;
+    this.y += this.vy;
+  }
+
+  draw(ctx: CanvasRenderingContext2D) {
+    ctx.fillStyle = this.color;
+    ctx.fillRect(this.x, this.y, this.size, this.size); // square particles match the screenshot
+  }
+}
+
+function getShapePoints(
+  textLines: string[],
+  canvasWidth: number,
+  canvasHeight: number,
+  gap: number
+): { x: number; y: number }[] {
+  const off = document.createElement("canvas");
+  off.width = canvasWidth;
+  off.height = canvasHeight;
+  const ctx = off.getContext("2d", { willReadFrequently: true });
+  if (!ctx) return [];
+  
+  ctx.fillStyle = "#fff";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  
+  // Calculate responsive font size
+  const fontSize = Math.min(canvasWidth * 0.12, 180);
+  ctx.font = `900 ${fontSize}px 'Arial Black', Impact, sans-serif`;
+  
+  const lineHeight = fontSize * 0.9;
+  const startY = canvasHeight / 2 - (lineHeight * (textLines.length - 1)) / 2;
+
+  textLines.forEach((line, i) => {
+    ctx.fillText(line, canvasWidth / 2, startY + i * lineHeight);
+  });
+
+  const data = ctx.getImageData(0, 0, canvasWidth, canvasHeight).data;
+  const pts: { x: number; y: number }[] = [];
+  
+  for (let y = 0; y < canvasHeight; y += gap) {
+    for (let x = 0; x < canvasWidth; x += gap) {
+      if (data[(y * canvasWidth + x) * 4 + 3] > 128) {
+        pts.push({ x, y });
+      }
+    }
+  }
+  return pts;
+}
 
 export default function OhhMyHero() {
-  const containerRef = useRef<HTMLElement>(null);
-  const textRef = useRef<HTMLHeadingElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const mouseRef = useRef({ x: -999, y: -999 });
+  const particlesRef = useRef<Particle[]>([]);
+  const rafRef = useRef<number>(0);
 
-  useEffect(() => {
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (prefersReducedMotion) return;
+  const initParticles = useCallback(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const W = canvas.width;
+    const H = canvas.height;
 
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline();
+    // Use smaller gap for more dense particles, higher for performance
+    const pts = getShapePoints(["IMPOSSIBLE", "TO IGNORE ."], W, H, 6);
 
-      // Fade + translate up for the small intro text
-      tl.fromTo(
-        ".hero-intro",
-        { y: 20, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" }
-      );
-
-      // Animate the main big text lines
-      tl.fromTo(
-        ".hero-big-text-line",
-        { y: 100, opacity: 0 },
-        { y: 0, opacity: 1, duration: 1, stagger: 0.15, ease: "power4.out" },
-        "-=0.5"
-      );
-
-      // Animate the description paragraph
-      tl.fromTo(
-        ".hero-desc",
-        { y: 30, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" },
-        "-=0.6"
-      );
-      
-      // Animate buttons
-      tl.fromTo(
-        ".hero-button",
-        { y: 20, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: "power2.out" },
-        "-=0.4"
-      );
-
-    }, containerRef);
-
-    return () => ctx.revert();
+    particlesRef.current = pts.map((pt) => new Particle(pt.x, pt.y, W, H));
   }, []);
 
+  const animate = useCallback(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    
+    const { x: mx, y: my } = mouseRef.current;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    for (const p of particlesRef.current) {
+      p.update(mx, my);
+      p.draw(ctx);
+    }
+
+    rafRef.current = requestAnimationFrame(animate);
+  }, []);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const handler = (e: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      mouseRef.current = {
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top,
+      };
+    };
+    const resetMouse = () => {
+      mouseRef.current = { x: -999, y: -999 };
+    };
+    canvas.addEventListener("mousemove", handler);
+    canvas.addEventListener("mouseleave", resetMouse);
+    return () => {
+      canvas.removeEventListener("mousemove", handler);
+      canvas.removeEventListener("mouseleave", resetMouse);
+    };
+  }, []);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const resize = () => {
+      const parent = canvas.parentElement;
+      if (!parent) return;
+      // High DPI canvas support
+      const dpr = window.devicePixelRatio || 1;
+      const rect = parent.getBoundingClientRect();
+      
+      canvas.width = rect.width;
+      canvas.height = rect.height;
+      
+      initParticles();
+    };
+
+    resize();
+    rafRef.current = requestAnimationFrame(animate);
+
+    window.addEventListener("resize", resize);
+
+    return () => {
+      cancelAnimationFrame(rafRef.current);
+      window.removeEventListener("resize", resize);
+    };
+  }, [initParticles, animate]);
+
   return (
-    <section
-      ref={containerRef}
-      className="relative min-h-screen flex flex-col justify-center bg-[#050505] text-white pt-32 pb-20 px-6 md:px-12 lg:px-24 overflow-hidden"
-    >
-      {/* Background ambient glow matching Pixxelu's style but darker */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-orange/[0.03] rounded-full blur-[120px] pointer-events-none" />
+    <section className="relative min-h-screen flex flex-col items-center justify-center pt-24 pb-12 px-6 overflow-hidden">
+      
+      {/* Decorative clouds behind the canvas */}
+      <div className="absolute top-32 left-10 w-64 h-24 bg-white/40 blur-2xl rounded-[100px] pointer-events-none" />
+      <div className="absolute top-1/2 right-20 w-96 h-32 bg-white/40 blur-3xl rounded-[100px] pointer-events-none" />
 
-      <div className="relative z-10 max-w-7xl mx-auto w-full">
-        <p className="hero-intro text-orange font-mono text-sm tracking-widest uppercase mb-8">
-          Pixxelu Studio
-        </p>
+      {/* Floating tag above the main text */}
+      <div className="relative z-20 mb-8 flex items-center bg-white/80 backdrop-blur-md px-4 py-2 rounded shadow-sm border border-black/5">
+        <span className="text-sm font-semibold text-black mr-2">Worked with 15+</span>
+        <span className="bg-[#f85c37] text-white text-[10px] font-bold px-1.5 py-0.5 rounded mr-1">P</span>
+        <span className="text-sm font-bold text-[#f85c37]">Pixxelu</span>
+        <span className="text-sm font-semibold text-black ml-1">brands</span>
+      </div>
 
-        <h1 
-          ref={textRef}
-          className="font-black font-display uppercase leading-[0.85] tracking-tighter text-[15vw] sm:text-[12vw] md:text-[130px] lg:text-[160px]"
-        >
-          <span className="block overflow-hidden">
-            <span className="hero-big-text-line block text-white">IMPOSSIBLE</span>
-          </span>
-          <span className="block overflow-hidden">
-            <span className="hero-big-text-line block text-zinc-400">TO IGNORE <span className="text-orange">.</span></span>
-          </span>
+      {/* Canvas Layer for the interactive text */}
+      <div className="relative w-full max-w-7xl h-[60vh] md:h-[70vh] z-10 mx-auto">
+        <canvas
+          ref={canvasRef}
+          className="absolute inset-0 w-full h-full"
+          style={{ cursor: "crosshair" }}
+        />
+      </div>
+
+      {/* Bottom CTA text */}
+      <div className="relative z-20 mt-8 text-center flex flex-col items-center">
+        <h2 className="text-2xl font-serif italic text-black/60 mb-2">
+          a little about us
+        </h2>
+        <h1 className="text-5xl md:text-7xl font-black tracking-tighter text-[#1a1a1a] uppercase cursor-pointer">
+          <WaveText text="WHAT'S UP" />
         </h1>
-
-        <div className="mt-16 md:mt-24 grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
-          <div className="md:col-span-4">
-            <h2 className="hero-desc text-2xl md:text-3xl font-bold tracking-tight text-white mb-4">
-              We make people stop and ask, &quot;who made that?&quot;
-            </h2>
-          </div>
-          <div className="md:col-span-6 md:col-start-6">
-            <p className="hero-desc text-zinc-400 text-lg md:text-xl leading-relaxed mb-10">
-              That reaction is the whole job. We do strategy, design, and code for brands that refuse to look ordinary. No templates, ever.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <a href="#contact" className="hero-button inline-flex items-center justify-center bg-orange text-white px-8 py-4 rounded-full font-bold uppercase tracking-wider text-sm hover:bg-white hover:text-black transition-colors duration-300">
-                Book a call
-              </a>
-              <a href="#work" className="hero-button inline-flex items-center justify-center border border-white/20 bg-white/5 text-white px-8 py-4 rounded-full font-bold uppercase tracking-wider text-sm hover:bg-white/10 transition-colors duration-300">
-                See the work
-              </a>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   );
