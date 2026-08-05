@@ -23,7 +23,7 @@ export default function OhhMyDesignPage() {
             So are we.
           </h2>
           <p className="text-zinc-400 text-lg md:text-xl mb-12">
-            It's perfect light for building, so send it over.
+            It&apos;s perfect light for building, so send it over.
           </p>
           <a href="mailto:hello@pixxelu.com" className="text-orange hover:text-white transition-colors font-mono tracking-widest uppercase text-sm border-b border-orange hover:border-white pb-1">
             hello@pixxelu.com

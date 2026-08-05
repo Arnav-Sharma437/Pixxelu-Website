@@ -78,7 +78,7 @@ export default function OhhMyHero() {
         <div className="mt-16 md:mt-24 grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
           <div className="md:col-span-4">
             <h2 className="hero-desc text-2xl md:text-3xl font-bold tracking-tight text-white mb-4">
-              We make people stop and ask, "who made that?"
+              We make people stop and ask, &quot;who made that?&quot;
             </h2>
           </div>
           <div className="md:col-span-6 md:col-start-6">
