@@ -11,25 +11,25 @@ if (typeof window !== "undefined") {
 
 const services = [
   {
-    title: "UI/UX Design",
-    tag: "Figma.",
+    title: "Custom CMS Mastery",
+    tag: "WordPress, Shopify, Webflow.",
     description:
-      "We turn fuzzy ideas into interfaces people actually enjoy using. From the first wireframe to pixel-final Figma, every screen is built to convert and to scale with you.",
-    img: "https://images.unsplash.com/photo-1618761714954-0b8cd0026356?auto=format&fit=crop&w=600&q=80"
-  },
-  {
-    title: "Web Development",
-    tag: "Next.js & React.",
-    description:
-      "We build pixel-perfect Next.js sites that are fast, animated, SEO-ready and fully editable by your team, with no developer bottleneck to slow you down.",
+      "We don't just use CMS; we bend them to our will. From headless WordPress architectures to completely bespoke Shopify Liquid themes, we build backends so powerful you'll feel like a wizard.",
     img: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=600&q=80"
   },
   {
-    title: "Brand Design",
-    tag: "Logo, decks, guidelines.",
+    title: "High-Performance Dev",
+    tag: "Next.js & React ecosystems.",
     description:
-      "We turn strategic insight into a brand that actually sticks. From moodboards that set direction to a full identity system, we make something distinct, scalable and built for traction.",
-    img: "https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=600&q=80"
+      "Bloated templates? Never heard of them. We engineer pixel-perfect frontends that load faster than you can blink. Complex APIs, custom interactions, zero compromises.",
+    img: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=600&q=80"
+  },
+  {
+    title: "UI/UX Engineering",
+    tag: "Figma to flawless execution.",
+    description:
+      "We turn wild design concepts into interfaces people are addicted to using. No boring layouts allowed. If it doesn't make your competitors jealous, we don't ship it.",
+    img: "https://images.unsplash.com/photo-1618761714954-0b8cd0026356?auto=format&fit=crop&w=600&q=80"
   },
 ];
 

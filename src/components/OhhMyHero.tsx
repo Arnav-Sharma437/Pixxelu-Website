@@ -209,10 +209,9 @@ export default function OhhMyHero() {
 
       {/* Floating tag above the main text */}
       <div className="relative z-20 mb-8 flex items-center bg-white/80 backdrop-blur-md px-4 py-2 rounded shadow-sm border border-black/5">
-        <span className="text-sm font-semibold text-black mr-2">Worked with 15+</span>
-        <span className="bg-[#f85c37] text-white text-[10px] font-bold px-1.5 py-0.5 rounded mr-1">P</span>
-        <span className="text-sm font-bold text-[#f85c37]">Pixxelu</span>
-        <span className="text-sm font-semibold text-black ml-1">brands</span>
+        <span className="text-sm font-semibold text-black mr-2">Shipped 50+ High-Conversion</span>
+        <span className="bg-[#f85c37] text-white text-[10px] font-bold px-1.5 py-0.5 rounded mr-1">CMS</span>
+        <span className="text-sm font-bold text-[#f85c37]">Experiences</span>
       </div>
 
       {/* Canvas Layer for the interactive text */}

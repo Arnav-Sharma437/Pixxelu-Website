@@ -11,19 +11,19 @@ if (typeof window !== "undefined") {
 }
 
 const badPractices = [
-  "Pitched by seniors, built by whoever is free.",
-  "Booked out for weeks, then slow to deliver.",
-  "Fat monthly retainer, plus surprise invoices.",
-  "Five calls and a deck before a single pixel.",
-  "Safe, on brand-ish, instantly forgettable.",
+  "Bloated templates that take 10 seconds to load.",
+  "Told 'WordPress can't do that' by junior devs.",
+  "Fat monthly retainer just to update a plugin.",
+  "Safe, on-brand, but instantly forgettable UI.",
+  "Off-the-shelf Shopify themes that look like everyone else's.",
 ];
 
 const goodPractices = [
-  "You talk to the person actually designing it.",
-  "First real screens in days, not quarters.",
-  "Fixed scope, fixed price, zero surprises.",
-  "Less meetings. More shipping.",
-  "Custom, opinionated, genuinely hard to forget.",
+  "Headless CMS architectures that load instantly.",
+  "We bend WordPress, Shopify, and Webflow to our will.",
+  "Fixed scope, fixed price, zero surprise invoices.",
+  "Custom, opinionated UI that makes competitors jealous.",
+  "Bespoke e-commerce experiences built for conversion.",
 ];
 
 export default function OhhMyComparison() {
